@@ -91,4 +91,3 @@ function FundWallet(props: Props) {
 }
 
 export default FundWallet
-
