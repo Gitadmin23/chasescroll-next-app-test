@@ -1,5 +1,6 @@
 import { CashoutIcon, FundWalletIcon, MiniTicketIcon } from '@/components/svg'
 import { Box, Flex, Text } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 interface Props {
@@ -32,6 +33,16 @@ function TabController(props: Props) {
         },
     ]
 
+    const router = useRouter()
+
+    const clickHandler =(item: any)=> {
+        if(item === 0){ 
+            router.replace("/dashboard/event")
+        } else {
+            setTab(item)
+        }
+    }
+
     return (
         <Flex width={"full"} bgColor={"white"} roundedBottom={"6px"} padding={"6px"} justifyContent={"space-around"} >
             {tab_list?.map((item: {
@@ -39,7 +50,7 @@ function TabController(props: Props) {
                 icon: any
             }, index: number) => {
                 return( 
-                    <Flex as={"button"} onClick={()=> setTab(index)} flexDirection={"column"} alignItems={"center"} fontSize={"12px"} justifyContent={"center"} py={"2"} rounded={"6px"} width={"full"} bgColor={tab === index ? "#12299C" : ""} color={tab === index ? "white" : "#12299C"} borderColor={tab === index ? "white" : "#12299C"} >
+                    <Flex as={"button"} onClick={()=> clickHandler(index)} flexDirection={"column"} alignItems={"center"} fontSize={"12px"} justifyContent={"center"} py={"2"} rounded={"6px"} width={"full"} bgColor={tab === index ? "#12299C" : ""} color={tab === index ? "white" : "#12299C"} borderColor={tab === index ? "white" : "#12299C"} >
                         <Flex width={"40px"} height={"40px"} justifyContent={"center"} alignItems={"center"} border={"1px"} rounded={"full"} >
                             {item?.icon}
                         </Flex>

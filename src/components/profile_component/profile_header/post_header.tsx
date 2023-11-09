@@ -21,7 +21,7 @@ function PostHeader(props: Props) {
     // const router = useRouter()
 
     // react query
-    const { isLoading, isRefetching } = useQuery(['get-post'], () => httpService.get(URLS.GET_MEDIA_POST+user_index), {
+    const {  } = useQuery(['get-post'], () => httpService.get(URLS.GET_MEDIA_POST+user_index), {
         onError: (error: any) => {
             toast({
                 status: "error",
@@ -34,7 +34,7 @@ function PostHeader(props: Props) {
     }) 
 
     return (
-        <HeaderLayout name='Event' count={data?.totalElements} icon={<PostGridIcon />} link={`/dashboard/profile/${user_index}`} index={user_index} />
+        <HeaderLayout name='Post' count={data?.totalElements} icon={<PostGridIcon />} link={`/dashboard/profile/${user_index}`} index={user_index} />
     )
 }
 

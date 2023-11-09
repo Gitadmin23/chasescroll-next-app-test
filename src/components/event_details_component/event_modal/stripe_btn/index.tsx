@@ -1,13 +1,12 @@
 import { StripeLogo } from '@/components/svg'
-import { Flex, Text, useToast } from '@chakra-ui/react'
+import { Flex, useToast } from '@chakra-ui/react'
 import React from 'react'
-import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useMutation } from 'react-query';
 import httpService from '@/utils/httpService';
-import { URLS } from '@/services/urls'; 
-import CheckoutForm from './CheckoutForm';
+import { URLS } from '@/services/urls';
 import LoadingAnimation from '@/components/sharedComponent/loading_animation';
+import StripePopup from './stripe_popup';
 
 interface Props {
     close: any,
@@ -39,7 +38,7 @@ function StripeBtn(props: Props) {
 
     const createTicket = useMutation({
         mutationFn: (data: any) => httpService.post(URLS.CREATE_TICKET, data),
-        onSuccess: (data: any) => { 
+        onSuccess: (data: any) => {
             toast({
                 title: 'Success',
                 description: "Ticket Created",
@@ -49,7 +48,7 @@ function StripeBtn(props: Props) {
                 position: 'top-right',
             });
 
-            if (data?.data?.content?.orderTotal > 0) {
+            if (data?.data?.content?.orderTotal > 0) { 
                 setconfigData({
                     ...configData,
                     email: data?.data?.content?.email,
@@ -60,7 +59,7 @@ function StripeBtn(props: Props) {
             }
 
         },
-        onError: (error) => { 
+        onError: (error) => {
             toast({
                 title: 'Error',
                 description: "Error Creating Ticket",
@@ -78,7 +77,7 @@ function StripeBtn(props: Props) {
             setClientSecret(data?.data?.gatewayReferenceID)
             setOpen(true)
         },
-        onError: (error) => { 
+        onError: (error) => {
             toast({
                 title: 'Error',
                 description: "Error On Stripe Request",
@@ -106,20 +105,7 @@ function StripeBtn(props: Props) {
                 </Flex>
             )}
             {open && (
-                <Flex width={"full"} alignItems={"center"} justifyContent={"center"} p={"4"} flexDirection={"column"} >
-                     
-                    {clientSecret?.length !== 0 && (
-                        <div className="flex flex-col gap-8 py-8">
-                            <>
-                                {clientSecret && stripePromise && (
-                                    <Elements stripe={stripePromise} options={{ clientSecret }} >
-                                        <CheckoutForm config={configData} closeModal={() => close} />
-                                    </Elements>
-                                )}
-                            </>
-                        </div>
-                    )}
-                </Flex>
+                <StripePopup stripePromise={stripePromise} clientSecret={clientSecret} configData={configData} />
             )}
         </LoadingAnimation>
     )

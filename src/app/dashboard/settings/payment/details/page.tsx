@@ -9,12 +9,9 @@ interface Props { }
 function PaymentDetails(props: Props) {
     const { } = props
 
-    const [tab, setTab] = React.useState(0)
-
     return ( 
         <Box width={"full"} >
-            <DetailCard tab={tab} setTab={setTab} />
-            <CardTabs tab={tab} />
+            <DetailCard />
         </Box>
     )
 }

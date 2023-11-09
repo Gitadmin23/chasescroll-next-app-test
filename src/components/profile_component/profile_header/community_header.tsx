@@ -21,7 +21,7 @@ function CommunityHeader(props: Props) {
     const router = useRouter()
 
     // react query
-    const { isLoading, isRefetching } = useQuery(['get-joined-community'], () => httpService.get(URLS.GET_JOINED_GROUPS+"?userID="+user_index), {
+    const {  } = useQuery(['get-joined-community'], () => httpService.get(URLS.GET_JOINED_GROUPS+"?userID="+user_index), {
         onError: (error: any) => {
             toast({
                 status: "error",

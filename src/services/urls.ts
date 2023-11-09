@@ -64,7 +64,10 @@ export const URLS = {
     GET_USER_FRIENDS: '/user/get-users-connections',
     SIGN_IN_WTIH_CREDENTIALS: '/auth/signinWithCredentials',
     GET_EVENTS: '/events/events',
-    ONLINE_USERS: '/auth/check-connections-onlines'
+    ONLINE_USERS: '/auth/check-connections-onlines',
+    GET_WALLET_BALANCE: "/payments/api/wallet/balance",
+    FUND_WALLET: "/payments/api/wallet/fundWalletWeb",
+    GET_TRANSACTIONS: "/payments/transactions"
     //GET_MEDIA_POST : "/feed/get-users-media-posts?userID="
 }
 

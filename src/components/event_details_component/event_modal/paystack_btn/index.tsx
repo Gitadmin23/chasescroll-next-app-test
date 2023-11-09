@@ -55,9 +55,9 @@ function PayStackBtn(props: Props) {
             });
             setConfig({
                 ...config,
-                email: data?.content?.email,
-                amount: (Number(data?.content?.orderTotal) * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-                reference: data?.content?.orderCode
+                email: data?.data?.content?.email,
+                amount: (Number(data?.data?.content?.orderTotal) * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+                reference: data?.data?.content?.orderCode
             });
         },
         onError: (error) => { 
@@ -75,7 +75,7 @@ function PayStackBtn(props: Props) {
 
 	const payStackMutation = useMutation({
 		mutationFn: (data: any) => httpService.post(`/payments/verifyWebPaystackTx?orderCode=${data}`),
-		onSuccess: (data) => {             
+		onSuccess: () => {         -    
             toast({
                 title: 'Success',
                 description: "Payment verified",
@@ -89,26 +89,25 @@ function PayStackBtn(props: Props) {
 			// toast.success('Payment verified');
 			// setLoading(false)  
 			// closeModal()
-            close(false)
+            // close(false)
 		},
 		onError: (error: any) => { 
             toast({
-                title: 'Success',
-                description: error,
+                title: 'Error',
+                description: "Error Occured",
                 status: 'error',
                 isClosable: true,
                 duration: 5000,
                 position: 'top-right',
-            });
-			// toast.error(error);
-			// setLoading(false)
-			// closeModal()
+            }); 
 		},
 	}); 
 
 
 	const onSuccess = (reference: any) => { 
-		setOrderCode(reference?.reference)
+		// setOrderCode(reference?.reference) 
+        
+        payStackMutation.mutate(reference?.reference);
 	};  
 	
 	// you can call this function anything
@@ -123,13 +122,13 @@ function PayStackBtn(props: Props) {
 		} 
 	}, [config, clientKey])
  
-	React.useEffect(()=> { 
-        if (orderCode) {
-            console.log(`Making paystack payment`); 
-            payStackMutation.mutate(orderCode);
-            return;
-        } 
-    }, [orderCode]);
+	// React.useEffect(()=> { 
+    //     if (orderCode) {
+    //         console.log(`Making paystack payment`); 
+    //         payStackMutation.mutate(orderCode);
+    //         return;
+    //     } 
+    // }, [orderCode]);
 
     const clickHandler = React.useCallback(() => {
         createTicket.mutate({

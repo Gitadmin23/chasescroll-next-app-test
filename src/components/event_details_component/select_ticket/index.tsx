@@ -40,8 +40,8 @@ function SelectTicket(props: Props) {
             </Box>
             {showModal && (
                 <Box width={"full"} pl={"5"} borderWidth={"0px"} zIndex={"30"} top={"60px"} position={"absolute"} rounded={"lg"} >
-                    <Box shadow={"lg"} width={"full"} borderColor={"#D0D4EB"} borderBottomWidth={"0px"} bg={"white"} rounded={"lg"}>
-                        {ticket?.map((item: any, index: number) => {
+                    <Flex gap={"3"} flexDirection={"column"} shadow={"lg"} width={"full"} borderColor={"#D0D4EB"} padding={"4"} borderBottomWidth={"0px"} bg={"white"} rounded={"lg"}>
+                        {ticket?.filter((item: any) => item?.ticketType )?.map((item: any, index: number) => {
                             return (
                                 <Button disabled={item?.totalNumberOfTickets === item?.ticketsSold ? true : false} key={index} onClick={() => clickHandler(item)} width={"full"} py={"14px"} borderBottomColor={"#D0D4EB"} rounded={"lg"} borderBottomWidth={"1px"} >
                                     {item?.totalNumberOfTickets === item?.ticketsSold ?
@@ -51,7 +51,7 @@ function SelectTicket(props: Props) {
                                 </Button>
                             )
                         })}
-                    </Box>
+                    </Flex>
                 </Box>
             )}
             {showModal && (

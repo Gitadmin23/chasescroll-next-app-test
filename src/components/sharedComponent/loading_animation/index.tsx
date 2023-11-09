@@ -6,7 +6,8 @@ interface Props {
     refeching?: any,
     children: React.ReactNode,
     length?: any,
-    fix_height?: boolean
+    fix_height?: boolean,
+    color?: string
 }
 
 function LoadingAnimation(props: Props) {
@@ -17,6 +18,7 @@ function LoadingAnimation(props: Props) {
         length,
         refeching,
         fix_height,
+        color
     } = props
 
     return (
@@ -26,7 +28,7 @@ function LoadingAnimation(props: Props) {
                     {children} 
                     {(!loading && refeching)&& (
                         <Flex width={"full"} justifyContent={"center"} height={fix_height ? "full": "auto"} fontSize={"20px"} py={fix_height ? "" : "8"}  >
-                            <Spinner size={["md", "sm"]} color='black' />
+                            <Spinner size={["md", "sm"]} color={color? color : 'black'} />
                         </Flex>
                     )}
                 </>
@@ -43,7 +45,7 @@ function LoadingAnimation(props: Props) {
             )}
             {loading && (
                 <Flex width={"full"} justifyContent={"center"} fontSize={"20px"} py={"8"}  >
-                    <Spinner size={["md", "sm"]} color='black' />
+                    <Spinner size={["md", "sm"]} color={color? color : 'black'} />
                 </Flex>
             )}
         </>

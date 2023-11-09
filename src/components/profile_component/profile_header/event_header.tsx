@@ -21,7 +21,7 @@ function EventHeader(props: Props) {
     const router = useRouter()
 
     // react query
-    const { isLoading, isRefetching } = useQuery(['get-joined-events'], () => httpService.get(URLS.JOINED_EVENT+user_index), {
+    const {  } = useQuery(['get-joined-events'], () => httpService.get(URLS.JOINED_EVENT+user_index), {
         onError: (error: any) => {
             toast({
                 status: "error",

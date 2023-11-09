@@ -1,20 +1,30 @@
 import { Box } from '@chakra-ui/react'
 import React from 'react'
 import FundWallet from './fund_wallet'
+import CashOut from './cash_out'
+import WalletTransaction from './wallet_transaction'
 
 interface Props {
-    tab: number, 
+    tab: number,
+    currency: string
 }
 
 function CardTabs(props: Props) {
     const {
-        tab, 
+        tab,
+        currency
     } = props
 
     return (
-        <Box width={"full"} > 
+        <Box width={"full"} >
+            {tab === 1 && (
+                <CashOut currency={currency} />
+            )}
             {tab === 2 && (
-                <FundWallet />
+                <FundWallet currency={currency} />
+            )}
+            {tab === 3 && (
+                <WalletTransaction  />
             )}
         </Box>
     )

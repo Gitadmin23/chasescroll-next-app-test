@@ -20,7 +20,7 @@ function NetworkHeader(props: Props) {
     const [data, setData] = React.useState([] as any) 
     
     // react query
-    const { isLoading, isRefetching } = useQuery(['get-joined-network'], () => httpService.get(URLS.GET_USER_CONNECTION_LIST+""+user_index), {
+    const { } = useQuery(['get-joined-network'], () => httpService.get(URLS.GET_USER_CONNECTION_LIST+""+user_index), {
         onError: (error: any) => {
             toast({
                 status: "error",
@@ -33,7 +33,7 @@ function NetworkHeader(props: Props) {
     }) 
 
     return (
-        <HeaderLayout name='Network' count={data?.length} icon={<NetworkIcon />} link={`/dashboard/profile/${user_index}/network`} />
+        <HeaderLayout name='Network' count={data?.totalElements} icon={<NetworkIcon />} link={`/dashboard/profile/${user_index}/network`} />
     )
 }
 
