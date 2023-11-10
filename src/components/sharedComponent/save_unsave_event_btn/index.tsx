@@ -25,6 +25,9 @@ function SaveOrUnsaveBtn(props: Props) {
     console.log(event);
     
 
+    console.log(event);
+    
+
     // save event
     const saveEvent = useMutation({
         mutationFn: (data: any) => httpService.post('/events/save-event', data),
