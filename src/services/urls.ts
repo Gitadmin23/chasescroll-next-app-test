@@ -68,11 +68,7 @@ export const URLS = {
     GET_WALLET_BALANCE: "/payments/api/wallet/balance",
     FUND_WALLET: "/payments/api/wallet/fundWalletWeb",
     GET_TRANSACTIONS: "/payments/transactions",
-    UPDATE_EVENT: "events/update-event",
-    USER_PUBLIC_PROFILE: '/user/publicprofile/',
-    USER_PRIVATE_PROFILE: '/user/privateprofile',
-    UPDATE_PROFILE: '/user/update-profile',
-    CHANGE_PASSWORD: '/chasescroll/verification/reset-password'
+    UPDATE_EVENT: "events/update-event"
     //GET_MEDIA_POST : "/feed/get-users-media-posts?userID="
 }
 

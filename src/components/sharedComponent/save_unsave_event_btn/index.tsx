@@ -22,6 +22,9 @@ function SaveOrUnsaveBtn(props: Props) {
     const [isSaved, setIsSaved] = React.useState(event.isSaved)
     const toast = useToast() 
 
+    console.log(event);
+    
+
     // save event
     const saveEvent = useMutation({
         mutationFn: (data: any) => httpService.post('/events/save-event', data),

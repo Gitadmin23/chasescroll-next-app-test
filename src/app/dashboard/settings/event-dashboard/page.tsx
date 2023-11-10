@@ -22,7 +22,7 @@ function EventDashboard(props: Props) {
         <Box height={"auto"} display={"flex"} width={"full"} overflowY={"auto"} justifyContent={"center"} position={"relative"}  > 
             <Box width={["full", "full", "600px"]} px={"6"} py={"10"} position={"relative"} >
                 <Flex alignItems={"center"} gap={"4"} width={"full"} justifyContent={"center"} paddingBottom={"6"}> 
-                    <Box onClick={()=> router.replace("/dashboard/settings")} as='button' position={"absolute"} zIndex={"10"} left={"0px"} width={"fit-content"} >
+                    <Box onClick={()=> router.back()} as='button' position={"absolute"} zIndex={"10"} left={"0px"} width={"fit-content"} >
                         <BsChevronLeft color={"black"} size={"25px"} />
                     </Box>
                     <Text textAlign={"center"} fontSize={"2xl"} fontWeight={"bold"} >Events Dash Board</Text>
@@ -34,13 +34,13 @@ function EventDashboard(props: Props) {
                                 if (results.length === i + 1) {
                                     return (
                                         <Box key={event?.userId} width={"full"} ref={ref} >
-                                            <ExploreEventCard event={event} dashboard={true} profile={true} />
+                                            <ExploreEventCard event={event} profile={true} />
                                         </Box>
                                     )
                                 } else {
                                     return (
                                         <Box key={event?.userId} width={"full"}  >
-                                            <ExploreEventCard event={event}  dashboard={true} profile={true} />
+                                            <ExploreEventCard event={event} profile={true} />
                                         </Box>
                                     )
                                 }
