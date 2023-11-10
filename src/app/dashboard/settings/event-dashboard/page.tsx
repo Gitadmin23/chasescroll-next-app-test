@@ -23,6 +23,7 @@ function EventDashboard(props: Props) {
             <Box width={["full", "full", "600px"]} px={"6"} py={"10"} position={"relative"} >
                 <Flex alignItems={"center"} gap={"4"} width={"full"} justifyContent={"center"} paddingBottom={"6"}> 
                     <Box onClick={()=> router.back()} as='button' position={"absolute"} zIndex={"10"} left={"0px"} width={"fit-content"} >
+<<<<<<< HEAD
                         <BsChevronLeft color={"black"} size={"25px"} />
                     </Box>
                     <Text textAlign={"center"} fontSize={"2xl"} fontWeight={"bold"} >Events Dash Board</Text>
@@ -79,6 +80,8 @@ function EventDashboard(props: Props) {
             <Box width={["full", "full", "600px"]} px={"6"} py={"10"} position={"relative"} >
                 <Flex alignItems={"center"} gap={"4"} width={"full"} justifyContent={"center"} paddingBottom={"6"}> 
                     <Box onClick={()=> router.replace("/dashboard/settings")} as='button' position={"absolute"} zIndex={"10"} left={"0px"} width={"fit-content"} >
+=======
+>>>>>>> 0019b9e (update on settings)
                         <BsChevronLeft color={"black"} size={"25px"} />
                     </Box>
                     <Text textAlign={"center"} fontSize={"2xl"} fontWeight={"bold"} >Events Dash Board</Text>
@@ -90,13 +93,13 @@ function EventDashboard(props: Props) {
                                 if (results.length === i + 1) {
                                     return (
                                         <Box key={event?.userId} width={"full"} ref={ref} >
-                                            <ExploreEventCard event={event} dashboard={true} profile={true} />
+                                            <ExploreEventCard event={event} profile={true} />
                                         </Box>
                                     )
                                 } else {
                                     return (
                                         <Box key={event?.userId} width={"full"}  >
-                                            <ExploreEventCard event={event}  dashboard={true} profile={true} />
+                                            <ExploreEventCard event={event} profile={true} />
                                         </Box>
                                     )
                                 }

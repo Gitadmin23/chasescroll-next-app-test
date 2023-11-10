@@ -1,4 +1,5 @@
 "use client"
+"use client"
 import React from "react";
 import { ElementsConsumer, CardElement, PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import CardSection from "../CardSection";
@@ -185,6 +186,10 @@ export default function InjectedCheckoutForm(props: IProps) {
           <div id="payment-form" >
             <PaymentElement id="payment-element" />
 
+            <CustomButton isLoading={loading} mt={"6"} onClick={() => handleSubmit()} text='Pay now' width={["full", "full"]} id="submit" />
+
+          </div>
+        </LoadingAnimation>
             <CustomButton isLoading={loading} mt={"6"} onClick={() => handleSubmit()} text='Pay now' width={["full", "full"]} id="submit" />
 
           </div>
