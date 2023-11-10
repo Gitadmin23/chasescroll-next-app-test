@@ -28,10 +28,15 @@ function EventLocationDetail(props: Props) {
         fontWeight
     } = props
 
+    const clickHandler =(item: any)=> {
+        
+    window.open(item, "_blank", "noreferrer");
+    }
+
     return (
         <>
             {!indetail && (
-                <Flex gap={"1"} alignItems={"center"} >
+                <Flex gap={"1"}  height={"50px"} bgColor={"gray.200"}  alignItems={"center"} >
                     {!noicon && (
                         <Box width={"fit-content"} >
                             <Box width={iconsize ? iconsize : "20px"} display={"flex"} justifyContent={"center"} alignItems={"center"} >
@@ -47,7 +52,7 @@ function EventLocationDetail(props: Props) {
                             <p>To Be Announced</p>
                         )}
                         {(location?.link) && (
-                            <a href={location?.link} style={{ color: color ? color : "#5D70F9", fontSize: fontsize ? fontsize : "sm", fontWeight: fontWeight ? fontWeight : "semibold" }} target="_blank" className=' font-bold text-sm text-chasescrollBlue ' >Join Online</a>
+                            <Text as={"button"} textAlign={"left"} onClick={(e)=> clickHandler(location?.link)} style={{ color: "#5D70F9", fontSize: fontsize ? fontsize : "sm", fontWeight: fontWeight ? fontWeight : "semibold" }} className=' font-bold text-sm text-chasescrollBlue ' >Join Online</Text>
                         )}
                     </Text>
                 </Flex>

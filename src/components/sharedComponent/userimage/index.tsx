@@ -5,7 +5,7 @@ import React from 'react'
 interface Props {
     data: any,
     size: any,
-    font?: string,
+    font?: any,
     border?: any,
     fontWeight?: any
 }

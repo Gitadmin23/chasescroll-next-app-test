@@ -18,6 +18,10 @@ import RefundPolicy from './event_modal/refund_policy'
 import PaymentMethod from './event_modal/payment_method'
 import GetEventTicket from './get_event_ticket'
 import ShareEvent from '../sharedComponent/share_event'
+import useModalStore from '@/global-state/useModalSwitch'
+import StripePopup from './event_modal/stripe_btn/stripe_popup'
+import useStripeStore from '@/global-state/useStripeState'
+import { loadStripe } from '@stripe/stripe-js'
 
 interface Props {
     banner: any,
@@ -41,14 +45,12 @@ interface Props {
     maxPrice: any,
     username: any,
     dataInfo: any,
-    ticketBought: any,
-    getData: any
-    ticketInfo: any
+    ticketBought: any, 
+    ticketInfo: any, 
 }
 
 function EventDetails(props: Props) {
-    const {
-
+    const { 
         banner,
         eventID,
         userBy,
@@ -69,7 +71,7 @@ function EventDetails(props: Props) {
         minPrice,
         maxPrice,
         username,
-        dataInfo,
+        dataInfo, 
     } = props
 
     const [selectedCategory, setSelectedCategory] = useState({} as any)
@@ -99,7 +101,7 @@ function EventDetails(props: Props) {
                 <Grid templateColumns={['repeat(1, 1fr)', 'repeat(1, 1fr)', 'repeat(1, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)']} py={"3"} gap={6}>
                     <EventDate name='Event Start date and time' date={timeAndDate} />
                     <EventDate name='Event End date and time' date={endtimeAndDate} />
-                    <EventUserOption isOrganizer={isOrganizer} isBought={isBought} ticket={price} currency={currency} selectedticket={selectedCategory} setCategory={setSelectedCategory} />
+                    <EventUserOption event={dataInfo} isOrganizer={isOrganizer} isBought={isBought} ticket={price} currency={currency} selectedticket={selectedCategory} setCategory={setSelectedCategory} />
                 </Grid> 
                 <OtherEventInfo name={'About this event'} data={about} />
                 <Grid templateColumns={['repeat(1, 1fr)', 'repeat(1, 1fr)', 'repeat(1, 1fr)', 'repeat(2, 1fr)', 'repeat(3, 1fr)']} py={"3"} gap={6}>
@@ -111,6 +113,7 @@ function EventDetails(props: Props) {
                 {/* <Flex width={"full"} justifyContent={"center"} py="6" >
                     <GetEventTicket ticket={price} setSelectedTicket={setSelectedCategory} data={dataInfo} selectedTicket={selectedCategory} isBought={isBought} isFree={isFree} />
                 </Flex> */}
+
             </Box>
         </HStack>
     )

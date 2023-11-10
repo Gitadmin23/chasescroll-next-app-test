@@ -17,19 +17,25 @@ function CommunityHeader(props: Props) {
     } = props
 
     const toast = useToast()
-    const [data, setData] = React.useState([] as any)
+    const [data, setData] = React.useState("" as any)
     const router = useRouter()
 
     // react query
-    const {  } = useQuery(['get-joined-community'], () => httpService.get(URLS.GET_JOINED_GROUPS+"?userID="+user_index), {
+    const {  } = useQuery(['get-joined-community'], () => httpService.get(URLS.GET_JOINED_GROUPS+ "?userID=" +user_index), {
         onError: (error: any) => {
-            toast({
-                status: "error",
-                title: error.response?.data,
-            });
+            console.log(error);
+            
+            // toast({
+            //     status: "error",
+            //     title: error.response?.data,
+            // });
         },
-        onSuccess: (data) => {    
-            setData(data.data); 
+        onSuccess: (data) => {  
+            console.log(data);
+            
+            if(data){ 
+                setData(data.data); 
+            }
         }
     }) 
 

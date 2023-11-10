@@ -28,7 +28,7 @@ function HeaderLayout(props: Props) {
             <Box display={"flex"} justifyContent={"center"} alignItems={"center"} width={"24px"} height={"24px"} >
                 {icon}
             </Box>
-            <Text fontSize={["sm", "16px"]} >{name}</Text>
+            <Text fontSize={["12px", "16px"]} >{name}</Text>
         </Flex>
     )
 }

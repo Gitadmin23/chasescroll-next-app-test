@@ -24,8 +24,7 @@ interface Props {
 function PaymentType(props: Props) {
     const { 
         click,
-        currency,
-        close,
+        currency, 
         selectedCategory,
         ticketCount,
         data
@@ -40,10 +39,10 @@ function PaymentType(props: Props) {
                 <Text fontSize={"20px"} fontWeight={"bold"} textAlign={"center"} >Payment Options</Text>
             </Flex> 
             {currency !== "NGN" && (
-                <StripeBtn selectedCategory={selectedCategory} datainfo={data} ticketCount={ticketCount} close={()=> close} />
+                <StripeBtn selectedCategory={selectedCategory} datainfo={data} ticketCount={ticketCount}  />
             )}
             {currency === "NGN" && (
-                <PayStackBtn selectedCategory={selectedCategory} datainfo={data} ticketCount={ticketCount} close={()=> close} />
+                <PayStackBtn selectedCategory={selectedCategory} datainfo={data} ticketCount={ticketCount}  />
             )}
         </Box>
     )

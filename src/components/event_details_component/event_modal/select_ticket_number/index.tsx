@@ -60,7 +60,7 @@ function SelectTicketNumber(props: Props) {
                 duration: 5000,
                 position: 'top-right',
             });  
-			queryClient.invalidateQueries(['all-events-details'+data.id])
+            queryClient.invalidateQueries(['all-events-details'+data.id]) 
             close(false)
         },
         onError: (error) => { 

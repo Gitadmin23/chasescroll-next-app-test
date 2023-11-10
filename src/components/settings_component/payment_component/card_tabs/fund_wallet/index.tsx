@@ -9,6 +9,8 @@ import StripePopup from '@/components/event_details_component/event_modal/stripe
 import ModalLayout from '@/components/sharedComponent/modal_layout';
 import { useDetails } from '@/global-state/useUserDetails';
 import Fundpaystack from './fundpaystack';
+import useModalStore from '@/global-state/useModalSwitch';
+import useSettingsStore from '@/global-state/useSettingsState';
 
 interface Props {
     currency: string
@@ -20,14 +22,15 @@ function FundWallet(props: Props) {
     } = props
 
     const { email } = useDetails((state) => state);
+    const { open, setOpen } = useModalStore((state) => state);
     const STRIPE_KEY: any = process.env.NEXT_PUBLIC_STRIPE_KEY;
     const PAYSTACK_KEY: any = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
 
     const stripePromise = loadStripe(STRIPE_KEY);
 
-    const [amount, setAmount] = React.useState("")
+    const { amount, setAmount } = useSettingsStore((state) => state); 
     const [clientSecret, setClientSecret] = React.useState("");
-    const [open, setOpen] = React.useState(false)
+    // const [open, setOpen] = React.useState(false)
     const [configData, setconfigData] = React.useState({} as any);
     const toast = useToast()
     const [config, setConfig] = React.useState({} as any)
@@ -76,12 +79,12 @@ function FundWallet(props: Props) {
     return (
         <Flex width={"full"} pt={"8"} flexDirection={"column"} alignItems={"center"} >
             <Text fontWeight={"semibold"} >Enter Amount</Text>
-            <Input onChange={(e) => setAmount(e.target.value)} width={"full"} type='number' textAlign={"center"} borderColor={"transparent"} focusBorderColor="transparent" placeholder={currency === "USD" ? '$0.00' : "₦0.00"} fontSize={"20px"} _hover={{ color: "black" }} />
+            <Input value={amount} onChange={(e) => setAmount(e.target.value)} width={"full"} type='number' textAlign={"center"} borderColor={"transparent"} focusBorderColor="transparent" placeholder={currency === "USD" ? '$0.00' : "₦0.00"} fontSize={"20px"} _hover={{ color: "black" }} />
             <CustomButton isLoading={createTicket.isLoading} onClick={() => clickHandler()} text='Fund' marginTop={"8"} backgroundColor={"#12299C"} />
 
             <Fundpaystack config={config} setConfig={setConfig} />
             <ModalLayout open={open} close={setOpen} title='Fund Wallet' >
-                <StripePopup stripePromise={stripePromise} clientSecret={clientSecret} configData={configData} />
+                <StripePopup fund={true} stripePromise={stripePromise} clientSecret={clientSecret} configData={configData} />
             </ModalLayout>
         </Flex>
     )

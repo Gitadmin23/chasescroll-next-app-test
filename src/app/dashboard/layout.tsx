@@ -168,7 +168,7 @@ function Layout({ children }: {
                                     <Message color={THEME.COLORS.chasescrollBlue} size='30px' variant='Outline' />
                                 </Link>
 
-                                <Link href={`/dashboard/profile/${userId}`}>
+                                <Link href={userId ? `/dashboard/profile/${userId}` : ""}>
                                     <Box width='32px' height='32px' borderRadius={'20px 0px 20px 20px'} borderWidth={'2px'} borderColor={'#D0D4EB'} overflow={'hidden'}>
                                         {(
                                             <VStack width={'100%'} height='100%' fontFamily={''} justifyContent={'center'} alignItems={'center'}>
@@ -181,7 +181,7 @@ function Layout({ children }: {
                                             )
                                         } */}
                                     </Box>
-                                    {/* <Avatar name={`${firstName} ${lastName}`} size='md' marginX='10px' /> */}
+                                    {/* <Avatar name={`${firstName} ${lastName}`} size='md' marginX='10px' /> */} 
                                 </Link>
                             </HStack>
 
@@ -224,7 +224,7 @@ function Layout({ children }: {
                         </VStack>
                     </Link>
 
-                    <Link href={`/dashboard/profile/${userId}`}>
+                    <Link href={userId ? `/dashboard/profile/${userId}` : ""}>
                         <VStack width={'40px'} height='40px' borderBottomLeftRadius={'20px'} borderTopLeftRadius={'20px'} borderBottomRightRadius={'20px'} bg={pathname.includes('profile') ? 'brand.chasescrollBlue' : 'white'} color={pathname.includes('profile') ? 'white' : 'brand.chasescrollBlue'} justifyContent={'center'} alignItems={'center'}>
                         <Box width='32px' height='32px' borderRadius={'20px 0px 20px 20px'} borderWidth={'2px'} borderColor={'#D0D4EB'} overflow={'hidden'}>
                                         {(

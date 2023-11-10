@@ -67,7 +67,8 @@ export const URLS = {
     ONLINE_USERS: '/auth/check-connections-onlines',
     GET_WALLET_BALANCE: "/payments/api/wallet/balance",
     FUND_WALLET: "/payments/api/wallet/fundWalletWeb",
-    GET_TRANSACTIONS: "/payments/transactions"
+    GET_TRANSACTIONS: "/payments/transactions",
+    UPDATE_EVENT: "events/update-event"
     //GET_MEDIA_POST : "/feed/get-users-media-posts?userID="
 }
 

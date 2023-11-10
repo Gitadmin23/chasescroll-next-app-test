@@ -7,8 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { usePaystackPayment } from 'react-paystack'
 import LoadingAnimation from '@/components/sharedComponent/loading_animation';
 
-interface Props {   
-    close: any,
+interface Props {  
     selectedCategory: {
         ticketType: string
     },
@@ -19,8 +18,7 @@ interface Props {
 }
 
 function PayStackBtn(props: Props) {
-    const { 
-        close,
+    const {  
         selectedCategory,
         ticketCount,
         datainfo

@@ -1,27 +1,27 @@
 import CustomButton from '@/components/general/Button'
 import EventLocationDetail from '@/components/sharedComponent/event_location'
 import EventImage from '@/components/sharedComponent/eventimage'
+import useStripeStore from '@/global-state/useStripeState'
 import { Box, Button, Checkbox, Flex, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { BsChevronLeft } from 'react-icons/bs'
 
 interface Props {
-    data: any 
-    click: any
+    data: any  
 }
 
 function RefundPolicy(props: Props) {
     const {
-        data,
-        click, 
+        data,  
     } = props
 
     const [checked, setChecked] = useState(false)
+    const { setModalTab, modalTab } = useStripeStore((state) => state);
 
     return (
         <Box width={"full"} bg={"white"} px={"8"} py={"10"} >  
             <Flex alignItems={"center"} gap={"4"} borderBottom={"1px dashed black "} py={"2"} > 
-                <Box onClick={()=> click((prev: any)=> prev -1)} as='button' width={"fit-content"} mb={"auto"} mt={"3"} >
+                <Box onClick={()=> setModalTab(modalTab -1)} as='button' width={"fit-content"} mb={"auto"} mt={"3"} >
                     <BsChevronLeft color={"black"} size={"25px"} />
                 </Box>
                 <EventImage width={"153px"} height={"101px"} data={data} />
@@ -40,7 +40,7 @@ function RefundPolicy(props: Props) {
                     <Text color={"#10182880"} >By clicking this box, you hereby accept the <span style={{ color: "#5D70F9", fontWeight: "bold" }} >Chasescroll refund policy</span></Text>
                 </Flex>
             </Box> 
-            <CustomButton disable={!checked} onClick={()=> click((prev: any)=> prev +1)} text='View Ticket' width={["full", "full"]} mt={"4"} />
+            <CustomButton disable={!checked} onClick={()=> setModalTab(modalTab +1)} text='View Ticket' width={["full", "full"]} mt={"4"} />
         </Box>
     )
 }

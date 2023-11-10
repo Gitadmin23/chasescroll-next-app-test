@@ -15,7 +15,7 @@ function DetailCard(props: Props) {
     const { } = props
 
     const [showEscrow, setShowEscrow] = useState(false)    
-    const [tab, setTab] = React.useState(3)
+    const [tab, setTab] = React.useState(2)
     // const [currency, setCurrency] = useState("NGN")
 
     const { currency } = useSettingsStore((state) => state);

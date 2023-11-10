@@ -43,11 +43,13 @@ function UserWalletAmount(props: Props) {
                     {!showText ? <ClosedEyeIcon /> : <OpenEyeIcon />}
                 </Box>
             </Flex>
-            <LoadingAnimation fix_height={true} color='white' loading={isLoading} refeching={isRefetching} >
-                {!isRefetching && (
-                    <Text fontSize={"xl"} fontWeight={"bold"} >{showEscrow ? formatNumber(showText ? data?.escrowBalances?.balance / 100 : "***", currency === "USD" ? "$" : "₦") : formatNumber(showText ? data?.walletBalances?.balance / 100 : "***", currency === "USD" ? "$" : "₦")}</Text>
-                )}
-            </LoadingAnimation>
+            <Flex height={"30px"} justifyContent={"center"} alignItems={"center"} > 
+                <LoadingAnimation fix_height={true} color='white' loading={isLoading} refeching={isRefetching} >
+                    {(!isRefetching && !isLoading ) && (
+                        <Text fontSize={"xl"} fontWeight={"bold"} >{showEscrow ? formatNumber(showText ? data?.escrowBalances?.balance / 100 : "***", currency === "USD" ? "$" : "₦") : formatNumber(showText ? data?.walletBalances?.balance / 100 : "***", currency === "USD" ? "$" : "₦")}</Text>
+                    )}
+                </LoadingAnimation>
+            </Flex>
         </Flex>
     )
 }

@@ -2,6 +2,7 @@ import AddOrRemoveUserBtn from '@/components/sharedComponent/add_remove_user_btn
 import BlockBtn from '@/components/sharedComponent/blockbtn';
 import LoadingAnimation from '@/components/sharedComponent/loading_animation';
 import ShareEvent from '@/components/sharedComponent/share_event';
+import UserImage from '@/components/sharedComponent/userimage';
 import { useDetails } from '@/global-state/useUserDetails';
 import { IMAGE_URL, URLS } from '@/services/urls';
 import httpService from '@/utils/httpService';
@@ -91,6 +92,9 @@ function ProfileImage(props: Props) {
                     {showModal && (
                         <Box onClick={() => setShowModal((prev) => !prev)} inset={"0px"} position={"fixed"} zIndex={"10"} bg={"black"} opacity={"0.3"} />
                     )}
+                </Box>
+                <Box position={"absolute"} bottom={"170px"} left={"8"} zIndex={"20"} > 
+                    <UserImage data={data} size={["120px" ,"150px"]} font={["30px" ,'60px']} />
                 </Box>
                 <Flex zIndex={"20"} width={"full"} bottom={"0px"} insetX={"0px"} bg={"#00000099"} px={["6", "6", "9"]} height={"150px"} justifyContent={"space-between"} position={"absolute"} alignItems={"center"} >
                     <Box color={"white"} >

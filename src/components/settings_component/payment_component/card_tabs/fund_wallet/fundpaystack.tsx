@@ -3,6 +3,7 @@ import React from 'react'
 import { usePaystackPayment } from "react-paystack";
 import { useMutation, useQueryClient } from "react-query";
 import { useToast } from '@chakra-ui/react'
+import useSettingsStore from '@/global-state/useSettingsState';
 
 interface Props {  
     config: any,  
@@ -12,9 +13,11 @@ interface Props {
 function Fundpaystack(props: Props) {
     const {  config, setConfig } = props
 
+	const queryClient = useQueryClient() 
 	
 	const initializePayment: any = usePaystackPayment(config); 
     const toast = useToast()
+	const { setAmount } = useSettingsStore((state) => state); 
     const PAYSTACK_KEY: any = process.env.NEXT_PUBLIC_PAYSTACK_KEY; 
 
 	const [orderCode, setOrderCode] = React.useState("")
@@ -32,6 +35,8 @@ function Fundpaystack(props: Props) {
                 duration: 5000,
                 position: 'top-right',
             });  
+			queryClient.invalidateQueries(['get-wallet-balanceNGN'])
+			setAmount("")
 			setConfig({ 
 				email: "",
 				amount: 0,

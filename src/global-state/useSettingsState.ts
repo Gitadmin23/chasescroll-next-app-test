@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 type State = {
     amount: string,
-    currency: string
+    currency: string,
 } 
 
 type Action = {
@@ -12,7 +12,7 @@ type Action = {
 
 const useSettingsStore = create<State & Action>((set) => ({
     amount: "", 
-    currency: "NGN",
+    currency: "USD",
     setAmount: (data) => set(() => ({ amount: data })),
     setCurrency: (data) => set(() => ({ currency: data })),
 }));
