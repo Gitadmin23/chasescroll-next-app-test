@@ -81,8 +81,8 @@ function PeopleCard(props: Props) {
                     <UserImage fontWeight={"semibold"} border={search ? "1px" : "3px"} data={person} size={search ? "32px" : 50} font={search ? "[16px]" : '[30px]'} />
                 </Box>
                 <Box>
-                    <Text fontSize={request ? "14px" : search ? "14px" : "15px"} fontWeight={"medium"} >{(person?.firstName + " " + person?.lastName)?.length > 15 ? (person?.firstName + " " + person?.lastName)?.slice(0, 15) + "..." : (person?.firstName + " " + person?.lastName)}</Text>
-                    <Text textAlign={"start"} fontSize={search ? "10px" : "12px"} fontWeight={search ? "medium" : "semibold"} color={"brand.chasescrollTextGrey2"} >@{person?.username?.length > 15 ? person?.username?.slice(0, 15) + "..." : person?.username}</Text>
+                    <Text fontSize={request ? "14px" : search? "14px" :"15px"} fontWeight={"medium"} >{(person?.firstName+" "+person?.lastName)?.length > 15 ? (person?.firstName+" "+person?.lastName)?.slice(0, 15)+"...": (person?.firstName+" "+person?.lastName)}</Text>
+                    <Text textAlign={"start"} fontSize={search? "10px" :"12px"} fontWeight={search? "medium" :"semibold"} color={"brand.chasescrollTextGrey2"} >@{person?.username?.length > 15 ? person?.username?.slice(0, 15)+"...": person?.username}</Text>
                 </Box>
             </Flex>
             {(!refund && !block)&& (

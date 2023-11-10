@@ -9,9 +9,16 @@ import CustomButton from "@/components/general/Button";
 import LoadingAnimation from "@/components/sharedComponent/loading_animation";
 import useModalStore from "@/global-state/useModalSwitch";
 import useSettingsStore from "@/global-state/useSettingsState";
+import LoadingAnimation from "@/components/sharedComponent/loading_animation";
+import useModalStore from "@/global-state/useModalSwitch";
+import useSettingsStore from "@/global-state/useSettingsState";
 // import { useNavigate, useParams } from "react-router-dom"; 
 
 interface IProps {
+  index?: any
+  config: any, 
+  clientSecret?: any,
+  fund?: any
   index?: any
   config: any, 
   clientSecret?: any,
@@ -22,7 +29,10 @@ export default function InjectedCheckoutForm(props: IProps) {
 
   const {
     index,
+    index,
     config,
+    clientSecret, 
+    fund
     clientSecret, 
     fund
   } = props
@@ -33,14 +43,23 @@ export default function InjectedCheckoutForm(props: IProps) {
 
   const [loading, setLoading] = React.useState(false); 
   const toast = useToast()
+  const { setOpen, setShowModal  } = useModalStore((state) => state);
+  const { setAmount } = useSettingsStore((state) => state); 
+  const queryClient = useQueryClient() 
+
+  const [loading, setLoading] = React.useState(false); 
+  const toast = useToast()
 
   function CheckoutForm() {
+    const stripe: any = useStripe();
+    const elements: any = useElements();
     const stripe: any = useStripe();
     const elements: any = useElements();
 
 
     const stripeMutation = useMutation({
       mutationFn: (data) => httpService.post(`/payments/stripePaySuccessWeb?orderId=${data}`),
+      onSuccess: () => { 
       onSuccess: () => { 
         toast({
           title: 'Success',
@@ -52,15 +71,21 @@ export default function InjectedCheckoutForm(props: IProps) {
         }); 
         queryClient.invalidateQueries(['all-events-details'+index])
         setShowModal(false)
+        }); 
+        queryClient.invalidateQueries(['all-events-details'+index])
+        setShowModal(false)
       },
+      onError: (error: any) => {
       onError: (error: any) => {
         toast({
           title: 'Error',
+          description: "Error Occurred",
           description: "Error Occurred",
           status: 'error',
           isClosable: true,
           duration: 5000,
           position: 'top-right',
+        }); 
         }); 
       },
     });
@@ -68,6 +93,7 @@ export default function InjectedCheckoutForm(props: IProps) {
 
     const stripeFund = useMutation({
       mutationFn: (data) => httpService.get(`/payments/api/wallet/verifyFundWalletWeb?transactionID=${data}`),
+      onSuccess: (data) => { 
       onSuccess: (data) => { 
         toast({
           title: 'Success',
@@ -80,20 +106,27 @@ export default function InjectedCheckoutForm(props: IProps) {
         setAmount("")
         setOpen(false)
         queryClient.invalidateQueries(['get-wallet-balanceUSD'])
+        }); 
+        setAmount("")
+        setOpen(false)
+        queryClient.invalidateQueries(['get-wallet-balanceUSD'])
       },
       onError: (error: any) => {
 
         toast({
           title: 'Error',
           description: "Error Occurred",
+          description: "Error Occurred",
           status: 'error',
           isClosable: true,
           duration: 5000,
           position: 'top-right',
         }); 
+        }); 
       },
     });
 
+    const handleSubmit = async () => { 
     const handleSubmit = async () => { 
       // e.preventDefault();
 
@@ -103,7 +136,7 @@ export default function InjectedCheckoutForm(props: IProps) {
         return;
       } 
 
-      const { error, paymentIntent } = await stripe?.confirmPayment({
+      const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
           // Make sure to change this to your payment completion page
@@ -111,6 +144,7 @@ export default function InjectedCheckoutForm(props: IProps) {
         },
         redirect: "if_required"
       });
+      console.log(paymentIntent);
       console.log(paymentIntent);
 
       if (paymentIntent?.status === "succeeded") {
@@ -120,7 +154,14 @@ export default function InjectedCheckoutForm(props: IProps) {
           stripeFund.mutate(config?.reference);
         } else {
           setLoading(false)
+        console.log(paymentIntent);
+        if (fund) {
+          setLoading(false)
+          stripeFund.mutate(config?.reference);
+        } else {
+          setLoading(false)
           stripeMutation.mutate(config?.reference);
+        }
         }
       }
 
@@ -130,9 +171,14 @@ export default function InjectedCheckoutForm(props: IProps) {
       //     setMessage("An unexpected error occured.");
       //   }
  
+ 
     };
 
     return (
+      <>
+        <LoadingAnimation loading={loading || stripeFund?.isLoading || stripeMutation?.isLoading} >
+
+          <div id="payment-form" >
       <>
         <LoadingAnimation loading={loading || stripeFund?.isLoading || stripeMutation?.isLoading} >
 
