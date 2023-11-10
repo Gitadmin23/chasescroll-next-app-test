@@ -28,15 +28,15 @@ function EventLocationDetail(props: Props) {
         fontWeight
     } = props
 
-    const clickHandler =(item: any)=> {
-        
-    window.open(item, "_blank", "noreferrer");
+    const clickHandler = (item: any, e: any) => {
+        e.stopPropagation();
+        window.open(item, "_blank", "noreferrer");
     }
 
     return (
         <>
             {!indetail && (
-                <Flex gap={"1"}  height={"50px"} bgColor={"gray.200"}  alignItems={"center"} >
+                <Flex gap={"1"} height={"50px"} alignItems={"center"} >
                     {!noicon && (
                         <Box width={"fit-content"} >
                             <Box width={iconsize ? iconsize : "20px"} display={"flex"} justifyContent={"center"} alignItems={"center"} >
@@ -44,7 +44,7 @@ function EventLocationDetail(props: Props) {
                             </Box>
                         </Box>
                     )}
-                    <Text fontWeight={fontWeight ? fontWeight : "semibold"} color={color ? color : "brand.chasescrollBlue"} fontSize={fontsize ? fontsize : "sm"} >
+                    <Text textAlign={"left"} fontWeight={fontWeight ? fontWeight : "semibold"} color={color ? color : "brand.chasescrollBlue"} fontSize={fontsize ? fontsize : "sm"} >
                         {location?.locationDetails && (
                             <p>{location?.locationDetails?.length >= (length ? length : 17) ? location?.locationDetails.slice(0, (length ? length : 17)) + "..." : location?.locationDetails}</p>
                         )}
@@ -52,18 +52,18 @@ function EventLocationDetail(props: Props) {
                             <p>To Be Announced</p>
                         )}
                         {(location?.link) && (
-                            <Text as={"button"} textAlign={"left"} onClick={(e)=> clickHandler(location?.link)} style={{ color: "#5D70F9", fontSize: fontsize ? fontsize : "sm", fontWeight: fontWeight ? fontWeight : "semibold" }} className=' font-bold text-sm text-chasescrollBlue ' >Join Online</Text>
+                            <Text as={"button"} onClick={(e) => clickHandler(location?.link, e)} style={{ color: "#5D70F9", fontSize: fontsize ? fontsize : "sm", fontWeight: fontWeight ? fontWeight : "semibold" }} >Join Online</Text>
                         )}
                     </Text>
                 </Flex>
             )}
             {indetail && (
-                <Box display={"flex"} flexDirection={"column"} borderBottomWidth={"1px"} roundedBottom={"lg"} py={"2"} >
+                <Box display={"flex"} flexDirection={"column"} height={"50px"} borderBottomWidth={"1px"} roundedBottom={"lg"} py={"2"} >
                     <Text fontSize={"sm"} fontWeight={"semibold"} >{"Event location"}</Text>
                     <Flex width={"full"} gap={"3"} mt={"3"} alignItems={"center"} >
                         <LocationIcon className="" />
                         <Box>
-                            <Text fontWeight={"semibold"} color={color ? color : "gray.600"} fontSize={fontsize ? fontsize : "sm"} >
+                            <Text textAlign={"left"} fontWeight={"semibold"} color={color ? color : "gray.600"} fontSize={fontsize ? fontsize : "sm"} >
                                 {location?.locationDetails && (
                                     <p>{location?.locationDetails?.length >= (length ? length : 17) ? location?.locationDetails.slice(0, (length ? length : 17)) + "..." : location?.locationDetails}</p>
                                 )}
@@ -71,7 +71,7 @@ function EventLocationDetail(props: Props) {
                                     <p>To Be Announced</p>
                                 )}
                                 {(location?.link) && (
-                                    <a href={location?.link} target="_blank" className=' font-bold text-sm text-chasescrollBlue ' >Join Online</a>
+                                    <Text as={"button"} onClick={(e) => clickHandler(location?.link, e)}  className=' font-bold text-sm text-chasescrollBlue ' >Join Online</Text>
                                 )}
                             </Text>
                         </Box>
