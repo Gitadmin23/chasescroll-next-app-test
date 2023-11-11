@@ -1,9 +1,10 @@
 import CustomButton from '@/components/general/Button'
+import PeopleCard from '@/components/search_component/other_components/people_card'
+import LoadingAnimation from '@/components/sharedComponent/loading_animation'
+import InfiniteScrollerComponent from '@/hooks/infiniteScrollerComponent'
 import httpService from '@/utils/httpService'
-import { Flex, useToast } from '@chakra-ui/react'
-import { AxiosError, AxiosResponse } from 'axios'
-import React from 'react'
-import { useMutation, useQuery } from 'react-query'
+import { Box, Flex, useToast } from '@chakra-ui/react' 
+import React from 'react' 
 
 interface Props { 
     index: any
@@ -15,36 +16,29 @@ function DashboardRefund(props: Props) {
     } = props
 
     const toast = useToast()
-    const [eventUser, setEventUser] = React.useState([] as any)
-
-    const { isLoading, refetch } = useQuery(['geteventuserbyticket'], () => httpService.get('/events/get-event-members/'+index), {
-        onError: (error: AxiosError<any, any>) => {
-          console.error(error.response?.data);
-        }, 
-        onSuccess: (data) => { 
-            setEventUser(data.data.content);
-        }
-    })    
+    // const [eventUser, setEventUser] = React.useState([] as any)
     
-    // const clickHandler = async()=> {
-
-    //     setLoadingAll(true)
-    //     const response = await httpService.get("/payments/refundEvent", {
-    //         params : {
-    //             eventID: data?.id
-    //         }
-    //     })
-
-    //     toast.success(response?.data?.result);
-    //     setLoadingAll(false)
-    //     refetch()
-        
-    // } 
-
+    const { results, isLoading, ref, isRefetching } = InfiniteScrollerComponent({ url: '/events/get-event-members/'+index, limit: 10, filter: "userId" })
+    
     return (
         <Flex width={"full"} flexDirection={"column"} > 
-            <div className=' w-full flex justify-center relative ' > 
-            </div>
+            <LoadingAnimation loading={isLoading} length={results?.filter((item: any) => item?.role !== "ADMIN")?.length} >
+            {results?.filter((item: any) => item?.role !== "ADMIN")?.map((person: any, i: number) => {
+                    if (results.length === i + 1) {
+                        return (
+                            <Box key={person?.userId} width={"full"} ref={ref} >
+                                <PeopleCard index={index} refund={true} person={person?.user}/> 
+                            </Box>
+                        )
+                    } else {
+                        return (
+                            <Box key={person?.userId} width={"full"}>
+                                <PeopleCard index={index} refund={true} person={person?.user}/> 
+                            </Box>
+                        )
+                    }
+                })}
+            </LoadingAnimation>
         </Flex>
     )
 }
