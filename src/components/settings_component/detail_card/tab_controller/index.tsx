@@ -50,7 +50,7 @@ function TabController(props: Props) {
                 icon: any
             }, index: number) => {
                 return( 
-                    <Flex as={"button"} onClick={()=> clickHandler(index)} flexDirection={"column"} alignItems={"center"} fontSize={"12px"} justifyContent={"center"} py={"2"} rounded={"6px"} width={"full"} bgColor={tab === index ? "#12299C" : ""} color={tab === index ? "white" : "#12299C"} borderColor={tab === index ? "white" : "#12299C"} >
+                    <Flex as={"button"} key={index} onClick={()=> clickHandler(index)} flexDirection={"column"} alignItems={"center"} fontSize={"12px"} justifyContent={"center"} py={"2"} rounded={"6px"} width={"full"} bgColor={tab === index ? "#12299C" : ""} color={tab === index ? "white" : "#12299C"} borderColor={tab === index ? "white" : "#12299C"} >
                         <Flex width={"40px"} height={"40px"} justifyContent={"center"} alignItems={"center"} border={"1px"} rounded={"full"} >
                             {item?.icon}
                         </Flex>
