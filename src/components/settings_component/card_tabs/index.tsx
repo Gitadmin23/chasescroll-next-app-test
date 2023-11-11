@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react'
 import React from 'react'
 import FundWallet from './fund_wallet'
-import CashOut from './cash_out'
-import WalletTransaction from './wallet_transaction'
+import CashOut from './cash_out' 
+import WalletTransaction from './fund_wallet/wallet_transaction'
 
 interface Props {
     tab: number,

@@ -58,7 +58,7 @@ function EventLocationDetail(props: Props) {
                 </Flex>
             )}
             {indetail && (
-                <Box display={"flex"} flexDirection={"column"} height={"50px"} borderBottomWidth={"1px"} roundedBottom={"lg"} py={"2"} >
+                <Box display={"flex"} flexDirection={"column"}  borderBottomWidth={"1px"} roundedBottom={"lg"} py={"2"} >
                     <Text fontSize={"sm"} fontWeight={"semibold"} >{"Event location"}</Text>
                     <Flex width={"full"} gap={"3"} mt={"3"} alignItems={"center"} >
                         <LocationIcon className="" />

@@ -2,6 +2,7 @@
 import useSettingsStore from '@/global-state/useSettingsState';
 import { useDetails } from '@/global-state/useUserDetails';
 import { Box, Flex, Switch, Text } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation';
 import React, { ReactNode } from 'react'
 import { IoIosArrowBack } from 'react-icons/io'
 
@@ -9,6 +10,7 @@ import { IoIosArrowBack } from 'react-icons/io'
 function Layout({ children }: { children: ReactNode }) {
 
     const { firstName, lastName, username } = useDetails((state) => state);
+    const router = useRouter()
 
     const { currency, setCurrency } = useSettingsStore((state) => state);
 
@@ -22,7 +24,7 @@ function Layout({ children }: { children: ReactNode }) {
     return (
         <Flex flexDirection={"column"} height={"full"} width={"full"} overflowY={"auto"} >
             <Flex justifyContent={"space-between"} py={"36px"} px={["6", "59px"]} width={"full"} alignItems={"center"} >
-                <Flex as={"button"} gap={"3"} width={"fit-content"} alignItems={"center"}  >
+                <Flex onClick={()=> router.replace("/dashboard/settings/payment")} as={"button"} gap={"3"} width={"fit-content"} alignItems={"center"}  >
                     <IoIosArrowBack size="24px" />
                     <Flex gap={"2"} justifyContent={"start"} alignItems={"center"} >
                         <Box width={"46px"} height={"46px"} rounded={"full"} bg={"gray.200"} />

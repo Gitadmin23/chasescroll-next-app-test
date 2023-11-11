@@ -21,6 +21,7 @@ interface Props {
     searchbar?: boolean,
     date?: boolean,
     profile?: boolean,
+    dashboard?: boolean,
 }
 
 function ExploreEventCard(props: Props) {
@@ -32,7 +33,8 @@ function ExploreEventCard(props: Props) {
         search,
         searchbar,
         date,
-        profile
+        profile,
+        dashboard
     } = props
 
     const router = useRouter()
@@ -68,6 +70,8 @@ function ExploreEventCard(props: Props) {
                 productTypeData: event?.productTypeData,
             })
             router.replace("/dashboard/event/create_event")
+        } else if(dashboard){
+            router.replace("/dashboard/settings/event-dashboard/" + event?.id)
         } else {
             router.replace("/dashboard/event/details/" + event?.id)
         }
