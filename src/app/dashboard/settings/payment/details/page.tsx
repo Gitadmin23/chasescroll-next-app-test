@@ -1,6 +1,6 @@
 "use client"
-import CardTabs from '@/components/settings_component/card_tabs'
-import DetailCard from '@/components/settings_component/detail_card'
+import CardTabs from '@/components/settings_component/payment_component/card_tabs' 
+import DetailCard from '@/components/settings_component/payment_component/detail_card'
 import { Box, Flex } from '@chakra-ui/react'
 import React from 'react' 
 

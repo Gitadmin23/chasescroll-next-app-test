@@ -1,5 +1,5 @@
 "use client"
-import WalletTransaction from '@/components/settings_component/card_tabs/fund_wallet/wallet_transaction'
+import WalletTransaction from '@/components/settings_component/payment_component/card_tabs/fund_wallet/wallet_transaction'
 import { Flex, Box, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import React from 'react'

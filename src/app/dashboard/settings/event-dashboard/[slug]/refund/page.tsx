@@ -1,5 +1,5 @@
 "use client"
-import DashboardRefund from '@/components/event_dashboard_component/dashboard_refund'
+import DashboardRefund from '@/components/settings_component/event_dashboard_component/dashboard_refund'
 import { Box, Text } from '@chakra-ui/react'
 import React from 'react'
 

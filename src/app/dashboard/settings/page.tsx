@@ -73,7 +73,7 @@ function Settings(props: Props) {
         {
             // id: nanoid(),
             type: "Blocked Users",
-            route: "",
+            route: "/blocked-users",
             icon: <BlockedUserIcon />,
         },
         {
@@ -96,7 +96,7 @@ function Settings(props: Props) {
     }
 
     return (
-        <Box px={"20px"} py={"30px"} overflowY={"auto"} width={"full"} >
+        <Box px={"20px"} py={"30px"} height={"auto"} overflowY={"auto"} width={"full"} >
             <Flex onClick={()=> router.back()} as={"button"} alignItems={"center"} fontWeight={"700"} fontSize={"20px"} gap={"3"} >
                 <IoIosArrowBack size="24px" />
                 Settings

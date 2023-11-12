@@ -64,8 +64,7 @@ function AddOrRemoveUserBtn(props: Props) {
 			queryClient.invalidateQueries(['/user/friend-requests'])
 			queryClient.invalidateQueries(['get-joined-network'])
         }
-    });
-
+    }); 
 
 
     const rejectuser = useMutation({

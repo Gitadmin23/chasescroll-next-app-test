@@ -3,6 +3,7 @@ import httpService from '@/utils/httpService';
 import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { CgMore } from "react-icons/cg";
+import { useQueryClient } from 'react-query';
 
 interface Props {
     user_index: any,
@@ -22,6 +23,7 @@ function BlockBtn(props: Props) {
     const [showModal, setShowModal] = useState("0")
     const [loading, setLoading] = useState("0")
     const toast = useToast()
+    const queryClient = useQueryClient()
 
     const blockSuggestion = async (event: any) => {
 
@@ -30,7 +32,7 @@ function BlockBtn(props: Props) {
         const response = await httpService.post(URLS.BLOCK_USER, {
             blockType: "USER",
             typeID: user_index,
-        }) 
+        })
 
         toast({
             title: 'Success',
@@ -40,19 +42,21 @@ function BlockBtn(props: Props) {
             duration: 5000,
             position: 'top-right',
         });
-        if(!isprofile) {
-            setDeleted([...deleted, user_index])
-        }
+
+        queryClient.invalidateQueries([URLS.GET_SUGGESTED_FRIENDS])
+        // if(!isprofile) {
+        //     setDeleted([...deleted, user_index])
+        // }
         setLoading("")
     }
 
-    const clickHandler =(event: any)=> {
+    const clickHandler = (event: any) => {
         event.stopPropagation();
         setShowModal(user_index)
     }
 
 
-    const closeHandler =(event: any)=> {
+    const closeHandler = (event: any) => {
         event.stopPropagation();
         setShowModal("0")
     }

@@ -3,9 +3,9 @@ import { Box, Flex } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import UserWalletAmount from './user_wallet_amount'
 import TabController from './tab_controller'
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-import CardTabs from '../card_tabs'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io' 
 import useSettingsStore from '@/global-state/useSettingsState'
+import CardTabs from '../card_tabs'
 
 interface Props { 
 

@@ -29,7 +29,7 @@ function SugestedUserSection() {
     })
 
     return (
-        <Flex pb={"8"} flexDirection={"column"} flex={"1"} overflowY={"auto"} overflowX={"hidden"} >
+        <Flex pb={"8"} pt={["16"]} flexDirection={"column"} flex={"1"} overflowY={"auto"} overflowX={"hidden"} >
             <Flex width={"full"} justifyContent={"space-between"} py={"5"} >
                 <Text fontSize={"sm"} fontWeight={"bold"} >People you may know</Text>
                 <Link href={"/dashboard/explore/suggested"} color={"brand.chasescrollBlue"} fontSize={"sm"} fontWeight={"bold"} >See all</Link>

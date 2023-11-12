@@ -16,7 +16,8 @@ interface Props {
     profile?: boolean,
     connects?: boolean,
     request?: boolean,
-    refund?: boolean
+    refund?: boolean,
+    block?: boolean
 }
 
 function PeopleCard(props: Props) {
@@ -27,7 +28,8 @@ function PeopleCard(props: Props) {
         profile,
         request,
         connects,
-        refund
+        refund,
+        block
     } = props
 
     const [isFriend, setisFriend] = React.useState(person?.joinStatus)
@@ -62,13 +64,15 @@ function PeopleCard(props: Props) {
             queryClient.invalidateQueries(['/events/get-event-members/'+index]) 
             
         }
-    }); 
+    });  
 
     const clickHandler = React.useCallback((e: any) => {
         
         e.stopPropagation();
         refundUser.mutate()
     }, [refundUser])
+
+
 
     return (
         <Flex as={"button"} onClick={() => router.replace("/dashboard/profile/" + person?.userId)} _hover={{ backgroundColor: "#f1f2ff" }} px={"2"} width={"full"} justifyContent={"space-between"} alignItems={"center"} py={"4"} borderBottomWidth={"1px"} >
@@ -81,7 +85,7 @@ function PeopleCard(props: Props) {
                     <Text textAlign={"start"} fontSize={search ? "10px" : "12px"} fontWeight={search ? "medium" : "semibold"} color={"brand.chasescrollTextGrey2"} >@{person?.username?.length > 15 ? person?.username?.slice(0, 15) + "..." : person?.username}</Text>
                 </Box>
             </Flex>
-            {!refund && (
+            {(!refund && !block)&& (
                 <> 
                     {isFriend !== "SELF" && (
                         <AddOrRemoveUserBtn index={index} connects={connects} request={request} profile={profile} search={search} width={request ? "85px" : search ? "85px" : '120px'} name={isFriend === "FRIEND_REQUEST_SENT" ? "Pending" : isFriend === "CONNECTED" ? "Disconnect" : "Connect"} setJoinStatus={setisFriend} user_index={person?.userId} />
@@ -91,7 +95,7 @@ function PeopleCard(props: Props) {
 
             {refund && (
                 <CustomButton isLoading={refundUser.isLoading} borderRadius={"md"} onClick={clickHandler} text='refund' color={"white"} backgroundColor={"rgb(220 38 38)"} height={"43px"} px={"4"} width={"fit-content"} />
-            )}
+            )} 
         </Flex>
     )
 }
