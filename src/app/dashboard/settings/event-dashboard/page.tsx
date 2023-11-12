@@ -93,13 +93,13 @@ function EventDashboard(props: Props) {
                                 if (results.length === i + 1) {
                                     return (
                                         <Box key={event?.userId} width={"full"} ref={ref} >
-                                            <ExploreEventCard event={event} profile={true} />
+                                            <ExploreEventCard event={event} dashboard={true} profile={true} />
                                         </Box>
                                     )
                                 } else {
                                     return (
                                         <Box key={event?.userId} width={"full"}  >
-                                            <ExploreEventCard event={event} profile={true} />
+                                            <ExploreEventCard event={event}  dashboard={true} profile={true} />
                                         </Box>
                                     )
                                 }
