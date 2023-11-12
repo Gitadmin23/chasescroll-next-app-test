@@ -186,21 +186,6 @@ function Layout({ children }: {
                                     <Message color={THEME.COLORS.chasescrollBlue} size='30px' variant='Outline' />
                                 </Link>
 
-                                <Link href={userId ? `/dashboard/profile/${userId}` : ""}>
-                                    <Box width='32px' height='32px' borderRadius={'20px 0px 20px 20px'} borderWidth={'2px'} borderColor={'#D0D4EB'} overflow={'hidden'}>
-                                        {(
-                                            <VStack width={'100%'} height='100%' fontFamily={''} justifyContent={'center'} alignItems={'center'}>
-                                                <CustomText fontFamily={'DM-Bold'} fontSize={'10px'} color='brand.chasescrollButtonBlue'>{firstName[0]?.toUpperCase()} {lastName[0]?.toUpperCase()}</CustomText>
-                                            </VStack>
-                                        )}
-                                        {/* {
-                                            chat?.otherUser?.data.imgMain.value && (
-                                                <Image src={`${IMAGE_URL}${chat?.otherUser?.data.imgMain.value}`} alt='image' width={'100%'} height={'100%'} objectFit={'cover'} />
-                                            )
-                                        } */}
-                                    </Box>
-                                    {/* <Avatar name={`${firstName} ${lastName}`} size='md' marginX='10px' /> */} 
-                                </Link>
                             </HStack>
 
                         </HStack>
