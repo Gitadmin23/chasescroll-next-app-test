@@ -1,8 +1,7 @@
 "use client";
 
-import { Avatar, Box, Flex, Grid, HStack, VStack } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Grid, HStack, VStack, useToast, Image } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
-import Image from 'next/image';
 import CustomText from '@/components/general/Text';
 import '../globals.css'
 // import { BellIcon, HomeIcon, MessageIcon, ProfileIcon2, SearchIcon, UsersIcon } from "../../../public/assets/svg";
@@ -13,9 +12,9 @@ import Link from 'next/link';
 import ThreadCard from '@/components/home/ThreadCard';
 import Sidebar from './sidebar';
 import { useDetails } from '@/global-state/useUserDetails';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import httpService from '@/utils/httpService';
-import { URLS } from '@/services/urls';
+import { IMAGE_URL, URLS } from '@/services/urls';
 import SearchBar from '@/components/explore_component/searchbar';
 import NotificationBar from '@/components/navbar/notification';
 import { Notification, Message, AddSquare, SearchNormal1, Calendar, People, Home } from 'iconsax-react'
@@ -50,33 +49,49 @@ const MenuItem = ({
 function Layout({ children }: {
     children: ReactNode
 }) {
+    const [id, setId] = React.useState<string | null>(null);
     const pathname = usePathname();
     const router = useRouter();
-    const { username, lastName, firstName, userId, setAll } = useDetails((state) => state);
+    const toast = useToast();
 
-    const { isLoading, mutate, isError } = useMutation({
-        mutationFn: (data: string) => httpService.get(`${URLS.GET_USER_PRIVATE_PROFILE}`),
+    const { username, lastName, firstName, userId, setAll, user } = useDetails((state) => state);
+
+    const getUserDetails = useQuery(['getDetails', id], () => httpService.get(`${URLS.USER_PRIVATE_PROFILE}`), {
+        enabled: id !== null,
         onSuccess: (data) => {
-            setAll({
+            console.log(data.data);
+            setAll({ 
+                user: data?.data, 
                 userId: data?.data?.userId,
                 firstName: data?.data?.firstName,
                 lastName: data?.data?.lastName,
                 email: data?.data?.email,
                 dob: data?.data?.dob,
                 username: data?.data?.username,
-            })
-        }
+            });
+        },
+        onError: (error) => {
+            console.log(error);
+            toast({
+                title: 'Error',
+                description: 'An error occured while updating your profile',
+                status: 'error',
+                position: 'top-right',
+                isClosable: true,
+                duration: 3000,
+            });
+        },
     });
 
     React.useEffect(() => {
-        const Id = localStorage.getItem('userId');
-
-        if (userId === null) {
+        const Id = localStorage.getItem('user_id');
+        if (Id === null) {
             router.push('/auth')
         } else {
-            mutate(Id as string);
+            setId(Id as string);
+            setAll({ userId: Id });
         }
-    }, [mutate, router, userId]);
+    }, [router, setAll]);
 
     const logout = () => {
         
@@ -109,7 +124,7 @@ function Layout({ children }: {
             text: 'Community'
         },
         {
-            route: '/dashboard/profile/fhfhhd',
+            route: `/dashboard/profile/${userId}`,
             icon: <FiUser fontSize='30px' />,
             text: 'Profile'
         }
@@ -139,16 +154,19 @@ function Layout({ children }: {
 
                                 <Link href={`/dashboard/profile/${userId}`}>
                                     <Box width='32px' height='32px' borderRadius={'20px 0px 20px 20px'} borderWidth={'2px'} borderColor={'#D0D4EB'} overflow={'hidden'}>
-                                        {(
+                                        { user === null || user?.data.imgMain.value === null && (
                                             <VStack width={'100%'} height='100%' fontFamily={''} justifyContent={'center'} alignItems={'center'}>
                                                 <CustomText fontFamily={'DM-Bold'} fontSize={'10px'} color='brand.chasescrollButtonBlue'>{firstName[0]?.toUpperCase()} {lastName[0]?.toUpperCase()}</CustomText>
                                             </VStack>
                                         )}
-                                        {/* {
-                                            chat?.otherUser?.data.imgMain.value && (
-                                                <Image src={`${IMAGE_URL}${chat?.otherUser?.data.imgMain.value}`} alt='image' width={'100%'} height={'100%'} objectFit={'cover'} />
+                                        {
+                                            user?.data.imgMain.value !== null && (
+                                                <>
+                                                    { user?.data.imgMain.value.startsWith('https://') && <Image alt='pic' src={`${user?.data.imgMain.value}`} width={'100%'} height={'100%'} objectFit='cover' />}
+                                                    { !user?.data.imgMain.value.startsWith('https://') && <Image alt='pic' src={`${IMAGE_URL}${user?.data.imgMain.value}`} width={'100%'} height={'100%'} objectFit='cover' />}
+                                                </>
                                             )
-                                        } */}
+                                        }
                                     </Box>
                                     {/* <Avatar name={`${firstName} ${lastName}`} size='md' marginX='10px' /> */}
                                 </Link>
@@ -168,21 +186,6 @@ function Layout({ children }: {
                                     <Message color={THEME.COLORS.chasescrollBlue} size='30px' variant='Outline' />
                                 </Link>
 
-                                <Link href={userId ? `/dashboard/profile/${userId}` : ""}>
-                                    <Box width='32px' height='32px' borderRadius={'20px 0px 20px 20px'} borderWidth={'2px'} borderColor={'#D0D4EB'} overflow={'hidden'}>
-                                        {(
-                                            <VStack width={'100%'} height='100%' fontFamily={''} justifyContent={'center'} alignItems={'center'}>
-                                                <CustomText fontFamily={'DM-Bold'} fontSize={'10px'} color='brand.chasescrollButtonBlue'>{firstName[0]?.toUpperCase()} {lastName[0]?.toUpperCase()}</CustomText>
-                                            </VStack>
-                                        )}
-                                        {/* {
-                                            chat?.otherUser?.data.imgMain.value && (
-                                                <Image src={`${IMAGE_URL}${chat?.otherUser?.data.imgMain.value}`} alt='image' width={'100%'} height={'100%'} objectFit={'cover'} />
-                                            )
-                                        } */}
-                                    </Box>
-                                    {/* <Avatar name={`${firstName} ${lastName}`} size='md' marginX='10px' /> */} 
-                                </Link>
                             </HStack>
 
                         </HStack>
@@ -227,16 +230,19 @@ function Layout({ children }: {
                     <Link href={userId ? `/dashboard/profile/${userId}` : ""}>
                         <VStack width={'40px'} height='40px' borderBottomLeftRadius={'20px'} borderTopLeftRadius={'20px'} borderBottomRightRadius={'20px'} bg={pathname.includes('profile') ? 'brand.chasescrollBlue' : 'white'} color={pathname.includes('profile') ? 'white' : 'brand.chasescrollBlue'} justifyContent={'center'} alignItems={'center'}>
                         <Box width='32px' height='32px' borderRadius={'20px 0px 20px 20px'} borderWidth={'2px'} borderColor={'#D0D4EB'} overflow={'hidden'}>
-                                        {(
+                                        { user?.data.imgMain.value === null && (
                                             <VStack width={'100%'} height='100%' fontFamily={''} justifyContent={'center'} alignItems={'center'}>
                                                 <CustomText fontFamily={'DM-Bold'} fontSize={'10px'} color='brand.chasescrollButtonBlue'>{firstName[0]?.toUpperCase()} {lastName[0]?.toUpperCase()}</CustomText>
                                             </VStack>
                                         )}
-                                        {/* {
-                                            chat?.otherUser?.data.imgMain.value && (
-                                                <Image src={`${IMAGE_URL}${chat?.otherUser?.data.imgMain.value}`} alt='image' width={'100%'} height={'100%'} objectFit={'cover'} />
+                                        {
+                                            user?.data.imgMain.value !== null && (
+                                                <>
+                                                    { user?.data.imgMain.value.startsWith('https://') && <Image alt='pic' src={`${user?.data.imgMain.value}`} width={'100%'} height={'100%'} objectFit='cover' />}
+                                                    { !user?.data.imgMain.value.startsWith('https://') && <Image alt='pic' src={`${IMAGE_URL}${user?.data.imgMain.value}`} width={'100%'} height={'100%'} objectFit='cover' />}
+                                                </>
                                             )
-                                        } */}
+                                        }
                         </Box>
                         </VStack>
                     </Link>

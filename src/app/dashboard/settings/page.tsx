@@ -31,13 +31,13 @@ function Settings(props: Props) {
         {
             // id: nanoid(),
             type: "Change Password",
-            route: "",
+            route: "/info/change-password",
             icon: <ChangePasswordIcon />,
         },
         {
             // id: nanoid(),
             type: "Account Settings",
-            route: "",
+            route: "/info/profile",
             icon: <ProfileCircle />,
         },
         {

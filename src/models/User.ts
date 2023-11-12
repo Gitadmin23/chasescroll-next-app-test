@@ -7,6 +7,7 @@ export type IUser = {
     userId: string;
     username: string;
     email: string;
+    showEmail: boolean;
     data: {
         about: {
             value: string;

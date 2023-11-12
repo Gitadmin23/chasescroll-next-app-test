@@ -1,3 +1,4 @@
+import { IUser } from '@/models/User';
 import { create } from 'zustand';
 
 type UserState = {
@@ -8,6 +9,7 @@ type UserState = {
     username: string;
     email: string;
     dob: string;
+    user: IUser|null;
     setAll: (data: Partial<UserState>) => void       
 }
 
@@ -19,5 +21,6 @@ export const useDetails = create<UserState>((set) => ({
     username: '',
     email: '',
     dob: '',
+    user: null,
     setAll: (data) => set((state) => ({ ...state, ...data }))
 }));

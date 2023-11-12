@@ -74,7 +74,35 @@ const communitySchema = z.object({
 
 const groupChatSchema = z.object({
     name: z.string().nonempty(),
-})
+});
+
+const editProfileSchema = z.object({
+    firstName: z.string().nonempty().min(3),
+    lastName: z.string().nonempty().min(3),
+    username: z.string().nonempty().min(3),
+    website: z.string().nonempty(),
+    aboutme: z.string().nonempty().min(3),
+});
+
+const editPersonalInfoSchema = z.object({
+    gender: z.string().nonempty(),
+    dob: z.string().nonempty(),
+});
+
+const changePasswordSchema = z.object({
+    oldPassword: z.string().min(5),
+    newPassword: z.string().min(8),
+    confirmPassword: z.string(),
+}).refine(({ newPassword, confirmPassword }) => {
+    if (confirmPassword !== newPassword) {
+        return false
+    } else {
+        return true
+    }
+}, {
+    message: 'password do not match',
+    path: ['confirmPassword'],
+});
 
 export {
     signUpValidation,
@@ -85,4 +113,7 @@ export {
     resetValidation,
     communitySchema,
     groupChatSchema,
+    editProfileSchema,
+    editPersonalInfoSchema,
+    changePasswordSchema,
 }

@@ -20,6 +20,7 @@ export default function ModalLayout({ open, close, children, size, bg, rounded, 
         <Modal onClose={close} scrollBehavior={scrollBehavior ? scrollBehavior : "inside"} size={size ? size : "md"} isOpen={open} isCentered>
             <ModalOverlay />
             <ModalContent backgroundColor={bg ? bg : "#fff"} rounded={rounded ? "0px" : "6px"} padding="0px" margin="16px" w="full"  h={scrollBehavior ? "full" : "auto"}  >
+                <ModalCloseButton color={'white'} size={'lg'} />
                 {title && (
                     <>
                         <ModalHeader textAlign={"center"} >{title}</ModalHeader>
