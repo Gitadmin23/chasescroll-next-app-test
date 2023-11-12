@@ -56,7 +56,7 @@ function Layout({ children }: {
 
     const { username, lastName, firstName, userId, setAll, user } = useDetails((state) => state);
 
-    const getUserDetails = useQuery(['getDetails', id], () => httpService.get(`${URLS.USER_PRIVATE_PROFILE}`), {
+    const getUserDetails = useQuery(['getDetails', id], () => httpService.get(`${URLS.GET_USER_PRIVATE_PROFILE}`), {
         enabled: id !== null,
         onSuccess: (data) => {
             console.log(data.data);
@@ -227,7 +227,6 @@ function Layout({ children }: {
                         </VStack>
                     </Link>
 
-                    <Link href={userId ? `/dashboard/profile/${userId}` : ""}>
                     <Link href={userId ? `/dashboard/profile/${userId}` : ""}>
                         <VStack width={'40px'} height='40px' borderBottomLeftRadius={'20px'} borderTopLeftRadius={'20px'} borderBottomRightRadius={'20px'} bg={pathname.includes('profile') ? 'brand.chasescrollBlue' : 'white'} color={pathname.includes('profile') ? 'white' : 'brand.chasescrollBlue'} justifyContent={'center'} alignItems={'center'}>
                         <Box width='32px' height='32px' borderRadius={'20px 0px 20px 20px'} borderWidth={'2px'} borderColor={'#D0D4EB'} overflow={'hidden'}>

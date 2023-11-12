@@ -54,7 +54,7 @@ function EditProfile() {
         },
     });
 
-    const { isLoading, isError } = useQuery(['getUserPersonalDetails', userId], () => httpService.get(`${URLS.USER_PRIVATE_PROFILE}`), {
+    const { isLoading, isError } = useQuery(['getUserPersonalDetails', userId], () => httpService.get(`${URLS.GET_USER_PRIVATE_PROFILE}`), {
         onSuccess: (data) => {
             setUser(data.data);
             setValue('dob', data?.data?.dob);

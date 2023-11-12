@@ -71,7 +71,7 @@ function EventLocationDetail(props: Props) {
                                     <p>To Be Announced</p>
                                 )}
                                 {(location?.link) && (
-                                    <Text as={"button"} onClick={(e) => clickHandler(location?.link, e)}  className=' font-bold text-sm text-chasescrollBlue ' >Join Online</Text>
+                                    <Text as={"button"} onClick={(e) => clickHandler(location?.link)}  className=' font-bold text-sm text-chasescrollBlue ' >Join Online</Text>
                                 )}
                             </Text>
                         </Box>

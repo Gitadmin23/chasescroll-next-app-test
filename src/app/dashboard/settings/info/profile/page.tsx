@@ -79,7 +79,7 @@ function EditProfile() {
         },
     });
 
-    const { isLoading, isError } = useQuery(['getUserDetails', userId], () => httpService.get(`${URLS.USER_PRIVATE_PROFILE}`), {
+    const { isLoading, isError } = useQuery(['getUserDetails', userId], () => httpService.get(`${URLS.GET_USER_PRIVATE_PROFILE}`), {
         onSuccess: (data) => {
             setUser(data.data);
             setValue('firstName', data?.data?.firstName);
