@@ -17,10 +17,12 @@ import { SearchNormal1 } from 'iconsax-react'
 import { IUser } from '@/models/User'
 import { uniq } from 'lodash'
 import UserImage from '../sharedComponent/userimage'
+import UserImage from '../sharedComponent/userimage'
 
 
 const ARRAY = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+const OnlineUser = ({ id, index }: { id: string, index: number }) => {
 const OnlineUser = ({ id, index }: { id: string, index: number }) => {
     const { setAll } = useChatPageState((state) => state)
     const [user, setUser] = React.useState<IUser|null>(null);
@@ -48,14 +50,17 @@ const OnlineUser = ({ id, index }: { id: string, index: number }) => {
     });
 
     return (
-        <Box onClick={() => createChat.isLoading ? null: createChat.mutate()} cursor='pointer' width={'45px'} height='45px' position={'relative'} >
+        <Box onClick={() => createChat.isLoading ? null: createChat.mutate()} cursor='pointer' display={'inline-block'} width={'45px'} height='45px' position={'relative'}  ml={index === 0 ? "0px" : "-10px"}   marginRight={'20px'} >
             <Box width={'10px'} height={'10px'} borderRadius={'5px'} bg='brand.chasescrollButtonBlue' position={'absolute'} right='0px' top="-2px" />
             { isLoading && (
+                <HStack justifyContent={'center'} alignItems={'center'} width='45px' height='45px' >
                 <HStack justifyContent={'center'} alignItems={'center'} width='45px' height='45px' >
                     <Spinner />
                 </HStack>
             ) }
              { !isLoading && (
+                <HStack spacing={0} justifyContent={'center'} alignItems={'center'} width='45px' height='45px' >
+                    <UserImage size={"40px"} border={"2px"} font={"16px"} data={user} image={user?.data?.imgMain?.value} />
                 <HStack spacing={0} justifyContent={'center'} alignItems={'center'} width='45px' height='45px' >
                     <UserImage size={"40px"} border={"2px"} font={"16px"} data={user} image={user?.data?.imgMain?.value} />
                 </HStack>
@@ -88,6 +93,8 @@ function Sidebar() {
             setOnlineUsers(prev =>  uniq(item.filter((item) => !chatsIds.includes(item)) ));
         },
         onError: (error) => { },
+    }) 
+    
     }) 
     
     const { isLoading, isError, } = useQuery(['getChats', userId], () => httpService.get(`${URLS.GET_CHATS}`, {
@@ -138,6 +145,7 @@ function Sidebar() {
 
                             <Box width='100%' height={'100%'} overflowX={'auto'} display={'flex'} gap={"1"} paddingTop={'10px'} >
                                 {onlineUsers.map((item, index) => (
+                                    <OnlineUser id={item} index={index} key={index.toString()} /> 
                                     <OnlineUser id={item} index={index} key={index.toString()} /> 
                                 ))}
                             </Box>
