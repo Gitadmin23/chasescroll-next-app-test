@@ -25,9 +25,10 @@ function SendMessage(props: Props) {
         click,
         isprofile,
         type
+        type
     } = props
 
-    const url_link = (type === "EVENT" ? `${WEBSITE_URL}/event/${id}` : `${WEBSITE_URL}/share?type=${props.type}&typeID=${id}`); 
+    const url_link = (type === "EVENT" ? `${WEBSITE_URL}/share/event/${id}` : `${WEBSITE_URL}/share?type=${props.type}&typeID=${id}`); 
 
     const handleType = () => {
         switch(props.type) {
