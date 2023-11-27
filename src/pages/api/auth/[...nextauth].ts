@@ -7,35 +7,42 @@ export const authOptions: AuthOptions = {
         GoogleProvider({
             clientId: '126010586447-56kd8nikghvd4348b6uh04lpbhrq5rbt.apps.googleusercontent.com',
             clientSecret: 'I_nY6PbHlj3lflJFq-EtvbAX',
-            idToken: true,
+            authorization: {
+                params: {
+                  prompt: "consent",
+                  access_type: "offline",
+                  response_type: "code"
+                }
+            }
         })
     ],
-    // pages: {
-    //     signIn: '/auth'
-    // },
     callbacks: {
-    //    async session({ token, user, session }) {
-    //     console.log(token);
-    //     console.log(session);
-    //     return {
-    //         ...token,
-    //         ...user,
-    //     } as any
-    //    },
-    //     async redirect({url, baseUrl}) {
-    //         console.log(`URL - ${url}`);
-    //         console.log(`BASE - ${baseUrl}`);
-    //         return url.startsWith(baseUrl) ? url:baseUrl
-    //     },
-    //     async jwt({token, user}) {
-    //         if (user) {
-    //             console.log(user);
-    //           token.idToken = (user as User).id
+        signIn: async ({ user, account }) => {
+            return {
+                user,
+                account
+            } as any
+        },
+        session: async ({ session, user, token }) => {
+            return {
+                session,
+                user,
+                token,
+            } as any
+        },
+        jwt: ({ token, account }) => {
+            console.log(account);
 
-    //         }
-    //         return token;
-    //       },
-    }
+            token.accessToken = account?.access_token;
+            token.idToken = account?.id_token;
+            token.refeshToken =account?.refresh_token;
+            console.log(token)
+            return {
+                token,
+            }
+        }
+    },
+    secret: 'wferonvoerbnoeribe',
 }
 
 export default NextAuth(authOptions);

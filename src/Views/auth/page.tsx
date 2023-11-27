@@ -76,16 +76,12 @@ function LoginPage() {
   const { setAll } = useDetails((state) => state);
   const { data: sessionData, update } = useSession();
 
+  
+
 
   const handleSignIn = async (event: any) => {
-    if (sessionData !== null) {
-      // signOut();
-      console.log(sessionData)
-      const id: string = (sessionData as any).idToken;
-      signinWithGoogle.mutate(id);
-    } else {
-      const result = await signIn('google');
-    }
+    const result = await signIn('google');
+    console.log(result);
   };
 
   const signinWithGoogle = useMutation({
@@ -104,6 +100,18 @@ function LoginPage() {
       })
       if (!data?.data?.firstName) {
         setShowModal(true)
+      } else {
+        localStorage.setItem('token', data?.data?.access_token);
+        localStorage.setItem('refresh_token', data?.data?.refresh_token);
+        localStorage.setItem('user_id', data?.data?.user_id);
+        localStorage.setItem('expires_in', data?.data?.expires_in);
+        setAll({
+          firstName: data?.data?.firstName,
+          lastName: data?.data?.firstName,
+          username: data?.data?.user_name,
+          userId: data?.data?.user_id,
+        })
+        router.push('/dashboard');
       }
       setCheckData(data?.data)
     },
@@ -116,6 +124,24 @@ function LoginPage() {
       })
     }
   })
+
+  // React.useEffect(() => {
+  //   const token: any = sessionData;
+  //   console.log(sessionData)
+  //   console.log(token.token?.token.token.accessToken)
+  //   if (token.token?.token.token.idToken) {
+  //     signinWithGoogle.mutate(token.token?.token.token.idToken);
+  //   }
+  // }, [sessionData])
+
+  const handleGoogleSignIn = async() => {
+    const token: any = sessionData;
+    if (token.token?.token.token.idToken) {
+      signinWithGoogle.mutate(token.token?.token.token.idToken);
+    } else {
+      await signIn('google');
+    }
+  }
 
   React.useEffect(() => {
     if (checkData?.user_id) {
@@ -317,7 +343,7 @@ function LoginPage() {
             </Flex>
           </Flex>
 
-          <Button onClick={handleSignIn} width={['100%', '294px']} height={'40px'} borderRadius={'8px'} bg='#1018280D' padding='8px 16px 8px 16px'>
+          <Button onClick={handleGoogleSignIn} width={['100%', '294px']} height={'40px'} borderRadius={'8px'} bg='#1018280D' padding='8px 16px 8px 16px'>
             <Image alt='google' src='/assets/svg/googlelogo.svg' />
             <CustomText marginLeft={'20px'} fontFamily={'DM-Medium'} fontSize={'16px'} color='black' fontWeight={'700'}>Sign in with Google</CustomText>
           </Button>
