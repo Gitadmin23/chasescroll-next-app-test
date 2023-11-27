@@ -6,6 +6,7 @@ export const URLS = {
     RESET_PASSWORD: '/chasescroll/verification/change-password',
     GET_POSTS: '/feed/get-user-and-friends-posts',
     GET_USER_DETAILS: '/user/publicprofile',
+    GET_PUBLIC_POST: '/feed/get-public-posts',
     GET_USER_PRIVATE_PROFILE: '/user/privateprofile',
     GET_POST_BY_ID: '/feed/get-post',
     LIKE_POST: '/feed/like-post',
