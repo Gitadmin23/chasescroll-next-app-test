@@ -1,5 +1,6 @@
 import CustomText from '@/components/general/Text'
 import { useDetails } from '@/global-state/useUserDetails'
+import AWSHook from '@/hooks/awsHook'
 import { IMAGE_URL, URLS } from '@/services/urls'
 import { THEME } from '@/theme'
 import { capitalizeFLetter } from '@/utils/capitalLetter'
@@ -46,6 +47,42 @@ function ShowImages({ files, setImage, handleStage, stage, setEmpty, mutate }: {
   const [value, setValue] = React.useState('');
   const toast = useToast();
   const queryClient = useQueryClient();
+  const { uploadedFile, fileUploadHandler, loading } = AWSHook();
+
+  const createPost = useMutation({
+    mutationFn: (data: any) => httpService.post(`${URLS.CREATE_POST}`, data),
+    onSuccess: (data) => {
+      handleStage(4);
+      queryClient.invalidateQueries(['getPosts']);
+      mutate();
+    },
+    onError: (error: any) => {
+      console.log(error);
+      toast({
+        title: 'Error',
+        description: 'An error occured while uploading file',
+        position: 'top-right',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+  })
+
+  React.useEffect(() => {
+    if (uploadedFile.length > 0) {
+      const obj = {
+        text: value,
+        type: files[0].type.startsWith('image') ? 'WITH_IMAGE' : 'WITH_VIDEO_POST',
+        isGroupFeed: false,
+        sourceId: userId,
+        mediaRef: uploadedFile[0].url,
+        multipleMediaRef: uploadedFile.map((item) => item.url),
+      }
+      console.log(obj)
+      createPost.mutate(obj);
+    }
+  }, [files, uploadedFile, userId, value])
 
   const uploadMediaFile = useMutation({
     mutationFn: (data: FormData) => httpService.post(files[0].type.startsWith('image') ? `${URLS.UPLOAD_IMAGE}/${userId}`:`${URLS.UPLOAD_VIDEO}/${userId}`, data),
@@ -75,25 +112,7 @@ function ShowImages({ files, setImage, handleStage, stage, setEmpty, mutate }: {
     },
   });
 
-  const createPost = useMutation({
-    mutationFn: (data: any) => httpService.post(`${URLS.CREATE_POST}`, data),
-    onSuccess: (data) => {
-      handleStage(4);
-      queryClient.invalidateQueries(['getPosts']);
-      mutate();
-    },
-    onError: (error: any) => {
-      console.log(error);
-      toast({
-        title: 'Error',
-        description: 'An error occured while uploading file',
-        position: 'top-right',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    },
-  })
+
 
   React.useEffect(() => {
     const fileReader = new FileReader();
@@ -110,6 +129,8 @@ function ShowImages({ files, setImage, handleStage, stage, setEmpty, mutate }: {
 }, [setImage]);
 
 const handleNext = React.useCallback(() => {
+  alert('working');
+  console.log(files);
   if (stage === 3) {
     if (files[0].size > 314572800) {
       toast({
@@ -122,13 +143,14 @@ const handleNext = React.useCallback(() => {
       });
       return
     }
-    const formData = new FormData();
-    formData.append('file', files[0]);
-    uploadMediaFile.mutate(formData);
+    fileUploadHandler(files as any);
+    // const formData = new FormData();
+    // formData.append('file', files[0]);
+    // uploadMediaFile.mutate(formData);
     return;
   };
   handleStage(stage+1);
-}, [files, handleStage, stage, toast, uploadMediaFile])
+}, [fileUploadHandler, files, handleStage, stage, toast])
 
 const handlePrev = React.useCallback(() => {
   if (stage === 2) {
@@ -151,11 +173,11 @@ const handleChange = (e: string) => {
 
         <HStack width='100%' height='50px' bg='white' justifyContent={'space-between'} paddingX='10px' alignItems={'center'} paddingTop={'10px'}>
             <FiChevronLeft size={'25px'} onClick={handlePrev} color={THEME.COLORS.chasescrollButtonBlue} />
-            { !uploadMediaFile.isLoading && !createPost.isLoading && (
+            {!loading && !createPost.isLoading && (
               <CustomText cursor='pointer' onClick={handleNext} color='brand.chasescrollButtonBlue' fontFamily={'Satoshi-Regular'} fontSize={'sm'}>{stage > 2 ? 'Create Post' : 'Next'}</CustomText>
             )}
             {
-              uploadMediaFile.isLoading && (
+              loading && (
                 <Box width='50px'>
                   <Progress isIndeterminate colorScheme='blue' width={'100%'} size='sm' />
                 </Box>
