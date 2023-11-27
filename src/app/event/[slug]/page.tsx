@@ -1,8 +1,7 @@
 
 import React from 'react'  
 import { IMAGE_URL } from '@/services/urls';
-import type { Metadata } from 'next' 
-import { Box } from '@chakra-ui/react';
+import type { Metadata } from 'next'  
 import GetEventData from '@/app/dashboard/event/details/get_event_data';
 
 type Props = {
