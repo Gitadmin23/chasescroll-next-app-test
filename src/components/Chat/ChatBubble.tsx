@@ -149,24 +149,7 @@ const ChatBubble = React.forwardRef<HTMLDivElement, IProps>(({ message, id = und
 
             <Box width={"fit-content"} >
               <UserImage size={"32px"} font={"13px"} border={"2px"} fontWeight={"medium"} data={post?.createdBy} image={post?.createdBy?.data?.imgMain?.value} />
-            </Box>
-            {/* <Box width='32px' height='32px' borderRadius={'20px 0px 20px 20px'} borderWidth={'2px'} borderColor={'#D0D4EB'} overflow={'hidden'}>
-                    { post?.createdBy?.data?.imgMain?.value === null && (
-                        <VStack width={'100%'} height='100%' justifyContent={'center'} alignItems={'center'}>
-                            <CustomText fontFamily={'DM-Regular'}>{post?.createdBy?.username[0].toUpperCase() || 'none'}</CustomText>
-                        </VStack>
-                    )}
-                    {
-                        post?.createdBy?.data?.imgMain?.value && (
-                           <>
-                            { post?.createdBy?.data?.imgMain?.value.startsWith('https://') &&  <Image src={`${post?.createdBy?.data?.imgMain?.value}`} alt='image' width={'100%'} height={'100%'} objectFit={'cover'} /> }
-
-                            { !post?.createdBy?.data?.imgMain?.value.startsWith('https://') &&  <Image src={`${IMAGE_URL}${post?.createdBy?.data?.imgMain?.value}`} alt='image' width={'100%'} height={'100%'} objectFit={'cover'} /> }
-                           </>
-                        )
-                    }
-                </Box> */}
-            
+            </Box>             
             
        </HStack>
 
