@@ -32,6 +32,8 @@ const AWSHook = () => {
                         credentials: cred,
                     },),
                     leavePartsOnError: false,
+                    partSize: 50,
+                    queueSize: 50,
                     params: params,
                 });
 
