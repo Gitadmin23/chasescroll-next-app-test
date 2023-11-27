@@ -130,7 +130,7 @@ function LoginPage() {
     const token: any = sessionData;
     console.log(sessionData)
     console.log(token.token?.token.token.accessToken)
-    if (token.token?.token.token.idToken) {
+    if (token && token.token?.token.token.idToken) {
       signinWithGoogle.mutate(token.token?.token.token.idToken);
     }
   }, [sessionData])
