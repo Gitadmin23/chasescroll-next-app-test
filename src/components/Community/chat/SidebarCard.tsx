@@ -39,8 +39,8 @@ const SidebarCard = React.forwardRef<HTMLDivElement, IProps>(({ community: comm 
                 {/* </Box> */}
 
                 <VStack alignItems={'flex-start'} spacing={0}>
-                    <CustomText fontFamily={'DM-Bold'} fontSize={'14px'}>{comm?.data.name}</CustomText>
-                    <CustomText fontFamily={'DM-Light'} fontSize={'12px'}>{comm?.data.description}</CustomText>
+                    <CustomText fontFamily={'DM-Bold'} fontSize={'14px'}>{comm?.data.name.substring(0, 20)}</CustomText>
+                    <CustomText fontFamily={'DM-Light'} fontSize={'12px'}>{comm?.data.description.substring(0, 25)}</CustomText>
                 </VStack>
             </HStack>
 
