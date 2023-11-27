@@ -9,13 +9,15 @@ import React from 'react'
 import { useQuery, focusManager } from 'react-query'
 
 interface Props {
-    event_index: any
+    event_index: any,
+    dynamic?: boolean
 }
 
   
 function GetEventData(props: Props) {
     const {
-        event_index
+        event_index,
+        dynamic
     } = props
     const toast = useToast()
     const [data, setData] = React.useState({} as any) 
@@ -38,6 +40,7 @@ focusManager.setFocused(false)
         <Box width={"full"}  >
             <LoadingAnimation loading={isLoading} refeching={isRefetching} length={data?.length} >
                 <EventDetails
+                    dynamic={dynamic}
                     dataInfo={data} 
                     eventID={data?.id}
                     isBought={data?.isBought}

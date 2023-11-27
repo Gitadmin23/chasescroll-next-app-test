@@ -1,9 +1,9 @@
 
-import React from 'react'
-import { useSearchParams } from 'next/navigation'
-import GetEventData from '@/app/dashboard/event/details/get_event_data';
+import React from 'react'  
 import { IMAGE_URL } from '@/services/urls';
 import type { Metadata } from 'next' 
+import { Box } from '@chakra-ui/react';
+import GetEventData from '@/app/dashboard/event/details/get_event_data';
 
 type Props = {
   params: { slug: string }
@@ -16,11 +16,12 @@ export async function generateMetadata(
     // read route params
  
     const id = params.slug
+    const url = process.env.NEXT_PUBLIC_BASE_URL as string
   
     // fetch data
     let product: any
     try {
-      product = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "?id=" + id, {
+      product = await fetch(url + "/events/events?id=" + id, {
         // headers: myHeaders,
         method: 'GET'
       }).then((res) => res.json())
@@ -29,8 +30,8 @@ export async function generateMetadata(
     } catch (error) {
       console.log(error);
   
-    } 
-  
+    }  
+    
       // optionally access and extend (rather than replace) parent metadata
       // const previousImages = (await parent).openGraph?.images || [] 
       
@@ -51,8 +52,8 @@ export async function generateMetadata(
 
 function ShareEvent({ params }: Props) { 
 
-  return (
-    <GetEventData event_index={params.slug} />
+  return ( 
+      <GetEventData  dynamic={true} event_index={params.slug} /> 
   )
 }
 

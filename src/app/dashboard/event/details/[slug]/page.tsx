@@ -14,11 +14,12 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   // read route params
   const id = params.slug
+  const url = process.env.NEXT_PUBLIC_BASE_URL as string
 
   // fetch data
   let product: any
   try {
-    product = await fetch("https://chaseenv.chasescroll.com/events/events" + "?id=" + id, {
+    product = await fetch(url + "/events/events?id=" + id,  {
       // headers: myHeaders,
       method: 'GET'
     }).then((res) => res.json())

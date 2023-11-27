@@ -26,6 +26,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import BlurredImage from '../sharedComponent/blurred_image'
 
 interface Props {
+    dynamic?: boolean
     banner: any,
     eventID: any,
     userBy: any,
@@ -51,8 +52,9 @@ interface Props {
     ticketInfo: any, 
 }
 
-function EventDetails(props: any) {
+function EventDetails(props: Props) {
     const { 
+        dynamic,
         banner,
         eventID,
         userBy,
@@ -80,8 +82,8 @@ function EventDetails(props: any) {
     const router = useRouter() 
 
     return (
-        <HStack width={"full"} display={"flex"} flexDirection={"column"} position={"relative"} paddingBottom={"12"} >
-            <Flex width={"full"} alignItems={"start"} >
+        <Box width={"full"} display={"flex"} flexDirection={"column"} pt={["6", "6", "0"]} position={"relative"} paddingBottom={"12"} >
+            <Flex width={"full"} alignItems={"center"} justifyContent={"center"} >
                 <Box as='button' display={"flex"} onClick={() => router.back()} px={"3"} mt={"20px"} ml={"-30px"} justifyContent={"center"} alignItems={"center"} zIndex={"20"} >
                     <BsChevronLeft color={"black"} size={"25px"} />
                 </Box>
@@ -94,7 +96,7 @@ function EventDetails(props: any) {
                     </Box>
                 </Box>
             </Flex>
-            <Box width={"full"} px={["0px", "6"]}>
+            <Box width={"full"} px={[dynamic ? "6" : "0px", "6"]}>
                 <EventHeader name={eventName} maxPrice={maxPrice} minPrice={minPrice} currency={currency} />
                 <EventCreator isOrganizer={isOrganizer} convener={convener} username={username} data={dataInfo} />
                 <Flex py={"3"} justifyContent={"end"} >
@@ -117,7 +119,7 @@ function EventDetails(props: any) {
                 </Flex> */}
 
             </Box>
-        </HStack>
+        </Box>
     )
 }
 

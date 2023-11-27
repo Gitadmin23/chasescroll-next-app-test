@@ -1,4 +1,4 @@
-
+"use client"
 import React from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Box, useToast } from '@chakra-ui/react';
