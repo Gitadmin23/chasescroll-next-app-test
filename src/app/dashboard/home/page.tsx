@@ -112,7 +112,8 @@ function Home() {
     createPostMutation.mutate({
       text: post,
       type: 'NO_IMAGE_POST',
-      sourceId: userId
+      sourceId: userId,
+      isGroup: true,
     });
    }, [createPostMutation, post, userId])
 
