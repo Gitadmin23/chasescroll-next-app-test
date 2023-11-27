@@ -126,16 +126,16 @@ function LoginPage() {
     }
   })
 
-  // React.useEffect(() => {
-  //   const token: any = sessionData;
-  //   console.log(token.token?.token.token.accessToken);
-  //   if (token !== null || token !== undefined) {
-  //     if (token.token?.token.token.idToken) {
-  //       signinWithGoogle.mutate(token.token?.token.token.idToken);
-  //     }
-  //   }
+  React.useEffect(() => {
+    const token: any = sessionData;
+    // console.log(token.token?.token.token.accessToken);
+    if (sessionData !== null) {
+      if (token.token?.token?.token?.idToken) {
+        signinWithGoogle.mutate(token?.token?.token?.token?.idToken);
+      }
+    }
    
-  // }, [sessionData, signinWithGoogle])
+  }, [sessionData])
 
   const handleGoogleSignIn = async() => {
     const token: any = sessionData;
