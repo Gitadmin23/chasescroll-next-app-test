@@ -52,7 +52,7 @@ export async function generateMetadata(
 function ShareEvent({ params }: Props) { 
 
   return ( 
-      <GetEventData  dynamic={true} event_index={params.slug} /> 
+      <GetEventData dynamic={true} event_index={params.slug} /> 
   )
 }
 
