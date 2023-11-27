@@ -44,7 +44,7 @@ function Home() {
     },
   });
 
-  const { isLoading, isError, refetch } = useQuery(['getPostss', page], () => httpService.get(`${URLS.GET_POSTS}`, {
+  const { isLoading, isError, refetch } = useQuery(['getPostss', page], () => httpService.get(`${URLS.GET_PUBLIC_POST}`, {
     params: {
       page,
     }
