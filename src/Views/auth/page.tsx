@@ -128,12 +128,14 @@ function LoginPage() {
 
   React.useEffect(() => {
     const token: any = sessionData;
-    console.log(sessionData)
-    console.log(token.token?.token.token.accessToken)
-    if (token && token.token?.token.token.idToken) {
-      signinWithGoogle.mutate(token.token?.token.token.idToken);
+    console.log(token.token?.token.token.accessToken);
+    if (token !== null || token !== undefined) {
+      if (token.token?.token.token.idToken) {
+        signinWithGoogle.mutate(token.token?.token.token.idToken);
+      }
     }
-  }, [sessionData])
+   
+  }, [sessionData, signinWithGoogle])
 
   const handleGoogleSignIn = async() => {
     const token: any = sessionData;
