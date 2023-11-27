@@ -113,7 +113,7 @@ function Home() {
       text: post,
       type: 'NO_IMAGE_POST',
       sourceId: userId,
-      isGroup: true,
+      isGroup: false,
     });
    }, [createPostMutation, post, userId])
 
