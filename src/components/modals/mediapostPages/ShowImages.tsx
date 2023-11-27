@@ -174,7 +174,7 @@ const handleChange = (e: string) => {
 
           { isLoading && (
             <VStack width={'100%'} height='100%' justifyContent={'center'} alignItems={'center'} >
-              <Spinner colorScheme='blue' size='md' />
+              <Progress isIndeterminate colorScheme='blue' width={'100%'} size='sm' />
             </VStack>
           )}
 

@@ -187,9 +187,9 @@ function Layout({ children }: {
                                     {/* <CustomText fontWeight={"bold"} >{username}</CustomText> */}
                                     <NotificationBar />
 
-                                    <Link href={`/dashboard/profile/${userId}`}>
+                                    {/* <Link href={`/dashboard/profile/${userId}`}>
                                         <UserImage data={user} image={user?.data?.imgMain?.value} size={["40px"]} font={["15px"]} />
-                                    </Link>
+                                    </Link> */}
 
                                     
                                 </HStack>
