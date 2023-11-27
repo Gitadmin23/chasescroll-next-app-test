@@ -69,6 +69,7 @@ function LoginPage() {
   const [UserName, setUserName] = React.useState("")
   const [email, setEmail] = React.useState({} as any)
   const [checkData, setCheckData] = React.useState<any>({})
+  const [checked, setChecked] = React.useState(false);
 
 
   const toast = useToast();
@@ -125,21 +126,22 @@ function LoginPage() {
     }
   })
 
-  // React.useEffect(() => {
-  //   const token: any = sessionData;
-  //   console.log(sessionData)
-  //   console.log(token.token?.token.token.accessToken)
-  //   if (token.token?.token.token.idToken) {
-  //     signinWithGoogle.mutate(token.token?.token.token.idToken);
-  //   }
-  // }, [sessionData])
+  React.useEffect(() => {
+    const token: any = sessionData;
+    console.log(sessionData)
+    console.log(token.token?.token.token.accessToken)
+    if (token.token?.token.token.idToken) {
+      signinWithGoogle.mutate(token.token?.token.token.idToken);
+    }
+  }, [sessionData])
 
   const handleGoogleSignIn = async() => {
     const token: any = sessionData;
-    if (token.token?.token.token.idToken) {
+    if (token && token.token?.token.token.idToken) {
       signinWithGoogle.mutate(token.token?.token.token.idToken);
     } else {
-      await signIn('google');
+      const dets = await signIn('google');
+      setCheckData(true);
     }
   }
 
