@@ -102,7 +102,7 @@ function VideoPlayer({
       setIsPlaying(false);
       videoRef?.current?.pause();
      }}>
-        <source type='video/mp4' src={src} />
+        <source type='video/mp4' src={src}  />
     </video>
     {
         showControl && (
