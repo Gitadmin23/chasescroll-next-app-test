@@ -36,7 +36,7 @@ function Home() {
   const toast = useToast();
   const queryClient = useQueryClient();
 
-  const getUser = useQuery(['getUserDets', userId], () => httpService.get(`${URLS.GET_POSTS}`, {
+  const getUser = useQuery(['getUserDets', userId], () => httpService.get(`${URLS.GET_USER_PRIVATE_PROFILE}`, {
   }), {
     onSuccess: (data) => {
       setUser(data.data);
