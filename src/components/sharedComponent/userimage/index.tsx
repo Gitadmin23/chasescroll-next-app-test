@@ -24,7 +24,7 @@ function UserImage(props: Props) {
     } = props   
 
     return (
-        <Box display={'inline'} roundedBottom={"64px"} roundedTopLeft={"64px"} borderColor={"#D0D4EB"} w={size} h={size} bg={"white"} borderWidth={border? border :"4px"} >
+        <Box roundedBottom={"64px"} roundedTopLeft={"64px"} borderColor={"#D0D4EB"} w={size} h={size} bg={"white"} borderWidth={border? border :"4px"} >
             {image !== null &&
                 <>
                     { image?.includes('https://') && <Image style={{ borderBottomLeftRadius: "64px", borderBottomRightRadius: "64px", borderTopLeftRadius: "64px" }} objectFit="cover" alt={image} width={"full"} height={"full"} src={image} /> }
@@ -33,11 +33,11 @@ function UserImage(props: Props) {
                 </>
             }
             {image === null && (
-                <HStack justifyContent={"center"} alignItems={"center"} width={"100%"} height={"100%"} >
-                    <CustomText fontFamily={'DM-Bold'} fontSize={'14px'} >{data?.firstName?.charAt(0).toUpperCase()}{data?.lastName?.charAt(0).toUpperCase()}</CustomText>
-                </HStack> 
+                <Flex justifyContent={"center"} alignItems={"center"} width={"full"} height={"full"} fontSize={font ? font : "30px"} fontWeight={fontWeight? fontWeight : "bold"} >
+                    <Text>{data?.firstName?.charAt(0).toUpperCase()}{data?.lastName?.charAt(0).toUpperCase()}</Text>
+                </Flex> 
             )}
-        </Box> 
+        </Box>
     )
 }
 
