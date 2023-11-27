@@ -13,6 +13,7 @@ const AWSHook = () => {
     const [uploadedFile, setUploadedFile] = useState<Array<{file: string, url: string}>>([]);
 
     const fileUploadHandler = (files:FileList) => {
+        console.log(files);
         setLoading(true);
         console.time('upload');
 
@@ -32,8 +33,6 @@ const AWSHook = () => {
                         credentials: cred,
                     },),
                     leavePartsOnError: false,
-                    partSize: 80,
-                    queueSize: 150,
                     params: params,
                 });
 

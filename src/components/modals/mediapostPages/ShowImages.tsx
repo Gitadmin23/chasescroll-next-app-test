@@ -70,7 +70,7 @@ function ShowImages({ files, setImage, handleStage, stage, setEmpty, mutate }: {
   })
 
   React.useEffect(() => {
-    if (uploadedFile.length > 0) {
+    if (uploadedFile.length > 0 && !loading) {
       const obj = {
         text: value,
         type: files[0].type.startsWith('image') ? 'WITH_IMAGE' : 'WITH_VIDEO_POST',
@@ -79,38 +79,9 @@ function ShowImages({ files, setImage, handleStage, stage, setEmpty, mutate }: {
         mediaRef: uploadedFile[0].url,
         multipleMediaRef: uploadedFile.map((item) => item.url),
       }
-      console.log(obj)
       createPost.mutate(obj);
     }
-  }, [files, uploadedFile, userId, value])
-
-  const uploadMediaFile = useMutation({
-    mutationFn: (data: FormData) => httpService.post(files[0].type.startsWith('image') ? `${URLS.UPLOAD_IMAGE}/${userId}`:`${URLS.UPLOAD_VIDEO}/${userId}`, data),
-    onSuccess: (data) => {
-      const obj = {
-        text: value,
-        type: files[0].type.startsWith('image') ? 'WITH_IMAGE' : 'WITH_VIDEO_POST',
-        isGroupFeed: false,
-        sourceId: userId,
-        mediaRef: data.data?.fileName,
-        multipleMediaRef: [
-          data.data?.fileName,
-        ]
-      }
-      console.log(obj)
-      createPost.mutate(obj);
-    },
-    onError: (error: any) => {
-      toast({
-        title: 'Error',
-        description: 'An error occured while uploading file',
-        position: 'top-right',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    },
-  });
+  }, [createPost, files, loading, uploadedFile, userId, value])
 
 
 
@@ -128,8 +99,7 @@ function ShowImages({ files, setImage, handleStage, stage, setEmpty, mutate }: {
     setImage(data, false);
 }, [setImage]);
 
-const handleNext = React.useCallback(() => {
-  alert('working');
+const handleNext = () => {
   console.log(files);
   if (stage === 3) {
     if (files[0].size > 314572800) {
@@ -144,13 +114,11 @@ const handleNext = React.useCallback(() => {
       return
     }
     fileUploadHandler(files as any);
-    // const formData = new FormData();
-    // formData.append('file', files[0]);
-    // uploadMediaFile.mutate(formData);
     return;
-  };
-  handleStage(stage+1);
-}, [fileUploadHandler, files, handleStage, stage, toast])
+  } else {
+    handleStage(stage+1);
+  }
+}
 
 const handlePrev = React.useCallback(() => {
   if (stage === 2) {

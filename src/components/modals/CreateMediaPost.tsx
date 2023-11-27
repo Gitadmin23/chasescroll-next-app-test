@@ -45,7 +45,7 @@ function CreateMediaPost({isOpen, onClose, mutate}:IProps) {
                 arrs.push(Files[i]);
             }
             setFiles(prev => [...prev, ...arrs]);
-    }, []);
+    }, [toast]);
 
     const handleSetStage = React.useCallback((page: number) => {
         setStage(page);
