@@ -21,7 +21,7 @@ function DeleteAccoutModal({ isOpen, onClose }: Props) {
             toast({
                 title: 'Success',
                 description: ' You account has been deleted',
-                status: 'error',
+                status: 'success',
                 position: 'top-right',
                 duration: 3000,
                 isClosable: true,

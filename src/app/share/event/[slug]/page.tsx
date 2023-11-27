@@ -20,7 +20,7 @@ export async function generateMetadata(
     // fetch data
     let product: any
     try {
-      product = await fetch("https://chaseenv.chasescroll.com/events/events" + "?id=" + id, {
+      product = await fetch(process.env.NEXT_PUBLIC_BASE_URL + "?id=" + id, {
         // headers: myHeaders,
         method: 'GET'
       }).then((res) => res.json())
