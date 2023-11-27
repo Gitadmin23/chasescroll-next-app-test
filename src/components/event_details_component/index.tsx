@@ -87,6 +87,7 @@ function EventDetails(props: Props) {
                 <Box as='button' display={"flex"} onClick={() => router.back()} px={"3"} mt={"20px"} ml={"-30px"} justifyContent={"center"} alignItems={"center"} zIndex={"20"} >
                     <BsChevronLeft color={"black"} size={"25px"} />
                 </Box>
+                
                 <Box height={["230px", "230px", "350px"]} position={"relative"} width={"full"} rounded={"16px"} roundedTopRight={"none"} >
                     <BlurredImage height={["230px", "230px", "350px"]} image={dataInfo?.currentPicUrl} />
                     {/* <Image style={{ borderBottomLeftRadius: "32px", borderBottomRightRadius: "32px", borderTopLeftRadius: "32px" }} objectFit="cover" alt={dataInfo?.currentPicUrl} width={"full"} height={"full"} src={IMAGE_URL + dataInfo?.currentPicUrl} /> */}
