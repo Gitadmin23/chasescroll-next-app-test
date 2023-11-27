@@ -98,6 +98,7 @@ function LoginPage() {
         title: 'Success',
         description: 'Signin Successful',
         status: 'success',
+        position: 'top-right'
       })
       if (!data?.data?.firstName) {
         setShowModal(true)

@@ -81,7 +81,7 @@ function ShowImages({ files, setImage, handleStage, stage, setEmpty, mutate }: {
       }
       createPost.mutate(obj);
     }
-  }, [createPost, files, loading, uploadedFile, userId, value])
+  }, [files, loading, uploadedFile, userId, value])
 
 
 
