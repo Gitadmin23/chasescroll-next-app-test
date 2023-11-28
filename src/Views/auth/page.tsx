@@ -27,7 +27,7 @@ const LINK2 = [
   },
   {
     name: "Sign up",
-    link: "/sign-up",
+    link: "/auth/sign-up",
     isExternal: true
   },
   {
