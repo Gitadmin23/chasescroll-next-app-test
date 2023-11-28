@@ -4,6 +4,16 @@ const httpService = axios.create({
     baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
 });
 
+export const unsecureHttpService = axios.create({
+    baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+})
+
+unsecureHttpService.interceptors.response.use((data) => {
+    return data;
+}, async(error: AxiosError<any, unknown>) => {
+    return Promise.reject(error);
+});
+
 httpService.interceptors.request.use(async(config) => {
     const token = localStorage.getItem('token')
     if (config.data instanceof FormData) {

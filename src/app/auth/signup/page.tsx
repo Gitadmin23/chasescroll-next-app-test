@@ -9,7 +9,7 @@ import { CustomInput } from '@/components/Form/CustomInput';
 import { THEME } from '@/theme';
 import CustomButton from '@/components/general/Button';
 import { useMutation } from 'react-query';
-import httpService from '@/utils/httpService';
+import httpService, { unsecureHttpService } from '@/utils/httpService';
 import { URLS } from '@/services/urls'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link';
@@ -22,7 +22,7 @@ function Signup() {
     const toast = useToast();
 
     const sendVerificatinEmail = useMutation({
-      mutationFn: (data: string) => httpService.post(`${URLS.SEND_VERIFICATION_EMAIL}`, {
+      mutationFn: (data: string) => unsecureHttpService.post(`${URLS.SEND_VERIFICATION_EMAIL}`, {
         userEmail: data,
         emailType: 1,
       }),
@@ -50,7 +50,7 @@ function Signup() {
     });
 
     const { mutate, isLoading } = useMutation({
-        mutationFn: (data) => httpService.post(`${URLS.SIGNUP}`, data),
+        mutationFn: (data) => unsecureHttpService.post(`${URLS.SIGNUP}`, data),
         onError: (error: any) => {
           toast({
             title: 'An error occured',
