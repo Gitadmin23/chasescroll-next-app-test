@@ -7,6 +7,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 export const metadata: Metadata = {
   title: 'Chasescroll',
   description: 'Making your events great!',
+  manifest: '/manifest.json',
 }
 
 export default async function RootLayout({
@@ -23,6 +24,7 @@ export default async function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon_io/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon_io/favicon-16x16.png" />
         <link rel="manifest" href="/favicon_io/site.webmanifest" /> 
+        {/* <link rel="manifest" href="/manifest.json" /> */}
       </head>
       <body>
         <Providers session={session}>
