@@ -29,6 +29,7 @@ import { IoMdInformationCircleOutline } from 'react-icons/io'
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { ArrowLeft2 } from 'iconsax-react'
 import AddEventsModal from '@/components/modals/community/AddEventsModal';
+import ShareEvent from '@/components/sharedComponent/share_event';
 
 
 
@@ -143,6 +144,7 @@ function CommunityChatHeader() {
     </HStack>
 
    <HStack>
+   <ShareEvent type='COMMUNITY' id={activeCommunity?.id} />
     { events.length > 0 && (
       <Box onClick={() => setAll({ showEvents: !showEvents })} cursor='pointer' position={'relative'} marginRight={'10px'} >
 
