@@ -1,4 +1,5 @@
 "use client"
+import UserImage from '@/components/sharedComponent/userimage';
 import useSettingsStore from '@/global-state/useSettingsState';
 import { useDetails } from '@/global-state/useUserDetails';
 import { Box, Flex, Switch, Text } from '@chakra-ui/react'
@@ -9,7 +10,7 @@ import { IoIosArrowBack } from 'react-icons/io'
 
 function Layout({ children }: { children: ReactNode }) {
 
-    const { firstName, lastName, username } = useDetails((state) => state);
+    const { firstName, lastName, username, user } = useDetails((state) => state);
     const router = useRouter()
 
     const { currency, setCurrency } = useSettingsStore((state) => state);
@@ -27,7 +28,9 @@ function Layout({ children }: { children: ReactNode }) {
                 <Flex onClick={()=> router.push("/dashboard/settings/payment")} as={"button"} gap={"3"} width={"fit-content"} alignItems={"center"}  >
                     <IoIosArrowBack size="24px" />
                     <Flex gap={"2"} justifyContent={"start"} alignItems={"center"} >
-                        <Box width={"46px"} height={"46px"} rounded={"full"} bg={"gray.200"} />
+                        <Box width={"fit-content"} > 
+                            <UserImage data={user} size={"46px"} font={"18px"} image={user?.data?.imgMain?.value} />    
+                        </Box> 
                         <Box>
                             <Text fontSize={"14px"} textAlign={"start"} color={"#353945"} >Hello</Text>
                             <Text fontSize={"17px"} fontWeight={"semibold"} mt={"-3px"} color={"#14131B"} >{firstName + " " + lastName}</Text>

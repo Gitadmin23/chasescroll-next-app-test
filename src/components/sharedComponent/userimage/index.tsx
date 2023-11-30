@@ -27,9 +27,9 @@ function UserImage(props: Props) {
         <Box roundedBottom={"64px"} roundedTopLeft={"64px"} borderColor={"#D0D4EB"} w={size} h={size} bg={"white"} borderWidth={border? border :"4px"} >
             {image !== null &&
                 <>
-                    { image?.includes('https://') && <Image style={{ borderBottomLeftRadius: "64px", borderBottomRightRadius: "64px", borderTopLeftRadius: "64px" }} objectFit="cover" alt={image} width={"full"} height={"full"} src={image} /> }
+                    { (image?.includes('http')) && <Image style={{ borderBottomLeftRadius: "64px", borderBottomRightRadius: "64px", borderTopLeftRadius: "64px" }} objectFit="cover" alt={image} width={"full"} height={"full"} src={image?.replace("http://ec2-3-128-192-61.us-east-2.compute.amazonaws.com:8080/resource-api/download/", "https://chaseenv.chasescroll.com/resource-api/download/")} /> } 
 
-                    { !image?.includes('https://') && <Image style={{ borderBottomLeftRadius: "64px", borderBottomRightRadius: "64px", borderTopLeftRadius: "64px" }} objectFit="cover" alt={image} width={"full"} height={"full"} src={IMAGE_URL + image} /> }
+                    { !image?.includes('http') && <Image style={{ borderBottomLeftRadius: "64px", borderBottomRightRadius: "64px", borderTopLeftRadius: "64px" }} objectFit="cover" alt={image} width={"full"} height={"full"} src={IMAGE_URL + image} /> }
                 </>
             }
             {image === null && (

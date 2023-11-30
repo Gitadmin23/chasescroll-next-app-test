@@ -19,7 +19,7 @@ function SaveOrUnsaveBtn(props: Props) {
     } = props
  
     const { userId: user_index } = useDetails((state) => state);
-    const [isSaved, setIsSaved] = React.useState(event.isSaved)
+    const [isSaved, setIsSaved] = React.useState(event?.isSaved)
     const toast = useToast() 
 
     // save event
