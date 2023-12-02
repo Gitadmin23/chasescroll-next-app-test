@@ -4,6 +4,7 @@ import { IComment } from '@/models/Comment'
 import { Box, HStack, Image, VStack } from '@chakra-ui/react'
 import React from 'react'
 import moment from 'moment';
+import { IMAGE_URL } from '@/services/urls';
 
 const CommentCard = React.forwardRef<HTMLDivElement, { comment: IComment }>(({ comment}, ref) => {
   return (
@@ -16,7 +17,10 @@ const CommentCard = React.forwardRef<HTMLDivElement, { comment: IComment }>(({ c
             )}
             {
                 comment.user.data.imgMain.value !== null && (
-                    <Image src={comment.user.data.imgMain.value} alt='image' width={'100%'} height={'100%'} objectFit={'cover'} />
+                    <>
+                        { comment.user.data.imgMain.value.startsWith('https://') && <Image src={comment.user.data.imgMain.value} alt='image' width={'100%'} height={'100%'} objectFit={'cover'} /> }
+                        { !comment.user.data.imgMain.value.startsWith('https://') && <Image src={`${IMAGE_URL}${comment.user.data.imgMain.value}`} alt='image' width={'100%'} height={'100%'} objectFit={'cover'} /> }
+                    </>
                 )
             }
         </Box>
