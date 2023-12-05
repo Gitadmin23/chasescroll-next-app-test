@@ -31,8 +31,6 @@ export const authOptions: AuthOptions = {
             } as any
         },
         jwt: ({ token, account }) => {
-            console.log(account);
-
             token.accessToken = account?.access_token;
             token.idToken = account?.id_token;
             token.refeshToken =account?.refresh_token;
