@@ -3,7 +3,7 @@ import { Providers } from './Provider'
 import './globals.css'; 
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/pages/api/auth/[...nextauth]';
-import { Viewport } from 'next/dist/lib/metadata/types/extra-types';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 const APP_NAME = "Chasescroll";
 const APP_DEFAULT_TITLE = "Creating Unforgetable Memories";
@@ -74,8 +74,10 @@ export default async function RootLayout({
         {/* <link rel="manifest" href="/manifest.json" /> */}
       </head>
       <body>
-        <Providers session={session}>
+        <Providers session={session}> 
+    <StyledEngineProvider injectFirst>
           {children}
+          </StyledEngineProvider>
         </Providers>
       </body>
     </html>
