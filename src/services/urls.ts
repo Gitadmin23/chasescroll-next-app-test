@@ -88,6 +88,10 @@ export const URLS = {
     DELETE_MESSAGE:'/chat/message',
     GET_BLOCKED_LIST: '/user/blocklist',
     UNBLOCK_USER: '/user/delete-block',
+    GET_VENDORS: '/vendor/search',
+    CREATE_VENDOR: '/vendor/create',
+    GET_SERVICES: '/service/search',
+    CREATE_SERVICE: '/service/create'
     //GET_MEDIA_POST : "/feed/get-users-media-posts?userID="
 }
 

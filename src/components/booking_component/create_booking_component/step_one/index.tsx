@@ -1,12 +1,14 @@
 import { CustomInput } from '@/components/Form/CustomInput'
 import { CustomTextArea } from '@/components/Form/CustomTextarea'
 import CustomButton from '@/components/general/Button'
-import { Flex, Input, Text, Textarea } from '@chakra-ui/react'
+import CustomText from '@/components/general/Text'
+import { useCreateBookingState } from '@/global-state/useCreateBooking'
+import { Flex, Input, Text, Textarea, HStack, VStack, Switch, Button } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { IoMdAdd } from 'react-icons/io'
 
 interface Props { 
-    next?: any
+    next: (step: number) => void
 }
 
 function StepOne(props: Props) {
@@ -14,75 +16,118 @@ function StepOne(props: Props) {
         next
     } = props
 
-    const data = [
-        "Farm sales",
-        "Beach property rentals & sales",
-        "Building lot sales",
-        "Buying agent services",
-        "Commercial property buying & sales",
-        "Appraisals",
-        "First-time home buyer services",
-    ]
+   const { email, phone, businessName, description, locationType, locationData, setLocationValue, setAll } = useCreateBookingState((state) => state);
 
-    const [selected, setSelected] = useState([] as any)
+    const [selected, setSelected] = useState([] as any);
+    const [isPhysical, setIsPhysical] = React.useState(true);
 
-    const clickHander =(item: any)=> {
+    React.useEffect(() => {
+        setAll({ locationType: 'pysical'});
+    }, [setAll])
 
-        let clone = [...selected]
-
-        if(selected?.includes(item)){ 
-            const index = clone.indexOf(item);
-
-            const x = clone.splice(index, 1);
-
-            setSelected(clone)
-
+    const handleSwitch = () => {
+        if(isPhysical) {
+            setAll({ locationType: 'online'});
+            setIsPhysical(false);
         } else {
-            setSelected([...clone, item])
+            setAll({ locationType: 'pysical'});
+            setIsPhysical(true);
         }
+    }
+
+    const clickHander =(item: any) => {
+        console.log({
+            email,
+            phone,
+            businessName,
+            description,
+            locationData,
+            locationType
+        });
+        next(1);
     }
 
     return (
         <Flex w={"full"} gap={"6"} >
             <Flex w={"full"} flexDir={"column"} >
                 <Text color={"#000000CC"} fontSize={"lg"} fontWeight={"medium"} >Start building a booking Profile</Text>
+
+                <VStack width='100%' alignItems={'flex-start'}>
+                    <CustomText>Email<span style={{ color: "#F04F4F" }} >*</span></CustomText>
+                    <Input  type='text' value={email} onChange={(e) => setAll({ email: e.target.value })} width={['100%']} />
+                </VStack>
+
+                <VStack width='100%' alignItems={'flex-start'}>
+                    <CustomText>phone<span style={{ color: "#F04F4F" }} >*</span></CustomText>
+                    <Input  type='text' value={phone} onChange={(e) => setAll({ phone: e.target.value })} width={['100%']} />
+                </VStack>
                 <Flex mt={"6"} flexDir={"column"} w={"full"} gap={"1"} >
                     <Text color={"#101828B2"} >Business Name<span style={{ color: "#F04F4F" }} >*</span></Text>
-                    <CustomInput name="businessName" type='text' placeholder='Business Name*' isPassword={false} />
+                    <Input  type='text' value={businessName} onChange={(e) => setAll({ businessName: e.target.value })} width={['100%']} />
                 </Flex>
                 {/* <Flex mt={"4"} flexDir={"column"} w={"full"} gap={"1"} >
                     <Text color={"#101828B2"} >Business Category<span style={{ color: "#F04F4F" }} >*</span></Text>
                     <CustomInput name='' h={"45px"} _placeholder={{ color: "#66708533" }} borderColor={"#A3A3A3"} focusBorderColor="#A3A3A3" placeholder='Business Category*' />
                 </Flex> */}
                 <Flex mt={"8"} flexDir={"column"} w={"full"} gap={"1"} >
-                    <Text color={"#101828B2"} >Business Category<span style={{ color: "#F04F4F" }} >*</span></Text>
+                    <Text color={"#101828B2"} >Business Description<span style={{ color: "#F04F4F" }} >*</span></Text>
                     <Text color={"#00000080"} fontSize={"xs"} >Let customers learn more about your business by adding a description to your booking profile</Text>
-                    <CustomTextArea name='description' placeholder=''  />
+                    <Textarea
+                    value={description}
+                    onChange={(e) => setAll({ description: e.target.value})}
+                  className="w-full h-40 rounded-lg border border-gray-400 outline-chasescrollBlue px-3 py-2 placeholder:text-chasescrollTextGrey text-chasescrollTextGrey"
+                  cols={5}
+                  rows={7}
+                  lang='pt_BR'
+                  placeholder={'Description'}
+                  resize='none'
+                  size='lg'
+                />
                 </Flex>
             </Flex>
+
             <Flex w={"full"} flexDir={"column"} >
-                <Text color={"#000000CC"} fontSize={"lg"} fontWeight={"medium"} >Add your Services</Text>
-                <Text fontSize={"sm"} color={"#00000080"} mt={"2"} >Add the Services your business provides, so you can get seen by the right audience</Text>
-                <Text color={"#000000CC"} mt={"5"} fontSize={"lg"} fontWeight={"medium"} >Real Estate Agent</Text>
-                <Flex flexWrap={"wrap"} gap={"2"} pt={"5"} >
-                    {data?.map((item: any, index: number) => {
-                        return (
-                            <Flex onClick={()=> clickHander(item)} as={"button"} key={index} gap={"10px"} fontSize={"xs"} color={selected?.includes(item) ? "#5D70F9" : "#00000080"} bgColor={selected?.includes(item) ? "#D0D4EB80" : "transparent"} borderColor={selected?.includes(item) ? "#D0D4EB80" : "#00000040"} borderWidth={"1px"} fontWeight={"medium"} alignItems={"center"} justifyContent={"center"} rounded={"5px"} px={"3"} h={"35px"} >
-                                <IoMdAdd size={"18px"} /> 
-                                {item}
-                            </Flex>
-                        )
-                    })}
-                </Flex>
-                <Text color={"#5D70F9"} fontSize={"xs"} fontWeight={"medium"} w={"fit-content"} mt={"3"} as={"button"} >Show more</Text>
-                <Text color={"#00000080"} mt={"3"} >Didn’t see your services? Add your own.</Text>
-                <Flex w={"full"} mt={"5"} justifyContent={"space-between"} alignItems={"center"} >
-                    <Flex as={"button"} fontWeight={"medium"} gap={"1"} alignItems={"center"} color={"#5D70F9"} >
-                        Add custom service
-                    </Flex>
-                    <CustomButton onClick={()=> next(1)} borderRadius={"8px"} width={"150px"} text='Next' backgroundColor={"#5D70F9"} color={"white"} fontSize={"sm"} />
-                </Flex>
+                <Text color={"#000000CC"} fontSize={"lg"} fontWeight={"medium"} >Location</Text>
+                <VStack alignItems={'flex-start'}>
+                    <HStack>
+                        <CustomText>Does your business have a physical address ?</CustomText>
+                        <Switch isChecked={isPhysical} onChange={handleSwitch} />
+                    </HStack>
+
+                    { isPhysical && (
+                        <>
+                            <VStack width='100%' alignItems={'flex-start'}>
+                                <CustomText>Address<span style={{ color: "#F04F4F" }} >*</span></CustomText>
+                                <Input  type='text' value={locationData.address} onChange={(e) => setLocationValue('address', e.target.value)} width={['100%', '50%']} />
+                            </VStack>
+
+                            <VStack width='100%' alignItems={'flex-start'}>
+                                <CustomText>City<span style={{ color: "#F04F4F" }} >*</span></CustomText>
+                                <Input  type='text' value={locationData.city} onChange={(e) => setLocationValue('city', e.target.value)} width={['100%', '50%']} />
+                            </VStack>
+
+                            <VStack width='100%' alignItems={'flex-start'}>
+                                <CustomText>State<span style={{ color: "#F04F4F" }} >*</span></CustomText>
+                                <Input  type='text' value={locationData.state} onChange={(e) => setLocationValue('state', e.target.value)} width={['100%', '50%']} />
+                            </VStack>
+
+                            <VStack width='100%' alignItems={'flex-start'}>
+                                <CustomText>zipcode</CustomText>
+                                <Input  type='text' value={locationData.zipcode} onChange={(e) => setLocationValue('zipcode', e.target.value)} width={['100%', '50%']} />
+                            </VStack>
+
+                            <VStack width='100%' alignItems={'flex-start'}>
+                                <CustomText>Country<span style={{ color: "#F04F4F" }} >*</span></CustomText>
+                                <Input  type='text' value={locationData.country} onChange={(e) => setLocationValue('country', e.target.value)} width={['100%', '50%']} />
+                            </VStack>
+                        </>
+                    )}
+                </VStack>
+
+                <Button marginTop={'20px'} onClick={clickHander} bg="brand.chasescrollButtonBlue" color='white' height='50px' width={['100%', '50%']}>Next</Button>
+                
             </Flex>
+
         </Flex>
     )
 }

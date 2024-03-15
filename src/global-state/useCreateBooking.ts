@@ -1,35 +1,69 @@
 import { create } from 'zustand';
 
 type CreateBookingState = {
+    email: string;
+    businessName: string;
+    phone: string;
+    description: string;
     locationType: string;
     locationData: {
-        link: string;
         address: string;
         country: string;
-        street: string
-        city: string
-        zipCode: string
-        locationDetails: string;
-        latlng: string;
+        street: string;
+        city: string;
+        zipcode: string;
         state: string;
-        placeIds: string;
-        toBeAnnouced: string;
-
-    };
-    serviceList: [],
-    socialMediaHandles: [],
-    setAll: (data: Partial<CreateBookingState>) => void       
+    },
+    socialMediaHandles: Array<{
+        socialMediaHandle: string;
+        platform: string;
+        details: string;
+    }>;
+    serviceList: Array<{
+        vendorID?: string;
+        eventTypes: string[];
+        serviceName: string;
+        serviceDescription: string;
+        photos: string[];
+        availabilityTimes: [
+            {
+                startTime: number;
+                endTime: number;
+                availabilityDayOfWeek: number;
+            }
+        ]
+    }>;     
+    setAll: (data: any) => void;
+    removeService: (index: number) => void;
+    removeSocial: (index: number) => void;
+    setLocationValue: (field: string, data: string) => void;
+    addService: (data: {
+        vendorID: string;
+        eventTypes: string[];
+        serviceName: string;
+        serviceDescription: string;
+        photos: File[];
+        availabilityTimes: Array<{
+            startTime: string;
+            endTime: string;
+            availabilityDayOfWeek: number;
+        }>;
+    }) => void;
+    addSocialMedia: (data: any) => void;
 }
 
 export const useCreateBookingState = create<CreateBookingState>((set) => ({
+    email: '',
+    businessName: '',
+    phone: '',
+    description: '',
     locationType: '',
     locationData: {
-        link: '',
         address: '',
         country: '',
         street: '',
         city: '',
-        zipCode: '',
+        zipcode: '',
         locationDetails: '',
         latlng: '',
         state: '',
@@ -39,5 +73,10 @@ export const useCreateBookingState = create<CreateBookingState>((set) => ({
     },
     serviceList: [],
     socialMediaHandles: [],
-    setAll: (data) => set((state) => ({ ...state, ...data }))
+    setAll: (data: CreateBookingState) => set((state) => ({ ...state, ...data })),
+    addService: (data: any) => set((state) => ({ ...state, serviceList: [...state.serviceList, data]})),
+    removeService: (indx: number) => set((state) => ({ ...state, serviceList: state.serviceList.filter((item, index) => index !!== indx)})),
+    addSocialMedia: (data: any) => set((state) => ({ ...state, socialMediaHandles: [...state.socialMediaHandles, data]})),
+    removeSocial: (indx: number) => set((state) => ({ ...state, socialMediaHandles: state.socialMediaHandles.filter((item, index) => index !!== indx)})),
+    setLocationValue: (field: string, data: string) => set((state) => ({ ...state, locationData: {...state.locationData, [field]: data }}))
 }));

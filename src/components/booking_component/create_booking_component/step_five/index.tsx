@@ -1,7 +1,11 @@
 import CustomButton from '@/components/general/Button';
 import CustomText from '@/components/general/Text'
-import { HStack, Select, Switch, VStack } from '@chakra-ui/react'
+import { useCreateBookingState } from '@/global-state/useCreateBooking';
+import { THEME } from '@/theme';
+import { Button, HStack, Select, Switch, VStack } from '@chakra-ui/react'
 import React from 'react'
+import AddServiceModal from '../AddServiceModal';
+import { FiPlus } from 'react-icons/fi';
 
 const DayPicker = ({ day }: {day: string}) => {
     const [checked, setChecked] = React.useState(false);
@@ -17,32 +21,36 @@ const DayPicker = ({ day }: {day: string}) => {
 function StepFive({ next }: {
     next: (step: number) => void
 }) {
+    const [showModal, setShowModal] = React.useState(false);
+    const { serviceList, addService, removeService } = useCreateBookingState((state) => state);
   return (
     <VStack w='full' alignItems={'flex-start'}>
-        <CustomText fontFamily={'DM-Bold'} fontSize={'20px'} color='black'>Add Business Hours</CustomText>
-        <CustomText fontFamily={'DM-Regular'} fontSize={'16px'}>Let your customers know when your are available for bookings</CustomText>
-
-        <HStack w='70%' height='600px' borderWidth={'1px'} borderColor={'grey'} borderRadius={'20px'} overflow='hidden'>
-            <VStack flex='0.4' height={'100%'}  paddingX={'60px'} paddingY={'50px'} >
-                <DayPicker day='Sunday'/>
-                <DayPicker day='Monday'/>
-                <DayPicker day='Tuesday'/>
-                <DayPicker day='Wednesday'/>
-                <DayPicker day='Thursday'/>
-                <DayPicker day='Friday'/>
-                <DayPicker day='Saturday'/>
-            </VStack>
-            <VStack flex='0.4'  height={'100%'} width='70%' alignItems={'flex-start'}paddingTop={'40px'}>
-                <CustomText fontFamily="DM-Medium" fontSize={'20px'}>How far in the futeure can you be booked</CustomText>
-                <CustomText fontFamily='DM-Regular' fontSize={'16px'} color='grey'>This location will show up on your Chasescroll ‘My Booking’ profile for customers to see when looking for your business</CustomText>
-
-                <Select width={'100%'} height={'50px'} borderRadius={'10px'} borderWidth={'1px'} borderColor={'grey'}>
-                    <option>2 weeks</option>
-                </Select>
-
-                <CustomButton text='Continue' />
-            </VStack>
+        {/* MODAL */}
+        <AddServiceModal isOpen={showModal} onClose={() => setShowModal(false)} />
+        <HStack>
+            <CustomText fontFamily={'DM-Bold'} fontSize={'20px'} color='black'>Add Services</CustomText>
+            <FiPlus size={20} color={THEME.COLORS.chasescrollButtonBlue} cursor={'pointer'} onClick={() => setShowModal(true)} />
         </HStack>
+        <CustomText fontFamily={'DM-Regular'} fontSize={'16px'} marginBottom={'20px'}>Add te services your render (You can add up to 3 services)</CustomText>
+
+        { serviceList.length < 1 && (
+            <HStack>
+                <CustomText cursor={'pointer'} fontFamily={'DM-Regular'} fontSize={'sm'} color={THEME.COLORS.chasescrollButtonBlue}>Add Service +</CustomText>
+            </HStack>
+        )}
+        { serviceList.length > 0 && serviceList.map((item, index) => (
+            <HStack key={index.toString()} spacing={1} borderRadius={'0px'} marginBottom='10px' borderWidth={'0px'} alignItems={'center'} justifyContent={'space-between'} paddingX={'10px'} borderColor={'brand.chasescrollButtonBlue'} bg='whitesmoke' width={['100%', '50%']} height='70px'>
+               <VStack alignItems={'flex-start'} spacing={1}>
+                    <CustomText fontFamily={'DM-Bold'} fontSize={'16px'} color='black'>{item.serviceName}</CustomText>
+                    <CustomText fontFamily={'DM-Regular'} fontSize={'14px'} color='grey'>{item.serviceDescription}</CustomText>
+               </VStack>
+
+               <CustomText color='red' fontSize={'14px'} fontFamily={'DM-Bold'} cursor={'pointer'} onClick={() => removeService(index)}>Delete</CustomText>
+            </HStack>
+        ))}
+
+        <Button onClick={() => next(2)} width='50%' height='50px' bg='brand.chasescrollButtonBlue' color="white" marginTop={'10px'}>Next</Button>
+
     </VStack>
   )
 }
