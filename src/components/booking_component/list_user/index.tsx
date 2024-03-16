@@ -44,8 +44,8 @@ function ListUser(props: Props) {
             </Flex>
             <Flex mt={"6"} justifyContent={"space-between"} alignItems={"center"} width={"full"} >
                 <Flex gap={"4"} >
-                    <CustomButton borderRadius={"8px"} width={"150px"} text='Categories' backgroundColor={"#F0F1F2"} color={"#101828B2"} fontSize={"sm"} />
-                    <CustomButton borderRadius={"8px"} width={"150px"} text='My Business' backgroundColor={"#5D70F9"} color={"white"} fontSize={"sm"} />
+                    <CustomButton borderRadius={"8px"} width={"150px"} text='Services' backgroundColor={"#F0F1F2"} color={"#101828B2"} fontSize={"sm"} />
+                    <CustomButton borderRadius={"8px"} width={"150px"} text='My Services' backgroundColor={"#5D70F9"} color={"white"} fontSize={"sm"} />
                 </Flex>
                 <Flex width={"40px"} height={"40px"} rounded={"full"} as={"button"} backgroundColor={"#5D70F9"} justifyContent={"center"} alignItems={"center"} >
                     <AddIconWithBorder />

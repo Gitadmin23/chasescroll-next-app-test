@@ -1,11 +1,16 @@
 import CustomButton from '@/components/general/Button'
-import { Checkbox, Flex, HStack, Input, Select, Text, VStack } from '@chakra-ui/react'
+import { Checkbox, Flex, HStack, Input, Select, Text, VStack, useToast } from '@chakra-ui/react'
 import React from 'react'
 import AddSocialMedia from '../AddSocialMedia'
 import { useCreateBookingState } from '@/global-state/useCreateBooking'
 import CustomText from '@/components/general/Text'
 import { FiPlus, FiX } from 'react-icons/fi'
 import { THEME } from '@/theme'
+import { useMutation } from 'react-query'
+import httpService from '@/utils/httpService'
+import { URLS } from '@/services/urls'
+import { useDetails } from '@/global-state/useUserDetails'
+import { useRouter } from 'next/navigation'
 
 interface Props { 
     next?: any
@@ -16,9 +21,54 @@ function StepThree(props: Props) {
         next
     } = props
 
+    const toast = useToast();
+
     const [showModal, setShowModal] = React.useState(false);
 
-    const { socialMediaHandles, removeSocial } = useCreateBookingState((state) => state);
+    const { userId } = useDetails((state) => state);
+    const router = useRouter();
+
+    const { socialMediaHandles, description, businessName, email, phone,serviceList, locationData, locationType, removeSocial } = useCreateBookingState((state) => state);
+
+    const { isLoading, mutate } = useMutation({
+        mutationFn: (data: any) => httpService.post(URLS.CREATE_VENDOR, data),
+        onSuccess: (data) => {
+            toast({
+                title: 'Success',
+                description: 'Business created',
+                status: 'success',
+                position: 'top-right',
+                duration: 5000,
+                isClosable: true,
+            });
+            router.push('/dashboard/booking')
+        },
+        onError: (error) => {
+            toast({
+                title: 'Error',
+                description: 'Error occured while creating business account',
+                status: 'error',
+                position: 'top-right',
+                duration: 5000,
+                isClosable: true,
+            })
+        }
+    })
+    const submit = () => {
+        const data = {
+            userID: userId,
+            email,
+            phone,
+            businessName,
+            description,
+            locationType,
+            locationData,
+            socialMediaHandles,
+            serviceList
+        }
+        console.log(data);
+        mutate(data);
+    }
 
     return (
         <Flex maxW={"412px"} w={"full"} flexDir={"column"} >
@@ -42,7 +92,7 @@ function StepThree(props: Props) {
                 ))}
             </Flex>
             
-            <CustomButton  borderRadius={"8px"} width={"full"} text='Next' backgroundColor={"#5D70F9"} color={"white"} fontSize={"sm"} />
+            <CustomButton isLoading={isLoading} onClick={submit}  borderRadius={"8px"} width={"full"} text='Next' backgroundColor={"#5D70F9"} color={"white"} fontSize={"sm"} />
         </Flex>
     )
 }

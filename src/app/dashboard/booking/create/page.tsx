@@ -54,7 +54,7 @@ function CreateBooking(props: Props) {
                         <Box w={tab === 0 ? "25%" : tab === 1 ? "50%" : tab === 2 ? "65%" : "80%"} h={"3"} rounded={"8px"} bgColor={"#5D70F9"} />
                     </Box>
                     <Box w={"fit-content"} >
-                        <Text>{tab+1}/4</Text>
+                        <Text>{tab+1}/3</Text>
                     </Box>
                 </Flex>
                 <Flex w={"full"} py={"8"}  >
@@ -70,9 +70,9 @@ function CreateBooking(props: Props) {
                     {tab === 2 && ( 
                         <StepThree next={setTab} />
                     )}
-                    {tab === 3 && ( 
+                    {/* {tab === 3 && ( 
                         <StepFour next={setTab} />
-                    )} 
+                    )}  */}
                 </Flex>
             </Box>
         </Box>

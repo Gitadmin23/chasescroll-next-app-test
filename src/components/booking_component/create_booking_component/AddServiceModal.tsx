@@ -46,7 +46,21 @@ function AddServiceModal({
             setImages([]);
             setTime([]);
         }
-    }, [])
+    }, []);
+
+    const handleTimeChange = (event: string) => {
+      
+        // Split the time string into hours and minutes
+        const [hoursStr, minutesStr] = event.split(':');
+        
+        // Convert hours and minutes to numbers
+        const hours = parseInt(hoursStr, 10);
+        const minutes = parseInt(minutesStr, 10);
+    
+        // Calculate time in minutes
+        const totalMinutes = hours * 60 + minutes;
+        return totalMinutes;
+      };
 
     const AddOrRemoveItem = (item: string) => {
         if (selected.includes(item)) {
@@ -119,7 +133,12 @@ function AddServiceModal({
             vendorID: userId,
             serviceName,
             serviceDescription: description,
-            availabilityTimes: time,
+            availabilityTimes: time.map((item) => ({
+                ...item,
+                startTime: handleTimeChange(item.startTime),
+                endTime: handleTimeChange(item.endTime),
+
+            })) as any,
             eventTypes: selected,
             photos: images,
         });
