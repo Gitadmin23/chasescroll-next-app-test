@@ -2,35 +2,27 @@ import { Box, Flex } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
-interface Props {}
+interface Props {
+    activeTab: number;
+    setActiveTab: (active: number) => void
+}
 
 function TabController(props: Props) {
-    const {} = props 
-
+    const { activeTab, setActiveTab } = props;
     const Router = useRouter()
-    const [active, setActive] = useState("")
-
-    const clickHandler =(item: string)=> {
-        Router.push(item)
-        setActive(item)
-    }    
-
-    useEffect(() => {
-        setActive(window?.location?.pathname)
-    }, [Router]) 
 
     return (
-        <Flex width={"full"} mt={"4"} gap={"60px"} py={"4"} borderBottomColor={"#00000059"} borderBottomWidth={"1px"} >
-            <Box  onClick={()=> clickHandler("/dashboard/booking/information")} as='button' borderBottomWidth={"1px"} pb={"1px"} color={active === "/dashboard/booking/information" ? "black" : "#101828B2"} borderBottomColor={active === "/dashboard/booking/information" ? "black" : "transparent"} >
-                SERVICES
+        <Flex width={"full"} mt={"4"} gap={"60px"}  borderBottomColor={"#00000059"} borderBottomWidth={"1px"} >
+            <Box  onClick={()=> setActiveTab(1)} as='button' borderBottomWidth={"3px"} pb={"1px"} color={activeTab === 1 ? "black" : "#101828B2"} borderBottomColor={activeTab === 1  ? "brand.chasescrollButtonBlue" : "transparent"} >
+                BOOKING
             </Box>
-            <Box onClick={()=> clickHandler("/dashboard/booking/information/portfolio")} as='button' borderBottomWidth={"1px"} pb={"1px"} color={active === "/dashboard/booking/information/portfolio" ? "black" : "#101828B2"} borderBottomColor={active === "/dashboard/booking/information/portfolio" ? "black" : "transparent"} >
+            <Box onClick={()=> setActiveTab(2)} as='button' borderBottomWidth={"3px"} pb={"1px"} color={activeTab === 2 ? "black" : "#101828B2"} borderBottomColor={activeTab === 2 ? "brand.chasescrollButtonBlue" : "transparent"} >
                 PORTFOLIO
             </Box>
-            <Box onClick={()=> clickHandler("/dashboard/booking/information/details")} as='button' borderBottomWidth={"1px"} pb={"1px"} color={active === "/dashboard/booking/information/details" ? "black" : "#101828B2"} borderBottomColor={active === "/dashboard/booking/information/details" ? "black" : "transparent"} >
+            <Box onClick={()=> setActiveTab(3)} as='button' borderBottomWidth={"3px"} pb={"1px"} color={activeTab === 3 ? "black" : "#101828B2"} borderBottomColor={activeTab === 3 ? "brand.chasescrollButtonBlue" : "transparent"} >
                 DETAILS
             </Box>
-            <Box onClick={()=> clickHandler("/dashboard/booking/information/review")} as='button' borderBottomWidth={"1px"} pb={"1px"} color={active === "/dashboard/booking/information/review" ? "black" : "#101828B2"} borderBottomColor={active === "/dashboard/booking/information/review" ? "black" : "transparent"} >
+            <Box onClick={()=> setActiveTab(4)} as='button' borderBottomWidth={"3px"} pb={"1px"} color={activeTab === 4 ? "black" : "#101828B2"} borderBottomColor={activeTab === 4 ? "brand.chasescrollButtonBlue" : "transparent"} >
                 REVIEWS
             </Box>
         </Flex>

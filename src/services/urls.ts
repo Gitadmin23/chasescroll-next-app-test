@@ -90,6 +90,8 @@ export const URLS = {
     UNBLOCK_USER: '/user/delete-block',
     GET_VENDORS: '/vendor/search',
     CREATE_VENDOR: '/vendor/create',
+    CREATE_BOOKING: '/booking/create',
+    GET_BOOKING:  '/booking/search',
     GET_SERVICES: '/service/search',
     CREATE_SERVICE: '/service/create'
     //GET_MEDIA_POST : "/feed/get-users-media-posts?userID="

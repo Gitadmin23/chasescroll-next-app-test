@@ -50,9 +50,9 @@ function BookingList(props: Props) {
     }
 
     return (
-        <Box width={"full"} py={"8"} >
+        <Box width={['100%', "50%"]} py={"8"} >
            {service.length > 0 && service.map((item, index) => (
-             <Flex key={index.toString()} marginBottom={'20px'} as={"button"} onClick={()=> Router.push("/dashboard/booking/information")} rounded={"32px"} flexDir={"column"} borderColor={"#D0D4EB"} borderWidth={"1px"} roundedTopRight={"0px"} width={"full"}  >
+             <Flex key={index.toString()} marginBottom={'20px'} as={"button"} onClick={()=> Router.push("/dashboard/booking/information/" + item.id)} rounded={"32px"} flexDir={"column"} borderColor={"#D0D4EB"} borderWidth={"1px"} roundedTopRight={"0px"} width={"full"}  >
              <Box p={"2"} >
                  <Flex gap={"1"} alignItems={"center"} >
                      <Box width={"60px"} height={"60px"} overflow={'hidden'} rounded={"full"} roundedTopRight={"0px"} bgColor={"gray.300"}>
@@ -83,14 +83,14 @@ function BookingList(props: Props) {
                      </Flex>
                  </Flex>
 
-                 {/* <Box width={"full"} px={"2"} mt={"4"} > 
+                 <Box width={"full"} px={"2"} mt={"4"} > 
                      <Text fontSize={"2xl"} textAlign={"left"} fontWeight={"bold"} color={"#131418"} >{item.serviceName}</Text>
 
                      <Flex gap={"1"} py={"10px"} >
-                         <LocationStroke />
+                         {/* <LocationStroke /> */}
                          <Text color={"#00000080"} >{item.serviceDescription}</Text>
                      </Flex>
-                     <Flex justifyContent={"space-between"} w={"full"} py={"3"} >
+                     {/* <Flex justifyContent={"space-between"} w={"full"} py={"3"} >
                          <Flex gap={"3px"} flexDir={"column"} alignItems={"center"} >
                              <Flex justifyContent={"center"} alignItems={"center"} w={"7"} h={"7"} >
                                  <HeartIcon />
@@ -109,8 +109,8 @@ function BookingList(props: Props) {
                              </Flex>
                              <Text fontWeight={"normal"} fontSize={"xs"} color={"#101828B2"} >9k Shares</Text>
                          </Flex>
-                     </Flex>
-                 </Box> */}
+                     </Flex> */}
+                 </Box>
 
              </Box>
          </Flex>
