@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.438.0",
-    "@aws-sdk/lib-storage": "^3.438.0",
+    "@aws-sdk/lib-storage": "^3isLoading, isError,isLoading, isError,.438.0",
     "@chakra-ui/next-js": "^2.1.5",
     "@chakra-ui/react": "^2.8.1",
     "@ducanh2912/next-pwa": "^9.7.2",

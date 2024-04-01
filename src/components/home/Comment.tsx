@@ -56,7 +56,7 @@ const SubCommentBox = React.forwardRef<HTMLDivElement, Subcomment & {deleteComme
         <div ref={ref}>
             <HStack width='100%' justifyContent={'space-between'} alignItems={'center'} marginBottom={'20px'}>
 
-                <HStack flex={0.8} overflow={'hidden'}>
+                <HStack flex={0.8} overflow={'hidden'} alignItems={'flex-start'}>
 
                     <Link href={`/dashboard/profile/${userId}`}>
                     
