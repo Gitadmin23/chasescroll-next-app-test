@@ -146,7 +146,6 @@ export default function CollaboratorBtn(props: IProps) {
         }
     }
 
-
     const UserCard = (props: IUser & { collaborators: boolean, admin: boolean }) => {
         const { username, userId, data: { imgMain: { value: imgMain } }, firstName, lastName, collaborators, admin } = props;
 
