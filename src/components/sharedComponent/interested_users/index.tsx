@@ -20,9 +20,7 @@ function InterestedUsers(props: Props) {
         fontSize,
         refund,
         color
-    } = props
-
-    console.log(event);    
+    } = props  
 
     return (
         <>

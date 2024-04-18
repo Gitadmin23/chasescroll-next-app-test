@@ -112,6 +112,9 @@ function EventCreator(props: Props) {
                     )}
                 </Flex>
             </Flex>
+            <ModalLayout open={open} close={setOpen} title='Event Organizers' >
+                <Chatcollaborator admins={data?.admins} collaborators={data?.collaborators} />
+            </ModalLayout>
         </Flex>
     )
 }
