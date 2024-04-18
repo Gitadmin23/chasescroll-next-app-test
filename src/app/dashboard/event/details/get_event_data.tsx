@@ -10,7 +10,7 @@ import { URLS } from '@/services/urls'
 import { capitalizeFLetter } from '@/utils/capitalLetter'
 import httpService from '@/utils/httpService'
 import {Box, Button, Flex, Text, useToast} from '@chakra-ui/react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useQuery, focusManager } from 'react-query'
 import {IEventType} from "@/models/Event";
@@ -29,6 +29,7 @@ function GetEventData(props: Props) {
         dynamic
     } = props
     const toast = useToast()
+    const router = useRouter();
     const { userId } = useDetails((state) => state);
     const [data, setData] = React.useState<IEventType| null>(null);
     const [show, setShow] = useState(false);
@@ -76,7 +77,11 @@ function GetEventData(props: Props) {
                 setShow(true)
             }
         }
-    }, [pathname])
+    }, [pathname]);
+
+    const handleNavigation = () => {
+        router.push(`/dashboard/settings/event-dashboard/${event_index}`);
+    }
 
     return (
         <Box width={"full"}  >
@@ -108,14 +113,15 @@ function GetEventData(props: Props) {
                     ticketBought={data?.ticketBought} attendees={undefined} />
 
                 <Flex w={['100%', '40%']} direction={['column', 'row']} paddingLeft={'10px'}>
-                    {isAdmin && (
+                    {(
                         <>
-                            <Button display={['block', 'none']} width={['100%', '50%']} height={['40px']} bg={'brand.chasescrollButtonBlue'} color={'white'}>Scan Ticket</Button>
-                            <Button display={['block']} width={['100%', '50%']} height={['40px']} bg={'brand.chasescrollBlue'} marginTop={'5px'} color={'white'} onClick={() => setShowScanner(true)}>Event Details</Button>
+                            <Button display={['block']} width={['100%', '50%']} height={['40px']} bg={'brand.chasescrollButtonBlue'} marginTop={'5px'} color={'white'} onClick={() => handleNavigation()} >Event Details</Button>
+
+                            <Button display={['block', 'none']} width={['100%', '50%']} height={['40px']} color={'brand.chasescrollButtonBlue'} onClick={() => setShowScanner(true)} borderColor={'brand.chasescrollButtonBlue'} bg={'white'} marginTop={'10px'} borderWidth={'2px'}>Scan Ticket</Button>
                         </>
                     )}
                     {isCollaborator && (
-                        <Button display={['block', 'none']} width={['100%', '50%']} height={['40px']} bg={'brand.chasescrollButtonBlue'} color={'white'} onClick={() => setShowScanner(true)}>Scan Ticket</Button>
+                        <Button display={['block', 'none']} width={['100%', '50%']} height={['40px']} bg={'brand.chasescrollButtonBlue'} color={'white'} onClick={() => setShowScanner(true)} marginTop={'10px'} >Scan Ticket</Button>
                     )}
                 </Flex>
             </LoadingAnimation>

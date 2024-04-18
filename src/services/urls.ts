@@ -45,8 +45,8 @@ export const URLS = {
     FIND_GROUPS: "/group/group",
     JOINED_GROUPS: "/group/joined-groups",
     GET_GROUP_REQUESTS: "/group/get-requests",
-    GET_GROUP_MESSAGES: "/feed/get-all-group-posts", 
-    GET_USER_CONNECTION_LIST: "/user/get-users-connections/", 
+    GET_GROUP_MESSAGES: "/feed/get-all-group-posts",
+    GET_USER_CONNECTION_LIST: "/user/get-users-connections/",
     GET_JOINED_GROUPS: "/group/joined-groups",
     ACCEPT_USER: "/user/accept-friend-request",
     REJECT_USER: "/user/reject-friend-request",
@@ -64,7 +64,7 @@ export const URLS = {
     CHECK_UER_ONLINE_STATUS: '/auth/check-online',
     GET_USER_FRIENDS: '/user/get-users-connections',
     SIGN_IN_WTIH_CREDENTIALS: '/auth/signinWithCredentials',
-    GET_EVENTS: '/events/events', 
+    GET_EVENTS: '/events/events',
     GET_WALLET_BALANCE: "/payments/api/wallet/balance",
     FUND_WALLET: "/payments/api/wallet/fundWalletWeb",
     GET_TRANSACTIONS: "/payments/transactions",
@@ -93,7 +93,8 @@ export const URLS = {
     CREATE_BOOKING: '/booking/create',
     GET_BOOKING:  '/booking/search',
     GET_SERVICES: '/service/search',
-    CREATE_SERVICE: '/service/create'
+    CREATE_SERVICE: '/service/create',
+    VALIDATE_TICKET: (id: string) => `/events/validate-ticket/${id}`,
     //GET_MEDIA_POST : "/feed/get-users-media-posts?userID="
 }
 

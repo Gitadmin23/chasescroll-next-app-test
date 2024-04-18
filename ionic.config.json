@@ -1,7 +1,0 @@
-{
-  "name": "chasescroll",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "custom"
-}

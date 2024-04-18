@@ -1,5 +1,12 @@
-import {Modal, ModalBody, ModalCloseButton, ModalContent, Box} from "@chakra-ui/react";
+import React from 'react';
+import {Modal, ModalBody, ModalCloseButton, ModalContent, Box, VStack, Spinner, Image, Button} from "@chakra-ui/react";
 import { Scanner as QrcodeScanner } from '@yudiel/react-qr-scanner';
+import {useMutation} from "react-query";
+import httpService from "@/utils/httpService";
+import {URLS} from "@/services/urls";
+import CustomText from "@/components/general/Text";
+import Ticket from "@/components/event_component/ticket";
+import {ITicket} from "@/models/Ticket";
 
 interface IProps {
     isOpen: boolean;
@@ -10,18 +17,68 @@ export default function Scanner({
     isOpen,
     onClose
                                 }: IProps) {
+    const [approved, setApproved] = React.useState(false);
+    const [show, setShow] = React.useState(true);
+    const [ticket, setTicket] = React.useState<ITicket|null>(null);
+    const [scanned, setScanned] = React.useState(false);
+
+    const { isLoading, mutate, isError } = useMutation({
+        mutationFn: (data: string) => httpService.get(`${URLS.VALIDATE_TICKET(data)}`),
+        onSuccess: (data) => {
+            console.log(data.data);
+            const item: {} = data.data;
+        }
+    })
+
+    const handleScanner = (str: string) => {
+        setShow(false);
+        mutate(str);
+    }
+
+    const retry = () => {
+        setShow(true);
+        setScanned(false);
+    }
+
     return (
-        <Modal isOpen={isOpen} isCentered={true} onClose={() => onClose()} size={'full'}>
+        <Modal isOpen={isOpen} isCentered={true} onClose={() => onClose()} size={scanned && !isLoading && !isError ? 'full':'6xl'}>
             <ModalContent bg={'grey'}>
-                <ModalCloseButton size={'large'}></ModalCloseButton>
-                <ModalBody width={'100%'} height={'100%'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                    <Box width={'300px'} height={'300px'} bg={'black'}>
-                        <QrcodeScanner
-                            enabled={true}
-                            onResult={(text, result) => console.log(text, result)}
-                            onError={(error) => console.log(error?.message)}
-                        />
-                    </Box>
+                <ModalCloseButton size={'large'} onClick={() => onClose()} />
+                <ModalBody position={'relative'} width={'100%'} height={'400px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                    { !isLoading && show && !scanned && (
+                        <Box width={'300px'} height={'300px'} bg={'black'}>
+                           <Box width={'100%'} height={'100%'}>
+                               <QrcodeScanner
+                                   enabled={true}
+                                   onResult={(text, result) => handleScanner(text)}
+                                   onError={(error) => console.log(error?.message)}
+                               />
+                           </Box>
+                        </Box>
+                    )}
+                    {isLoading && (
+                        <VStack justifyContent={'center'} w={'100%'} h={'100%'}>
+                            <Spinner />
+                            <CustomText>Verifing Ticket...</CustomText>
+                        </VStack>
+                    )}
+                    { !isLoading && !show && approved && (
+                        <></>
+                    )}
+                    { !isLoading && !show && !isError &&(
+                       <>
+                           <Ticket showQrCode={true} />
+                           <Box width={'250px'} height={'250px'} position={'absolute'} top={'400px'} left={'80px'} bg={'transparent'}>
+                               <Image src={ approved ? '/assets/approved.svg': '/assets/denied.svg'} alt={'approved'} width={'250px'} height={'250px'} objectFit={'cover'} />
+                           </Box>
+                       </>
+                    )}
+                    { !isLoading && isError && !show && (
+                        <Box flex={1}>
+                            <CustomText fontFamily={'DM-Bold'} fontSize={'18px'} textAlign={'center'}>An error occured while scanning the ticket</CustomText>
+                            <Button onClick={retry} width={'100%'} height={'45px'} color={'white'} bg={'brand.chasescrollButtonBlue'}>Retry</Button>
+                        </Box>
+                    )}
                 </ModalBody>
             </ModalContent>
         </Modal>
