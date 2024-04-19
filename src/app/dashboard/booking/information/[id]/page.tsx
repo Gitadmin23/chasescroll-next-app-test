@@ -44,11 +44,7 @@ function BookingDetails(props: Props) {
     const [showModal, setShowModal] = React.useState(false);
 
     const toast = useToast();
-<<<<<<< HEAD
     const { isLoading, isError } = useQuery(['getService',  id], () => httpService.get(URLS.GET_SERVICES, {
-=======
-    const { isLoading, isError } = useQuery(['getService', id], () => httpService.get(URLS.GET_SERVICES, {
->>>>>>> 1ff80b5 (finished booking)
         params: {
             id,
         }

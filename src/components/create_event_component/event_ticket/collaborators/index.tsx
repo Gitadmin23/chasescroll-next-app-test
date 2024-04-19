@@ -59,7 +59,7 @@ export default function CollaboratorBtn(props: IProps) {
         }
     });
 
-    const AddAdmin = (userIndex: string) => {
+    const AddAdmin =(userIndex: string)=> {
 
         let admin = !eventdata?.admins ? [] : [...eventdata?.admins]
         let collaborators = !eventdata?.collaborators ? [] : [...eventdata?.collaborators]
@@ -70,46 +70,44 @@ export default function CollaboratorBtn(props: IProps) {
 
 
             const index = collaborators.indexOf(userIndex);
-            clone?.collaborators.splice(index, 1);
+            clone?.collaborators.splice(index, 1); 
 
-            if (!eventdata?.admins?.includes(userIndex)) {
+            if (!eventdata?.admins?.includes(userIndex)) { 
 
-                clone.admins = [...admin, userIndex]
-            } else {
+                clone.admins = [...admin, userIndex] 
+            } else { 
 
                 const index = admin.indexOf(userIndex);
-                clone?.admins.splice(index, 1);
+                clone?.admins.splice(index, 1); 
             }
 
             updateEvent(clone);
 
         } else if (eventdata?.admins?.includes(userIndex)) {
 
-
             const index = admin.indexOf(userIndex);
-            clone?.admins.splice(index, 1);
+            clone?.admins.splice(index, 1); 
 
-            updateEvent(clone);
+            updateEvent(clone); 
         } else {
 
             if (!clone.admins) {
                 clone.admins = [userIndex]
             } else {
                 clone.admins = [...admin, userIndex]
-            }
+            } 
 
-            updateEvent(clone);
+            updateEvent(clone); 
 
         }
     }
 
-    const AddCollaborators = (userIndex: string) => {
+    const AddCollaborators =(userIndex: string)=> {
 
         let admin = !eventdata?.admins ? [] : [...eventdata?.admins]
         let collaborators = !eventdata?.collaborators ? [] : [...eventdata?.collaborators]
 
         let clone = { ...eventdata }
-
         if (eventdata?.admins?.includes(userIndex)) {
 
 
@@ -118,34 +116,36 @@ export default function CollaboratorBtn(props: IProps) {
 
             if (!eventdata?.collaborators?.includes(userIndex)) {
 
-                clone.collaborators = [...collaborators, userIndex]
+                clone.collaborators = [...collaborators, userIndex] 
             } else {
 
 
                 const index = collaborators.indexOf(userIndex);
                 clone?.collaborators.splice(index, 1);
                 // clone?.collaborators?.filter((id) => id !== userIndex)
-                clone.collaborators = [...collaborators, userIndex]
+                clone.collaborators = [...collaborators, userIndex] 
             }
             updateEvent(clone);
 
-        } else if (eventdata?.collaborators?.includes(userIndex)) {
+        } else if (eventdata?.collaborators?.includes(userIndex)) { 
 
             const index = collaborators.indexOf(userIndex);
             clone?.collaborators.splice(index, 1);
 
             // clone?.collaborators?.filter((id) => id !== userIndex)
 
-            updateEvent(clone);
+            updateEvent(clone); 
         } else {
 
             clone.collaborators = [...collaborators, userIndex]
             // clone.collaborators.push(item)
 
-            updateEvent(clone);
+            updateEvent(clone); 
 
-        }
+        } 
     }
+
+
 
     const UserCard = (props: IUser & { collaborators: boolean, admin: boolean }) => {
         const { username, userId, data: { imgMain: { value: imgMain } }, firstName, lastName, collaborators, admin } = props;
@@ -220,6 +220,8 @@ export default function CollaboratorBtn(props: IProps) {
         )
     }
 
+    const toast = useToast()  
+
     const clickHandler = () => {
 
         setTab(false)
@@ -256,6 +258,11 @@ export default function CollaboratorBtn(props: IProps) {
                 productTypeData: data?.productTypeData,
                 collaborators: data?.collaborators,
                 admins: data?.admins
+            } 
+
+            const cloneAdmin: any = {
+                collaborators: data?.collaborators,
+                admins: data?.admins
             }
 
 
@@ -275,10 +282,7 @@ export default function CollaboratorBtn(props: IProps) {
             updateEvent(clone)
         }
 
-    }
-
-    const toast = useToast()
-
+    } 
     // Edit Event
     const updateUserEvent = useMutation({
         mutationFn: (newdata: any) => httpService.put(URLS.UPDATE_EVENT, newdata),
@@ -348,7 +352,6 @@ export default function CollaboratorBtn(props: IProps) {
         setTab(item)
         setSearch("")
     }
-
 
     return (
         <>

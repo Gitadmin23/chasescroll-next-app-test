@@ -493,10 +493,6 @@ function SubmitEvent(props: Iprops) {
         }
     }, [saveToDraft, uploadImage, createEventFromDraft])
 
-    const updateEventCollaboration = React.useCallback(() => {
-        updateUserEvent.mutate(eventdata)
-    }, [])
-
     return (
         <Flex w={"full"} alignItems={"center"} justifyContent={"center"} fontSize={["md", "lg"]} fontWeight={"bold"} >
 
