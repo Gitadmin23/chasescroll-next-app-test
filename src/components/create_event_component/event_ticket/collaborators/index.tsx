@@ -6,8 +6,7 @@ import UserImage from '@/components/sharedComponent/userimage'
 import { CloseIcon, CollaboratorIcon } from '@/components/svg'
 import useEventStore, { CreateEvent } from '@/global-state/useCreateEventState'
 import { useDetails } from '@/global-state/useUserDetails'
-import useDebounce from '@/hooks/useDebounce'
-import { IEventType } from '@/models/Event'
+import useDebounce from '@/hooks/useDebounce' 
 import { IUser } from '@/models/User'
 import httpService from '@/utils/httpService'
 import { textLimit } from '@/utils/textlimit'
@@ -258,12 +257,7 @@ export default function CollaboratorBtn(props: IProps) {
                 productTypeData: data?.productTypeData,
                 collaborators: data?.collaborators,
                 admins: data?.admins
-            } 
-
-            const cloneAdmin: any = {
-                collaborators: data?.collaborators,
-                admins: data?.admins
-            }
+            }  
 
 
             const admin: any = []
