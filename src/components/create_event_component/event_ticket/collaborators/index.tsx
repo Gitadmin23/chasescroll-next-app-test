@@ -6,7 +6,7 @@ import UserImage from '@/components/sharedComponent/userimage'
 import { CloseIcon, CollaboratorIcon } from '@/components/svg'
 import useEventStore, { CreateEvent } from '@/global-state/useCreateEventState'
 import { useDetails } from '@/global-state/useUserDetails'
-import useDebounce from '@/hooks/useDebounce' 
+import useDebounce from '@/hooks/useDebounce'
 import { IUser } from '@/models/User'
 import httpService from '@/utils/httpService'
 import { textLimit } from '@/utils/textlimit'
@@ -58,7 +58,7 @@ export default function CollaboratorBtn(props: IProps) {
         }
     });
 
-    const AddAdmin =(userIndex: string)=> {
+    const AddAdmin = (userIndex: string) => {
 
         let admin = !eventdata?.admins ? [] : [...eventdata?.admins]
         let collaborators = !eventdata?.collaborators ? [] : [...eventdata?.collaborators]
@@ -69,15 +69,15 @@ export default function CollaboratorBtn(props: IProps) {
 
 
             const index = collaborators.indexOf(userIndex);
-            clone?.collaborators.splice(index, 1); 
+            clone?.collaborators.splice(index, 1);
 
-            if (!eventdata?.admins?.includes(userIndex)) { 
+            if (!eventdata?.admins?.includes(userIndex)) {
 
-                clone.admins = [...admin, userIndex] 
-            } else { 
+                clone.admins = [...admin, userIndex]
+            } else {
 
                 const index = admin.indexOf(userIndex);
-                clone?.admins.splice(index, 1); 
+                clone?.admins.splice(index, 1);
             }
 
             updateEvent(clone);
@@ -85,23 +85,23 @@ export default function CollaboratorBtn(props: IProps) {
         } else if (eventdata?.admins?.includes(userIndex)) {
 
             const index = admin.indexOf(userIndex);
-            clone?.admins.splice(index, 1); 
+            clone?.admins.splice(index, 1);
 
-            updateEvent(clone); 
+            updateEvent(clone);
         } else {
 
             if (!clone.admins) {
                 clone.admins = [userIndex]
             } else {
                 clone.admins = [...admin, userIndex]
-            } 
+            }
 
-            updateEvent(clone); 
+            updateEvent(clone);
 
         }
     }
 
-    const AddCollaborators =(userIndex: string)=> {
+    const AddCollaborators = (userIndex: string) => {
 
         let admin = !eventdata?.admins ? [] : [...eventdata?.admins]
         let collaborators = !eventdata?.collaborators ? [] : [...eventdata?.collaborators]
@@ -115,35 +115,34 @@ export default function CollaboratorBtn(props: IProps) {
 
             if (!eventdata?.collaborators?.includes(userIndex)) {
 
-                clone.collaborators = [...collaborators, userIndex] 
+                clone.collaborators = [...collaborators, userIndex]
             } else {
 
 
                 const index = collaborators.indexOf(userIndex);
                 clone?.collaborators.splice(index, 1);
                 // clone?.collaborators?.filter((id) => id !== userIndex)
-                clone.collaborators = [...collaborators, userIndex] 
+                clone.collaborators = [...collaborators, userIndex]
             }
             updateEvent(clone);
 
-        } else if (eventdata?.collaborators?.includes(userIndex)) { 
+        } else if (eventdata?.collaborators?.includes(userIndex)) {
 
             const index = collaborators.indexOf(userIndex);
             clone?.collaborators.splice(index, 1);
 
             // clone?.collaborators?.filter((id) => id !== userIndex)
 
-            updateEvent(clone); 
+            updateEvent(clone);
         } else {
 
             clone.collaborators = [...collaborators, userIndex]
             // clone.collaborators.push(item)
 
-            updateEvent(clone); 
+            updateEvent(clone);
 
-        } 
+        }
     }
-
 
 
     const UserCard = (props: IUser & { collaborators: boolean, admin: boolean }) => {
@@ -257,7 +256,7 @@ export default function CollaboratorBtn(props: IProps) {
                 productTypeData: data?.productTypeData,
                 collaborators: data?.collaborators,
                 admins: data?.admins
-            }  
+            }
 
 
             const admin: any = []
