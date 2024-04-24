@@ -24,7 +24,6 @@ function PayStackBtn(props: Props) {
         ticketCount,
         datainfo
     } = props 
-
     const toast = useToast()
     const PAYSTACK_KEY: any = process.env.NEXT_PUBLIC_PAYSTACK_KEY;
 
