@@ -26,6 +26,8 @@ export default function Scanner({
         mutationFn: (data: string) => httpService.get(`${URLS.VALIDATE_TICKET(data)}`),
         onSuccess: (data) => {
             console.log(data.data);
+            setTicket(data?.data?.ticket);
+            setApproved(data?.data?.validate);
             const item: {} = data.data;
         }
     })
@@ -41,7 +43,7 @@ export default function Scanner({
     }
 
     return (
-        <Modal isOpen={isOpen} isCentered={true} onClose={() => onClose()} size={scanned && !isLoading && !isError ? 'full':'6xl'}>
+        <Modal isOpen={isOpen} isCentered={true} onClose={() => onClose()} size={scanned && !isLoading && !isError ? 'full':'full'}>
             <ModalContent bg={'grey'}>
                 <ModalCloseButton size={'large'} onClick={() => onClose()} />
                 <ModalBody position={'relative'} width={'100%'} height={'400px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
@@ -67,9 +69,9 @@ export default function Scanner({
                     )}
                     { !isLoading && !show && !isError &&(
                        <>
-                           <Ticket showQrCode={true} />
-                           <Box width={'250px'} height={'250px'} position={'absolute'} top={'400px'} left={'80px'} bg={'transparent'}>
-                               <Image src={ approved ? '/assets/approved.svg': '/assets/denied.svg'} alt={'approved'} width={'250px'} height={'250px'} objectFit={'cover'} />
+                           <Ticket showQrCode={true} ticket={ticket as ITicket} />
+                           <Box width={'250px'} height={'250px'} position={'absolute'} top={'160px'} left={'220px'} bg={'transparent'}>
+                               <Image src={ approved ? '/assets/approved.svg': '/assets/denied.svg'} alt={'approved'} width={'100px'} height={'100px'} objectFit={'cover'} />
                            </Box>
                        </>
                     )}
