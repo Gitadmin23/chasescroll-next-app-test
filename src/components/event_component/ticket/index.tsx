@@ -31,7 +31,7 @@ export default function Ticket({ ticket, showStatus = false, approved = false, s
                     <Image src={`${IMAGE_URL as string}${ticket?.event?.currentPicUrl as string}`} width={'100%'} height={'100%'} objectFit={'cover'} alt={'img'} />
                 </Box>
                 <VStack>
-                    <CustomText fontSize={'18px'} color={'brand.chasescrollButtonBlue'} fontFamily={'DM-Medium'}>{ticket?.event?.eventName?.length > 20 ? ticket?.event?.eventName.substring(0, 20) : ticket?.event?.eventName ?? 'davido man on fire'}</CustomText>
+                    <CustomText fontSize={'18px'} color={'brand.chasescrollButtonBlue'} fontFamily={'DM-Medium'}>{(ticket?.event?.eventName as string).length > 20 ? ticket?.event?.eventName.substring(0, 20) : ticket?.event?.eventName ?? 'davido man on fire'}</CustomText>
                     <CustomText fontSize={'16px'} color={'black'} fontFamily={'DM-Regular'}>{ticket?.event?.location?.address.substring(0, 10) ?? 'no 2 abode street'}</CustomText>
                 </VStack>
             </HStack>
