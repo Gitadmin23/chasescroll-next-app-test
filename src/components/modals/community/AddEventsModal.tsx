@@ -1,5 +1,5 @@
 import { useCommunityPageState } from '@/components/Community/chat/state';
-import EventDetails from '@/components/event_details_component';
+// import EventDetails from '@/components/event_details_component';
 import CustomText from '@/components/general/Text';
 import { useDetails } from '@/global-state/useUserDetails'
 import useDebounce from '@/hooks/useDebounce';
@@ -7,10 +7,26 @@ import { IEvent } from '@/models/Events'
 import { PaginatedResponse } from '@/models/PaginatedResponse';
 import { IMAGE_URL, URLS } from '@/services/urls';
 import httpService from '@/utils/httpService';
-import { Box, Button, HStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay, VStack, useToast, Image, Input } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    HStack,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalOverlay,
+    VStack,
+    useToast,
+    Image,
+    Input,
+    InputGroup,
+    InputLeftAddon, InputLeftElement
+} from '@chakra-ui/react';
 import { uniqBy } from 'lodash';
 import React from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import {FiSearch} from "react-icons/fi";
 
 const EventBox = ({ event }: {
     event: IEvent,
@@ -45,25 +61,35 @@ const EventBox = ({ event }: {
         }
     })
     return (
-        <HStack alignItems={'flex-start'} width='100%' height={'auto'} paddingY={'10px'} borderBottomWidth={'1px'} borderBottomColor={'lightgrey'}>
-            <Box width='50px' height={'50px'} borderRadius={'10px'} bg={'lightgrey'} overflow={'hidden'}>
-                <Image alt='om' src={`${IMAGE_URL}${event.currentPicUrl}`} width='100%' height='100%' objectFit={'cover'} />
-            </Box>
+        <HStack alignItems={'center'} width='100%' height={'130px'} paddingY={'10px'} borderBottomWidth={'1px'} borderBottomColor={'lightgrey'} justifyContent={'space-between'}>
 
-            <VStack flex={1} alignItems={'flex-start'} spacing={2}>
-                <Box>
-                    <CustomText fontFamily={'DM-Bold'} fontSize={'16px'}>{event.eventName.length > 40 ? event.eventName.substring(0, 40) + '...':event.eventName}</CustomText>
-                    <CustomText fontFamily={'DM-Regular'} fontSize={'14px'}>{event.eventDescription.length >40 ? event.eventDescription.substring(0, 40) + '...' : event.eventDescription}</CustomText>
+           <HStack>
+
+                <Box width='150px' height={'110px'} borderRadius={'10px'} bg={'lightgrey'} overflow={'hidden'}>
+                    <Image alt='om' src={`${IMAGE_URL}${event.currentPicUrl}`} width='100%' height='100%' objectFit={'cover'} />
                 </Box>
 
-                <Button onClick={() => savedEvent.mutate({
+                <VStack flex={1} alignItems={'flex-start'} spacing={2}>
+                <Box>
+                    <CustomText fontFamily={'DM-Bold'} fontSize={'18px'}>{event.eventName.length > 20 ? event.eventName.substring(0, 20) + '...':event.eventName}</CustomText>
+
+                    <CustomText fontFamily={'DM-Regular'} fontSize={'16px'} color='grey'>{event?.eventDescription?.length >20 ? event?.eventDescription?.substring(0, 20) + '...' : event?.eventDescription}</CustomText>
+
+                    <CustomText fontFamily={'DM-Regular'} marginTop={'10px'} fontSize={'12px'} color='brand.chasescrollButtonBlue'>{event?.location?.address?.length >20 ? event?.location?.address?.substring(0, 20) + '...' : event?.location?.address}</CustomText>
+                </Box>
+
+                
+            </VStack>
+
+           </HStack>
+
+            <Button onClick={() => savedEvent.mutate({
                     eventID: event.id,
                     typeID: activeCommunity?.id,
                     type: 'EVENT',
                 })}
                     isLoading={savedEvent.isLoading}
-                    width='100px' height='30px' borderRadius={'10px'} variant={'outline'} fontSize={'12px'}>Add</Button>
-            </VStack>
+                    width='100px' height='40px' borderRadius={'30px'} bg='brand.chasescrollButtonBlue' color='white' variant={'outline'} fontSize={'12px'}>Add</Button>
 
         </HStack>
     )
@@ -97,18 +123,25 @@ function AddEventsModal({ isOpen, onClose }: {
 
 
     return (
-        <Modal isOpen={isOpen} onClose={() => onClose()} size='md' isCentered>
+        <Modal isOpen={isOpen} onClose={() => onClose()} size='lg' isCentered>
             <ModalOverlay />
-            <ModalContent padding='0px'>
+            <ModalContent padding='0px' borderRadius={'20px'}>
                 <ModalCloseButton />
                 <ModalBody padding='0px'>
-                    <HStack paddingX='10px' width='100%' height={'60px'} borderBottomWidth={'1px'} borderBottomColor={'lightgrey'}>
+                    <VStack paddingX='10px' width='100%' height={'100px'} borderBottomWidth={'1px'} borderBottomColor={'lightgrey'} alignItems={'flex-start'} justifyContent={'center'} spacing={0}>
                         <CustomText fontFamily={'DM-Bold'} fontSize={'20px'}>Events</CustomText>
+                        <CustomText fontFamily={'DM-Regular'} fontSize={'15px'} color={'grey'}>Please select an event to add to your community</CustomText>
+                    </VStack>
+                    <HStack paddingX='20px' width='100%' paddingY='10px'>
+                        <InputGroup>
+                            <InputLeftElement>
+                                <FiSearch size={30} color={'grey'} />
+                            </InputLeftElement>
+                            <Input value={search} onChange={(e) =>setSeearch(e.target.value)} placeholder='Search for event' height={'50px'} borderRadius={'30px'} />
+                        </InputGroup>
+
                     </HStack>
-                    <HStack paddingX='10px' width='100%' paddingY='10px'>
-                        <Input value={search} onChange={(e) =>setSeearch(e.target.value)} placeholder='Search for event' />
-                    </HStack>
-                    <Box width='100%' height='450px' overflowY={'auto'} paddingX='10px'>
+                    <Box width='100%' height='450px' overflowY={'auto'} paddingX='20px'>
                         {!isLoading && !isError && events.length < 1 && (
                             <VStack width='100%' height={'100%'} justifyContent={'center'} alignItems={'center'}>
                                 <CustomText fontFamily={'DM-Regular'} fontSize={'18px'}>You have no Events to add!</CustomText>

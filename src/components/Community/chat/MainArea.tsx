@@ -21,18 +21,18 @@ import Link from 'next/link';
 
 function MainArea() {
     const { activeCommunity, setAll, messages, pageNumber, hasNext, activeMessageId, commentHasNext, commentPage, comments, showEvents, events } = useCommunityPageState((state) => state);
-    
+
     const [posts, setPosts] = React.useState<IMediaContent[]>([]);
     const [showEventModal, setShowEventModal] = React.useState(false);
     const [len, setLen] = React.useState(messages?.length);
 
-    
+
 
      const intObserver = React.useRef<IntersectionObserver>();
 
 
     const { userId: myId } = useDetails((state) => state)
-   
+
     // queries
     const { isLoading, } = useQuery([`getMessage-${activeCommunity?.id}`, activeCommunity?.id, pageNumber], () => httpService.get(`${URLS.GET_GROUP_MESSAGES}`, {
         params: {
@@ -41,6 +41,7 @@ function MainArea() {
         }
     }), {
         enabled: activeCommunity !== null,
+        refetchOnMount: true,
         onSuccess: (data) => {
             const item: PaginatedResponse<IMediaContent> = data.data;
             if (item?.content?.length > 0) {
@@ -50,13 +51,13 @@ function MainArea() {
                     if (messages.length > 0) {
                         const arr = [...messages, ...item?.content];
                         setAll({ messages: uniqBy(arr, 'id'), hasNext: item.last ? false:true });
-        
+
                     } else {
                         setAll({ messages: uniqBy(item?.content, 'id'),  hasNext: item.last ? false:true });
                     }
                 }
             }
-          
+
         },
         onError: (error: any) => {}
     });
@@ -74,7 +75,7 @@ function MainArea() {
         intObserver.current = new IntersectionObserver((posts) => {
           if (posts[0].isIntersecting && hasNext) {
             setAll({ pageNumber: pageNumber + 1});
-            //setPageNumber(prev => prev + 1); 
+            //setPageNumber(prev => prev + 1);
           }
         });
         if (post) intObserver.current.observe(post);
