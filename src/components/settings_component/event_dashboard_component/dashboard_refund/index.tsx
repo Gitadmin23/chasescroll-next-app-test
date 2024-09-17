@@ -15,12 +15,10 @@ import {
     TableContainer,
     Tbody,
     Td,
-    Text,
-    Tfoot,
+    Text, 
     Th,
     Thead,
-    Tr,
-    useColorMode,
+    Tr, 
     useToast
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
