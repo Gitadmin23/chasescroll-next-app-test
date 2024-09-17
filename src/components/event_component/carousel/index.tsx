@@ -40,7 +40,8 @@ function EventCarousel(props: Props) {
     const { userId, email } = useDetails((state) => state);
 
     focusManager.setFocused(false)
-    // react query
+
+    
     const { isLoading, isRefetching } = useQuery(['get-events-for-carousel'], () => httpService.get('/events/events'), {
         onError: (error: any) => {
             toast({
