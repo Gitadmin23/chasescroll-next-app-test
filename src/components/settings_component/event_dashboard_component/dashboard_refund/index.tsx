@@ -1,11 +1,8 @@
-import CustomButton from '@/components/general/Button'
-// import PeopleCard from '@/components/search_component/other_components/people_card'
+import CustomButton from '@/components/general/Button' 
 import CopyRightText from '@/components/sharedComponent/CopyRightText'
 import EventImage from '@/components/sharedComponent/eventimage'
 import LoadingAnimation from '@/components/sharedComponent/loading_animation'
-import RefundBtn from '@/components/sharedComponent/refundbtn'
-// import UserImage from '@/components/sharedComponent/userimage'
-// import InfiniteScrollerComponent from '@/hooks/infiniteScrollerComponent'
+import RefundBtn from '@/components/sharedComponent/refundbtn' 
 import httpService from '@/utils/httpService'
 import {
     Box,
@@ -63,8 +60,7 @@ function DashboardRefund(props: Props) {
     const {
         bodyTextColor,
         borderColor
-    } = useCustomTheme();
-    const { colorMode, toggleColorMode } = useColorMode();
+    } = useCustomTheme(); 
 
     const toast = useToast()
     const [size, setSize] = React.useState(20)
@@ -183,7 +179,7 @@ function DashboardRefund(props: Props) {
 
     }, [showDate, showNumberOfTicket, showEmail, showStatus, showStatus, showTicketType, showUserName])
 
-    const { isLoading: loadingData, isRefetching: refechingDa } = useQuery(['all-events-details', index], () => httpService.get(URLS.All_EVENT + "?id=" + index), {
+    const { isLoading: loadingData } = useQuery(['all-events-details', index], () => httpService.get(URLS.All_EVENT + "?id=" + index), {
         onError: (error: any) => {
             toast({
                 status: "error",
@@ -213,8 +209,6 @@ function DashboardRefund(props: Props) {
     const downloadCSV = () => {
         refetch()
     }
-
-    
 
     return (
         <Flex ref={componentRef} width={"full"} flexDirection={"column"} >
