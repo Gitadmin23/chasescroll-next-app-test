@@ -230,19 +230,25 @@ export default function EventDetail(props: IEventType) {
                             {(!isOrganizer && eventMemberRole !== "ADMIN" && eventMemberRole !== "COLLABORATOR") && (
                                 <GetEventTicket {...props} />
                             )}
+                            <Flex>
+                                {(donationEnabled || isOrganizer) && (
+                                    <DonationBtn {...props} />
+                                )}
+                            </Flex>
                         </Flex>
                     )}
-                    {(isOrganizer || eventMemberRole === "ADMIN" || eventMemberRole === "COLLABORATOR") && (
-                        <Flex w={"full"} bgColor={secondaryBackgroundColor} display={["none", "none", "flex", "flex"]} rounded={"64px"} alignItems={"center"} h={"86px"} px={"4"} py={"3"} justifyContent={"center"} >
-                            <OrganizeBtn {...props} />
-                        </Flex>
-                    )}
-                    <Flex> 
+
+                    <Flex display={["flex", "flex", "flex", "none", "none"]}  >
                         {(donationEnabled || isOrganizer) && (
                             <DonationBtn {...props} />
                         )}
                     </Flex>
 
+                    {(isOrganizer || eventMemberRole === "ADMIN" || eventMemberRole === "COLLABORATOR") && (
+                        <Flex w={"full"} bgColor={secondaryBackgroundColor} display={["none", "none", "flex", "flex"]} rounded={"64px"} alignItems={"center"} h={"86px"} px={"4"} py={"3"} justifyContent={"center"} >
+                            <OrganizeBtn {...props} />
+                        </Flex>
+                    )}
                     <Flex flexDir={"column"} gap={"4"} >
                         <Text fontWeight={"medium"} >Tags</Text>
                         <Button color={headerTextColor} fontSize={"12px"} w={"fit-content"} px={"3"} bgColor={secondaryBackgroundColor} rounded={"32px"} h={"38px"} >
@@ -255,7 +261,7 @@ export default function EventDetail(props: IEventType) {
             <Box display={["flex", "flex", "flex", "none", "none"]} h={"300px"} />
 
             {((eventMemberRole !== "COLLABORATOR") && !isOrganizer && eventMemberRole !== "ADMIN") && (
-                <Flex w={[!isBought ? "auto" : "fit-content"]} display={["flex", "flex", "flex", "none", "none"]} zIndex={"100"} pos={["fixed", "fixed", "fixed", "relative", "relative"]} bgColor={[mainBackgroundColor]} bottom={pathname?.includes("detail") ? "80px" : "30px"} left={[isBought ? "auto" : "4", "4", "4", "4"]} right={"4"} mt={isBought ? "0px" : "8"} flexDir={"column"} rounded={isBought ? "13px" : "16px"} gap={"3"} pb={isBought ? "0px" : "3"} p={[isBought ? "0px" : "1", "3", "3", "3"]} style={{ border: isBought ? "" : `1px solid #DEDEDE`, boxShadow: "0px 20px 70px 0px #C2C2C21A" }} >
+                <Flex w={[!isBought ? "auto" : "fit-content"]} display={["flex", "flex", "flex", "none", "none"]} zIndex={"100"} pos={["fixed", "fixed", "fixed", "relative", "relative"]} bgColor={[mainBackgroundColor]} bottom={pathname?.includes("detail") ? "80px" : "30px"} left={[isBought ? "auto" : "4", "4", "4", "4"]} right={"4"} mt={isBought ? "0px" : "8"} flexDir={"column"} rounded={isBought ? "13px" : "16px"} gap={"3"} pb={isBought ? "0px" : "3"} p={[isBought ? "0px" : "3", "3", "3", "3"]} style={{ border: isBought ? "" : `1px solid #DEDEDE`, boxShadow: "0px 20px 70px 0px #C2C2C21A" }} >
                     {!isBought && (
                         <Text fontWeight={"600"} fontSize={"18px"} >{(isOrganizer || eventMemberRole === "ADMIN" || eventMemberRole === "COLLABORATOR" || isBought) ? " " : "Ticket  Available"}</Text>
                     )}
