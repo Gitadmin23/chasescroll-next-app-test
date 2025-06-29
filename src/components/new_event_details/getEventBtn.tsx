@@ -55,7 +55,7 @@ function GetEventTicket(props: IProps) {
             });
         } else {
             if (token) {
-                setModalTab(data?.isBought ? 5 : 1);
+                setModalTab(1);
                 setShowModal(true);
             } else if (!user_index) {
                 if (affiliate) {
@@ -66,7 +66,7 @@ function GetEventTicket(props: IProps) {
                 // router.push("/share/auth/login?type=EVENT&typeID=" + id);
                 setOpen(true)
             } else {
-                setModalTab(data?.isBought ? 5 : 1);
+                setModalTab(1);
                 setShowModal(true);
             }
         }
@@ -74,7 +74,7 @@ function GetEventTicket(props: IProps) {
 
     const viewHandler = (event: any) => {
         event.stopPropagation();
-        setModalTab(data?.isBought ? 5 : 1);
+        setModalTab(5);
         setShowModal(true);
     };
 
