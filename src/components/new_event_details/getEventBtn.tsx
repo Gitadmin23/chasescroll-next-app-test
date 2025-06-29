@@ -14,6 +14,7 @@ import useModalStore from "@/global-state/useModalSwitch";
 import { useRouter, useSearchParams } from "next/navigation";
 import { SuccessIcon } from "@/components/svg";
 import { IEventType } from "@/models/Event";
+import useCustomTheme from "@/hooks/useTheme";
 
 interface IProps {
     data: IEventType
@@ -28,6 +29,8 @@ function GetEventTicket(props: IProps) {
     } = props;
 
     const [openSignUp, setOpenSignUp] = useState(false)
+
+    const { primaryColor } = useCustomTheme()
     const query = useSearchParams();
     const affiliate = query?.get('affiliate');
     const type = query?.get('open');
@@ -99,7 +102,7 @@ function GetEventTicket(props: IProps) {
             </Flex>
             {data?.isBought && (
                 <Flex w={"full"} display={[data?.isBought ? "block" : "block", "block", "block", "block"]} >
-                    <CustomButton backgroundColor={"#233DF3"} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={viewHandler} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={"View Ticket"} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
+                    <CustomButton backgroundColor={"#F2F4FF"} borderWidth={"1px"} borderColor={primaryColor} color={primaryColor} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={viewHandler} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={"View Ticket"} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
                 </Flex>
             )}
             <ModalLayout size={modalTab === 5 ? ["full", "md", "3xl"] : "md"} title={modalTab === 6 ? "Ticket available for this event" : ""} open={showModal} close={setShowModal} >
