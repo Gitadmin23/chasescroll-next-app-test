@@ -5,15 +5,15 @@ import PaymentMethod from "./event_modal/payment_method";
 import SelectTicketNumber from "./event_modal/select_ticket_number";
 import RefundPolicy from "./event_modal/refund_policy";
 import CustomButton from "@/components/general/Button";
-import PaymentType from "./event_modal/payment_type"; 
+import PaymentType from "./event_modal/payment_type";
 import { useDetails } from "@/global-state/useUserDetails";
 import ViewTicket from "./event_modal/view_ticket";
 import SelectTicketType from "./event_modal/select_ticket_type";
 import useStripeStore from "@/global-state/useStripeState";
 import useModalStore from "@/global-state/useModalSwitch";
 import { useRouter, useSearchParams } from "next/navigation";
-import { SuccessIcon } from "@/components/svg"; 
-import { IEventType } from "@/models/Event"; 
+import { SuccessIcon } from "@/components/svg";
+import { IEventType } from "@/models/Event";
 
 interface IProps {
     data: IEventType
@@ -26,10 +26,10 @@ function GetEventTicket(props: IProps) {
         data,
         setOpen
     } = props;
-    
-    const [openSignUp, setOpenSignUp] = useState(false) 
+
+    const [openSignUp, setOpenSignUp] = useState(false)
     const query = useSearchParams();
-    const affiliate = query?.get('affiliate'); 
+    const affiliate = query?.get('affiliate');
     const type = query?.get('open');
     // const [stripePromise, setStripePromise] = React?.useState(() => loadStripe(STRIPE_KEY))
 
@@ -47,10 +47,7 @@ function GetEventTicket(props: IProps) {
 
     const clickHandler = (event: any) => {
         event.stopPropagation();
-        if (data?.isBought) {
-            setModalTab(data?.isBought ? 5 : 1);
-            setShowModal(true);
-        } else if (!ticketType?.ticketType) {
+        if (!ticketType?.ticketType) {
             toast({
                 status: "error",
                 title: "Please Select Ticket Type",
@@ -65,7 +62,7 @@ function GetEventTicket(props: IProps) {
                     router.push("/event/" + data?.affiliateID + "?type=affiliate&open=true")
                 } else {
                     router.push("/event/" + data?.id + "?open=true")
-                } 
+                }
                 // router.push("/share/auth/login?type=EVENT&typeID=" + id);
                 setOpen(true)
             } else {
@@ -73,7 +70,13 @@ function GetEventTicket(props: IProps) {
                 setShowModal(true);
             }
         }
-    }; 
+    };
+
+    const viewHandler = (event: any) => {
+        event.stopPropagation();
+        setModalTab(data?.isBought ? 5 : 1);
+        setShowModal(true);
+    };
 
     const goback = () => {
         if (showModal) {
@@ -87,13 +90,18 @@ function GetEventTicket(props: IProps) {
     const signUpHandler = (item: boolean) => {
         setOpen(false)
         setOpenSignUp(item)
-    }  
+    }
 
     return (
-        <> 
+        <>
             <Flex w={"full"} display={[data?.isBought ? "block" : "block", "block", "block", "block"]} >
-                <CustomButton backgroundColor={"#233DF3"} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={clickHandler} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType) ? "Ticket Sold Out" : (data?.isBought) ? "View Ticket" : data?.isFree ? "Register" : "Check out ")} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
-            </Flex>  
+                <CustomButton backgroundColor={"#233DF3"} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={clickHandler} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && ticketType?.ticketType) ? "Ticket Sold Out" : data?.isFree ? "Register" : "Check out ")} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
+            </Flex>
+            {data?.isBought && (
+                <Flex w={"full"} display={[data?.isBought ? "block" : "block", "block", "block", "block"]} >
+                    <CustomButton backgroundColor={"#233DF3"} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={viewHandler} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={"Ticket Sold Out"} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
+                </Flex>
+            )}
             <ModalLayout size={modalTab === 5 ? ["full", "md", "3xl"] : "md"} title={modalTab === 6 ? "Ticket available for this event" : ""} open={showModal} close={setShowModal} >
                 {modalTab === 1 && (
                     <SelectTicketNumber close={setShowModal} numbOfTicket={numbOfTicket} setNumberOfTicket={setNumberOfTicket} next={setModalTab} selectedTicket={ticketType} data={data} />
@@ -124,7 +132,7 @@ function GetEventTicket(props: IProps) {
                         <CustomButton onClick={() => setModalTab(5)} color={"#FFF"} text='View Ticket' w={"full"} backgroundColor={"#3EC259"} />
                     </Flex>
                 )}
-            </ModalLayout> 
+            </ModalLayout>
         </>
     )
 }
