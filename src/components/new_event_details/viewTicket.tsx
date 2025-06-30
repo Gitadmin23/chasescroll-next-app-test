@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Text, useColorMode, useToast } from "@chakra-ui/react";
-import CustomButton from "../general/Button"; 
+import CustomButton from "../general/Button";
 import useCustomTheme from "@/hooks/useTheme";
 import useModalStore from "@/global-state/useModalSwitch";
 import React, { useRef, useState } from "react";
@@ -48,7 +48,7 @@ export default function ViewTicket(
     const [dataMultiple, setDataMultiple] = useState([] as any)
     const [length, setTicketLenght] = useState("" as any)
 
-    let userId = sessionStorage?.getItem("user_id") + ""; 
+    let userId = sessionStorage?.getItem("user_id") + "";
     const { userId: user_index } = useDetails((state) => state);
 
     const reactToPrintFn = useReactToPrint({ contentRef });
@@ -66,7 +66,7 @@ export default function ViewTicket(
             setTicketDetails(data?.data?.content[0]);
             setDataMultiple(data?.data?.content)
         },
-        enabled: data?.isBought 
+        enabled: data?.isBought
     })
 
 
@@ -89,16 +89,18 @@ export default function ViewTicket(
 
     return (
         <>
-            <Flex w={"full"} display={[data?.isBought ? "block" : "block", "block", "block", "block"]} >
-                <CustomButton backgroundColor={"#F2F4FF"} borderWidth={"1px"} borderColor={primaryColor} color={primaryColor} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={()=> setOpen(true)} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={`View Ticket${length > 1 ? `s x${length}` : ""}`} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
-            </Flex>
+            {data?.isBought && (
+                <Flex w={"full"} display={[data?.isBought ? "block" : "block", "block", "block", "block"]} >
+                    <CustomButton backgroundColor={"#F2F4FF"} borderWidth={"1px"} borderColor={primaryColor} color={primaryColor} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={() => setOpen(true)} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={`View Ticket${length > 1 ? `s x${length}` : ""}`} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
+                </Flex>
+            )}
             <ModalLayout size={["full", "md", "3xl"]} title={""} open={open} close={setOpen} >
 
                 <LoadingAnimation loading={isLoading} >
                     <Flex p={"4"} shadow={"lg"} position={"relative"} flexDirection={"column"} bg={mainBackgroundColor} roundedTop={"md"} width={"full"} alignItems={"center"} justifyContent={"center"} px={"2"} gap={"2"} >
                         <Flex bg={mainBackgroundColor} maxW={["750px"]} display={["none", "none", "flex"]} position={"relative"} gap={"4"} px={"4"} mb={"2"} width={"full"} justifyContent={"space-between"} alignItems={"center"} >
 
-                            <Box display={["none", "none", "flex"]} zIndex={"10"} onClick={()=> setOpen(false)} as='button' >
+                            <Box display={["none", "none", "flex"]} zIndex={"10"} onClick={() => setOpen(false)} as='button' >
                                 <IoClose size={"30px"} />
                             </Box>
                             <Flex pos={"absolute"} display={["none", "none", "flex"]} w={"full"} justifyContent={"center"} >
@@ -111,7 +113,7 @@ export default function ViewTicket(
                                 <CustomButton width={"fit-content"} backgroundColor={"#3EC259"} color={"#FFF"} borderRadius={"full"} onClick={() => reactToPrintFn()} text='Download Ticket' />
                             </Box>
                         </Flex>
-                        <Box pos={"absolute"} top={"2"} left={"2"} p={"1"} bgColor={mainBackgroundColor} rounded={"full"} display={["flex", "flex", "none"]} zIndex={"10"} onClick={()=> setOpen(false)} as='button' >
+                        <Box pos={"absolute"} top={"2"} left={"2"} p={"1"} bgColor={mainBackgroundColor} rounded={"full"} display={["flex", "flex", "none"]} zIndex={"10"} onClick={() => setOpen(false)} as='button' >
                             <IoClose size={"25px"} />
                         </Box>
                         <Box bg={mainBackgroundColor} display={["none", "none", "block"]} >

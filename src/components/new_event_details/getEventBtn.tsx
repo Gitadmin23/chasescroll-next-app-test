@@ -101,7 +101,9 @@ function GetEventTicket(props: IProps) {
             <Flex w={"full"} display={[data?.isBought ? "block" : "block", "block", "block", "block"]} >
                 <CustomButton backgroundColor={"#233DF3"} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={clickHandler} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && ticketType?.ticketType) ? "Ticket Sold Out" : data?.isFree ? "Register" : "Check out ")} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
             </Flex>
-            <ViewTicket data={data} />
+            {data?.isBought && ( 
+                <ViewTicket data={data} />
+            )}
             <ModalLayout size={modalTab === 5 ? ["full", "md", "3xl"] : "md"} title={modalTab === 6 ? "Ticket available for this event" : ""} open={showModal} close={setShowModal} >
                 {modalTab === 1 && (
                     <SelectTicketNumber close={setShowModal} numbOfTicket={numbOfTicket} setNumberOfTicket={setNumberOfTicket} next={setModalTab} selectedTicket={ticketType} data={data} />
