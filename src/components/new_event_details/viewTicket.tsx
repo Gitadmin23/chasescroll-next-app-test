@@ -48,7 +48,7 @@ export default function ViewTicket(
     const [dataMultiple, setDataMultiple] = useState([] as any)
     const [length, setTicketLenght] = useState("" as any)
 
-    let userId = sessionStorage?.getItem("user_id") + ""
+    let userId = sessionStorage?.getItem("user_id") + ""; 
     const { userId: user_index } = useDetails((state) => state);
 
     const reactToPrintFn = useReactToPrint({ contentRef });
@@ -90,7 +90,7 @@ export default function ViewTicket(
     return (
         <>
             <Flex w={"full"} display={[data?.isBought ? "block" : "block", "block", "block", "block"]} >
-                <CustomButton backgroundColor={"#F2F4FF"} borderWidth={"1px"} borderColor={primaryColor} color={primaryColor} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={()=> setOpen(true)} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={`View Ticket ${length}`} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
+                <CustomButton backgroundColor={"#F2F4FF"} borderWidth={"1px"} borderColor={primaryColor} color={primaryColor} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={()=> setOpen(true)} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={`View Ticket x${length}`} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
             </Flex>
             <ModalLayout size={["full", "md", "3xl"]} title={""} open={open} close={setOpen} >
 
