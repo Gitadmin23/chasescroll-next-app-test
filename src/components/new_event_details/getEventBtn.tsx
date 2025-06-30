@@ -7,7 +7,7 @@ import RefundPolicy from "./event_modal/refund_policy";
 import CustomButton from "@/components/general/Button";
 import PaymentType from "./event_modal/payment_type";
 import { useDetails } from "@/global-state/useUserDetails";
-import ViewTicket from "./event_modal/view_ticket";
+// import ViewTicket from "./event_modal/view_ticket";
 import SelectTicketType from "./event_modal/select_ticket_type";
 import useStripeStore from "@/global-state/useStripeState";
 import useModalStore from "@/global-state/useModalSwitch";
@@ -15,6 +15,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { SuccessIcon } from "@/components/svg";
 import { IEventType } from "@/models/Event";
 import useCustomTheme from "@/hooks/useTheme";
+import ViewTicket from "./viewTicket";
 
 interface IProps {
     data: IEventType
@@ -100,11 +101,7 @@ function GetEventTicket(props: IProps) {
             <Flex w={"full"} display={[data?.isBought ? "block" : "block", "block", "block", "block"]} >
                 <CustomButton backgroundColor={"#233DF3"} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={clickHandler} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && ticketType?.ticketType) ? "Ticket Sold Out" : data?.isFree ? "Register" : "Check out ")} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
             </Flex>
-            {data?.isBought && (
-                <Flex w={"full"} display={[data?.isBought ? "block" : "block", "block", "block", "block"]} >
-                    <CustomButton backgroundColor={"#F2F4FF"} borderWidth={"1px"} borderColor={primaryColor} color={primaryColor} borderRadius={"32px"} opacity={(!ticketType?.ticketType && !data?.isBought && ticketType?.ticketType) ? "30%" : ""} my={"auto"} onClick={viewHandler} disable={(((ticketType?.totalNumberOfTickets === ticketType?.ticketsSold) && !data?.isBought && ticketType?.ticketType)) ? true : (ticketType?.ticketType || data?.isBought) ? false : true} text={"View Ticket"} width={["full"]} height={["37px", " 37px", "57px"]} fontSize={"sm"} fontWeight={"semibold"} />
-                </Flex>
-            )}
+            <ViewTicket data={data} />
             <ModalLayout size={modalTab === 5 ? ["full", "md", "3xl"] : "md"} title={modalTab === 6 ? "Ticket available for this event" : ""} open={showModal} close={setShowModal} >
                 {modalTab === 1 && (
                     <SelectTicketNumber close={setShowModal} numbOfTicket={numbOfTicket} setNumberOfTicket={setNumberOfTicket} next={setModalTab} selectedTicket={ticketType} data={data} />
@@ -118,12 +115,12 @@ function GetEventTicket(props: IProps) {
                 {modalTab === 4 && (
                     <PaymentType data={data} ticketCount={numbOfTicket} currency={data?.currency} selectedCategory={ticketType?.ticketType} click={setModalTab} />
                 )}
-                {modalTab === 5 && (
+                {/* {modalTab === 5 && (
                     <ViewTicket
                         user_index={user_index}
                         click={goback}
                         data={data} />
-                )}
+                )} */}
                 {modalTab === 6 && (
                     <SelectTicketType ticket={data?.productTypeData} setSelectedTicket={setTicketType} currency={data?.currency} click={setModalTab} />
                 )}
