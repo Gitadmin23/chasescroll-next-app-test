@@ -117,6 +117,9 @@ function GoogleBtn(props: Props) {
     useEffect(() => {
         if (tokenData && email) { 
 
+            console.log(tokenData, email);
+            
+
             if (username === email) {
 
                 if (!checkData?.email) {
@@ -126,9 +129,11 @@ function GoogleBtn(props: Props) {
                         lastName: "",
                     })
                 }
+                console.log("second");
                 setOpen(true)
             } else {
                 if (index) {
+                    console.log("third");
                     if (type === "DONATION") {
                         router.push(`/dashboard/donation/${index}`);
                     } else if (type === "RENTAL") {
@@ -141,6 +146,7 @@ function GoogleBtn(props: Props) {
                         router.push(`/dashboard/event/details/${(affiliateID === "affiliate" || affiliateIDtwo) ? affiliate ? affiliate : affiliateIDtwo : index}${(affiliateID === "affiliate" || affiliateIDtwo) ? "?type=affiliate" : ""}`);
                     }
                 } else {
+                    console.log("fourth");
                     router.push('/dashboard/product')
                 }
             }
@@ -158,6 +164,7 @@ function GoogleBtn(props: Props) {
         onSuccess: (data) => {
  
             if (data?.data?.username === data?.data?.email) { 
+                console.log(data?.data?.email, data?.data?.username);
 
                 setAll({
                     user: data?.data,
@@ -178,6 +185,7 @@ function GoogleBtn(props: Props) {
                 setOpen(true)
             } else {  
                 if (index) {
+                    console.log("fifth");
                     if (type === "DONATION") {
                         router.push(`/dashboard/donation/${index}`);
                     } else if (type === "RENTAL") {
@@ -190,6 +198,7 @@ function GoogleBtn(props: Props) {
                         router.push(`/dashboard/event/details/${(affiliateID === "affiliate" || affiliateIDtwo) ? affiliate ? affiliate : affiliateIDtwo : index}${(affiliateID === "affiliate" || affiliateIDtwo) ? "?type=affiliate" : ""}`);
                     }
                 } else {
+                    console.log("sixth");
                     router.push('/dashboard/product')
                 }
             }
@@ -222,6 +231,9 @@ function GoogleBtn(props: Props) {
             localStorage.setItem('expires_in', data?.data?.expires_in);
  
             setCheckToken(data?.data?.access_token)
+
+            console.log(data?.data?.access_token);
+            
 
             checkUserInfo?.mutate(data?.data?.access_token)
 
