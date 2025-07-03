@@ -36,10 +36,6 @@ export default function NewPage() {
                     <Image alt='logo' src='/images/logo.png' />
                     <Text fontSize={"24px"} color={"#1F1F1F"} textAlign={"center"} fontWeight={"600"} >Welcome To Chasescroll</Text>
                     <Text fontSize={"14px"} color={"#5C5C5C"} textAlign={"center"} fontWeight={"500"} >{`We're thrilled to work with you on your event projects. Join us today.`}</Text>
-                    {/* <Button as={"button"} mt={"4"} h={"50px"} w={"full"} bgColor={"#F7F7F7"} rounded={"32px"} gap={"3"} justifyContent={"center"} alignItems={"center"} >
-                        <GoogleIcon />
-                        <Text fontSize={"14px"} color={"#111111"} textAlign={"center"} fontWeight={"500"} >Signup with Google</Text>
-                    </Button>  */}
                     <GoogleBtn title="Sign in" newbtn={true} />
                     <Flex mt={"2"} flexDirection={"column"} pos={"relative"} alignItems={"center"} >
                         <Box maxW={"400px"} w={"70vw"} height={"1px"} pos={"absolute"} top={"3"} bgColor={"#BCBCBC"} />

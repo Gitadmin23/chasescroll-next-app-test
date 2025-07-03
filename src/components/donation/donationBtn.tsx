@@ -14,23 +14,22 @@ import { IDonationList } from '@/models/donation'
 
 export default function DonationBtn(props: {
     item: IDonationList,
+    data?: any,
     user: any;
     event?: any;
 }) {
 
     const {
         user,
-        item,
+        item, 
         event
     } = props
 
     const [open, setOpen] = useState(false)
 
-    const [value, setValue] = useState("")
+    const [value, setValue] = useState("")  
 
-    console.log(user?.userId);
-    let token = localStorage.getItem("token")
-
+    let token = localStorage.getItem("token") 
 
     const {
         primaryColor,
@@ -65,11 +64,7 @@ export default function DonationBtn(props: {
             orderType: "DONATION",
             typeID: string
         }) => httpService.post(`/payments/createCustomOrder`, data),
-        onSuccess: (data: any) => {
-
-            console.log(data);
-            
-
+        onSuccess: (data: any) => { 
             setPaystackConfig({
                 publicKey: PAYSTACK_KEY,
                 email: data?.data?.content?.email,
@@ -99,7 +94,7 @@ export default function DonationBtn(props: {
 
     const clickHandler = () => {
         payForTicket.mutate({
-            seller: item?.createdBy?.userId,
+            seller: user?.userId,
             price: Number(value),
             currency: "NGN",
             orderType: "DONATION",

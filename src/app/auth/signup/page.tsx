@@ -29,11 +29,7 @@ export default function Sigup() {
                     <Text fontSize={"24px"} color={"#1F1F1F"} textAlign={"center"} fontWeight={"600"} >Join us at Chasescroll</Text>
                     <Text fontSize={"14px"} color={"#5C5C5C"} textAlign={"center"} fontWeight={"500"} >Create a memorable event now</Text>
                     
-                    <GoogleBtn title="" newbtn={true} />
-                    {/* <Button mt={"4"} h={"50px"} w={"full"} bgColor={"#F7F7F7"} rounded={"32px"} gap={"3"} justifyContent={"center"} alignItems={"center"} >
-                        <AppleIcon />
-                        <Text fontSize={"14px"} color={"#111111"} textAlign={"center"} fontWeight={"500"} >Signup with Apple</Text>
-                    </Button> */}
+                    <GoogleBtn title="" newbtn={true} /> 
                     <Flex mt={"2"} flexDirection={"column"} pos={"relative"} alignItems={"center"} > 
                         <Box width={"400px"} height={"1px"} pos={"absolute"} top={"3"} bgColor={"#BCBCBC"} />
                         <Text px={"2"} bg={"white"} pos={"relative"} color={"#BCBCBC"} zIndex={"10"} >OR</Text>

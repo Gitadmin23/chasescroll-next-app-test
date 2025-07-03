@@ -132,8 +132,7 @@ export default function DonationPayment({ data, fullWidth }: { data?: IDonationL
             </Button>
             <Flex w={"full"} justifyContent={"center"} >
                 <DonationTermAndCondition refund={true} />
-            </Flex>
-
+            </Flex> 
             <ModalLayout open={type === "modal" ? true : false} close={()=> router.push(`/donation/${data?.id}`)} title='' closeIcon={true} >
                 <Flex w={"full"} flexDir={"column"} gap={"4"} p={"6"} >
                     <Flex flexDir={"column"} justifyContent={"center"} >

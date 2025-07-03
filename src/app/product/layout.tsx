@@ -184,7 +184,7 @@ function Layout({ children }: {
                                 <FundraisingIcon />
                                 <Text fontSize={["16px", "16px", "24px"]} fontWeight={"700"} >Fundraising</Text>
                             </Flex>
-                            <Flex display={["flex", "flex", "flnoneex"]} alignItems={"center"} gap="2" >
+                            <Flex display={["flex", "flex", "none"]} alignItems={"center"} gap="2" >
                                 <FundraisingIcon height='19' />
                                 <Text fontSize={["16px", "16px", "24px"]} fontWeight={"700"} >Fundraising</Text>
                             </Flex>

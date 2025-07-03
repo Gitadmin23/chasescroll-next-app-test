@@ -145,7 +145,7 @@ export default function DonationItemGroup({ details, singleData, creator, pasted
                                         </Flex>
                                         {(userId !== item?.user?.userId && !pasted) && (
                                             <Flex as={"button"} w={"full"} display={["none", "none", "flex"]} borderTopWidth={"1px"} fontFamily={"14px"} mt={2} px={"3"} fontWeight={"600"} py={"4"} justifyContent={"center"} >
-                                                <DonationBtn item={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]} user={item?.user} />
+                                                <DonationBtn data={item} item={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]} user={item?.user} />
                                             </Flex>
                                         )}
                                     </Flex>
@@ -182,7 +182,7 @@ export default function DonationItemGroup({ details, singleData, creator, pasted
                                         </Flex>
                                         {(userId !== item?.user?.userId && !pasted) && (
                                             <Flex as={"button"} w={"full"} display={["none", "none", "flex"]} borderTopWidth={"1px"} fontFamily={"14px"} mt={2} px={"3"} fontWeight={"600"} py={"4"} justifyContent={"center"} >
-                                                <DonationBtn item={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]} user={item?.user} />
+                                                <DonationBtn data={item} item={item?.fundRaisers?.filter((item) => isDateInPast(item?.endDate))[0]} user={item?.user} />
                                             </Flex>
                                         )}
                                     </Flex>

@@ -39,8 +39,8 @@ interface UserDetail {
     lastName: string;
     username?: string;
     phone?: string;
-}
-// +(data?.affiliateID? "&affiliate=true" : "")
+} 
+
 function GoogleBtn(props: Props) {
     const {
         title,
@@ -88,8 +88,7 @@ function GoogleBtn(props: Props) {
             setTokenData(token.token?.token.token.idToken)
         }
     }, [status]);
-
-    // const { user } = useGetUser() 
+ 
     const { email, username, setAll } = useDetails((state) => state);
 
     useEffect(() => {
