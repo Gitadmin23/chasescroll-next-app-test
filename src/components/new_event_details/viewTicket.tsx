@@ -65,6 +65,8 @@ export default function ViewTicket(
             setTicketLenght(data?.data?.content?.length)
             setTicketDetails(data?.data?.content[0]);
             setDataMultiple(data?.data?.content)
+            console.log(data?.data?.content);
+            
         },
         enabled: data?.isBought
     })
@@ -119,7 +121,7 @@ export default function ViewTicket(
                         <Box bg={mainBackgroundColor} display={["none", "none", "block"]} >
                             <Flex ref={contentRef} width={"full"} flexDirection={"column"} alignItems={"center"} gap={"4"} px={["4", "4", "0px"]} >
 
-                                {dataMultiple?.map((item: { id: string, scanTimeStamp: any }, index: number) => {
+                                {dataMultiple?.map((item: { id: string, scanTimeStamp: any, boughtPrice: any}, index: number) => {
 
                                     return (
                                         <Flex key={index} maxW={["750px"]} w={["fit-content"]} flexDir={["row"]} rounded={"16px"} pb={"4"} p={["4"]} bg={index === 0 ? secondaryBackgroundColor : ticketBackgroundColor} alignItems={["center"]} justifyContent={"center"} gap={"4"} >
@@ -159,7 +161,7 @@ export default function ViewTicket(
                                                     <Flex flexDirection={"column"} >
                                                         <Text fontWeight={"bold"} fontSize={"10.26px"} lineHeight={"16.42px"} color={"brand.chasescrollBlue"} >Ticket fee</Text>
                                                         <Text color={bodyTextColor} fontSize={"10.26px"} lineHeight={"13.68px"}  >
-                                                            <EventPrice minPrice={datainfo?.boughtPrice} maxPrice={datainfo?.boughtPrice} currency={datainfo?.event?.currency} />
+                                                            <EventPrice minPrice={item?.boughtPrice} maxPrice={item?.boughtPrice} currency={datainfo?.event?.currency} />
                                                         </Text>
                                                     </Flex>
                                                     <Flex flexDirection={"column"} alignItems={"center"} >
@@ -214,7 +216,7 @@ export default function ViewTicket(
                             }
                         } flexDirection={"row"} overflowX={"auto"} alignItems={"center"} gap={"4"} px={["1", "1", "0px"]} >
                             <Flex width={"full"} gap={"6"} >
-                                {dataMultiple?.map((item: { id: string, scanTimeStamp: any }, index: number) => {
+                                {dataMultiple?.map((item: { id: string, scanTimeStamp: any, boughtPrice: any }, index: number) => {
                                     return (
                                         <Flex key={index} w={["full", "full", "750px"]} flexDir={["column", "column", "row"]} rounded={"16px"} pb={"4"} pt={["4"]} p={["0px", "0px", "4"]} bg={index === 0 ? secondaryBackgroundColor : ticketBackgroundColor} alignItems={["start", "start", "center"]} justifyContent={"center"} >
                                             <Flex width={"full"} justifyContent={"space-between"} pos={"relative"} px={"4"} pt={"4"} >
@@ -265,7 +267,7 @@ export default function ViewTicket(
                                                     <Flex flexDirection={"column"} >
                                                         <Text fontWeight={"bold"} fontSize={"10.26px"} lineHeight={"16.42px"} color={"brand.chasescrollBlue"} >Ticket fee</Text>
                                                         <Text color={bodyTextColor} fontSize={"10.26px"} lineHeight={"13.68px"}  >
-                                                            <EventPrice minPrice={datainfo?.boughtPrice} maxPrice={datainfo?.boughtPrice} currency={datainfo?.event?.currency} />
+                                                            <EventPrice minPrice={item?.boughtPrice} maxPrice={item?.boughtPrice} currency={datainfo?.event?.currency} />
                                                         </Text>
                                                     </Flex>
                                                     <Flex flexDirection={"column"} >
