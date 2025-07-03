@@ -60,13 +60,7 @@ export default function ListProduct({ setOpen, selectProduct, setSelectProduct, 
                 productId: dataindex
             }])
         }
-    }
-
-    // useEffect(()=> {
-    //     if(results){
-    //         length(results?.length)
-    //     }
-    // }, [isLoading])
+    } 
 
     const clickHander = () => {
 

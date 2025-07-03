@@ -1,5 +1,5 @@
 "use client"
-import { Flex, Grid, Image, Text } from '@chakra-ui/react'
+import { Button, Flex, Grid, Image, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import LoadingAnimation from '../sharedComponent/loading_animation';
 import useCustomTheme from '@/hooks/useTheme';
@@ -8,7 +8,7 @@ import { dateFormat, timeFormat } from '@/utils/dateFormat';
 import UserImage from '../sharedComponent/userimage';
 import { capitalizeFLetter } from '@/utils/capitalLetter';
 import { textLimit } from '@/utils/textlimit';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import DonationPayment from './donationPayment';
 import usePaystackStore from '@/global-state/usePaystack';
 import Fundpaystack from '../settings_component/payment_component/card_tabs/fund_wallet/fundpaystack';
@@ -29,6 +29,10 @@ import ProductRating from '../kisok/productRating';
 import RentalCheckout from '../kisok/rentalCheckout';
 import DescriptionPage from '../sharedComponent/descriptionPage';
 import GetCreatorData from '../kisok/getCreatorData';
+import SignupModal from '@/app/auth/component/signupModal';
+import ModalLayout from '../sharedComponent/modal_layout';
+import CustomText from '../general/Text';
+import GoogleBtn from '../sharedComponent/googlebtn';
 
 export default function DonationDetails({ id, notAuth }: { id: string, notAuth?: boolean }) {
 
@@ -44,6 +48,13 @@ export default function DonationDetails({ id, notAuth }: { id: string, notAuth?:
     } = useCustomTheme()
 
     const { back, push } = useRouter()
+    const query = useSearchParams();
+    const type = query?.get('type');
+
+    const router = useRouter()
+
+    const [open, setOpen] = useState(false)
+    const [openSignUp, setOpenSignUp] = useState(false) 
     const { configPaystack, setPaystackConfig, dataID, message, amount, setAmount } = usePaystackStore((state) => state);
     const [isCollaborator, setCollaborate] = useState<Array<any>>([])
 
@@ -91,6 +102,11 @@ export default function DonationDetails({ id, notAuth }: { id: string, notAuth?:
             setCollaborate(collaborators)
         }
     }, [item])
+
+    const signUpHandler = (itemData: boolean) => {
+        router.push(`/donation/${item?.id}?type=modal`)
+        setOpenSignUp(itemData)
+    }
 
     return (
         <LoadingAnimation loading={isLoading} >
@@ -152,7 +168,7 @@ export default function DonationDetails({ id, notAuth }: { id: string, notAuth?:
                                             </Flex>
                                         </Flex>
                                     ) : (
-                                        <DonationPayment data={item} />
+                                        <DonationPayment data={item} setOpen={setOpen} />
                                     )}
                                 </Flex>
                             </Flex>
@@ -189,7 +205,7 @@ export default function DonationDetails({ id, notAuth }: { id: string, notAuth?:
                                     </Flex>
                                 ) : (
                                     <Flex insetX={"6"} bottom={["14", "14", "0px", "0px", "0px"]} pos={["fixed", "fixed", "relative", "relative"]} w={["auto", "auto", "full", "fit-content"]} display={["none", "none", "flex"]} zIndex={"50"} flexDir={"column"} gap={"4"} pb={"6"} px={["0px", "0px", "6", "6"]} >
-                                        <DonationPayment data={item} />
+                                        <DonationPayment data={item} setOpen={setOpen} />
                                     </Flex>
                                 )}
                             </Flex>
@@ -198,6 +214,35 @@ export default function DonationDetails({ id, notAuth }: { id: string, notAuth?:
                 </Flex>
             </Flex>
             <Fundpaystack id={dataID} config={configPaystack} setConfig={setPaystackConfig} setAmount={setAmount} amount={amount} message={message} />
+
+            <ModalLayout open={type === "modal" ? true : false} close={()=> router.push(`/donation/${item?.id}`)} title='' closeIcon={true} >
+                <Flex w={"full"} flexDir={"column"} gap={"4"} p={"6"} >
+                    <Flex flexDir={"column"} justifyContent={"center"} >
+                        <Text fontSize={"24px"} textAlign={"center"} fontWeight={"700"} lineHeight={"32px"} >Fundraising</Text>
+                        <Text color={"#626262"} textAlign={"center"}>Please choose your option and proceed with Chasescroll.</Text>
+                    </Flex>
+                    <GoogleBtn newbtn title='Sign in' type="DONATION" id={item?.id ? true : false} index={item?.id} height='50px' border='1px solid #B6B6B6' bgColor='white' />
+                    <Flex justifyContent={"center"} gap={"2px"} alignItems={"center"} >
+                        <Text color={"#BCBCBC"} fontSize={"14px"} lineHeight={"19.6px"} >OR</Text>
+                    </Flex>
+                    <Button onClick={() => router.push("/share/auth/temporary-account/?type=DONATION&typeID=" + item?.id)} backgroundColor={"#EDEFFF"} color={"#5465E0"} h={"50px"} w={"full"} borderWidth={"0.5px"} borderColor={"#EDEFFF"} rounded={"32px"} gap={"3"} _hover={{ backgroundColor: "#EDEFFF" }} justifyContent={"center"} alignItems={"center"} >
+                        <Text textAlign={"center"} fontWeight={"600"} >Get Temporary Account</Text>
+                    </Button>
+                    <Button onClick={() => signUpHandler(true)} color={"white"} h={"50px"} w={"full"} borderWidth={"0.5px"} borderColor={"#233DF3"} bgColor={"#233DF3"} rounded={"32px"} gap={"3"} _hover={{ backgroundColor: "#233DF3" }} justifyContent={"center"} alignItems={"center"} >
+                        <Text textAlign={"center"} fontWeight={"600"} >Sign up</Text>
+                    </Button>
+                    {/* <SignupModal index={item?.id} open={openSignUp} setOpen={signUpHandler} /> */}
+                    <Flex>
+                        <CustomText fontSize={'sm'} fontFamily={'Satoshi-Regular'} marginLeft='0px'>
+                            Already have an account?
+                        </CustomText>
+                        <CustomText onClick={() => router.push("/share/auth/login/?type=DONATION&typeID=" + item?.id)} fontWeight={"700"} ml={"4px"} fontSize={'sm'} color='brand.chasescrollButtonBlue' fontFamily={'Satoshi-Regular'} cursor='pointer'>Log in</CustomText>
+                    </Flex>
+                </Flex>
+            </ModalLayout>
+            {openSignUp && (
+                <SignupModal hide={true} index={item?.id} open={openSignUp} setOpen={signUpHandler} />
+            )}
         </LoadingAnimation>
     )
 }

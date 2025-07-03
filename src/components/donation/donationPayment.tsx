@@ -14,9 +14,8 @@ import { useDetails } from '@/global-state/useUserDetails'
 import DonationTermAndCondition from './donationTermAndCondition'
 import { useRouter, useSearchParams } from 'next/navigation' 
 
-export default function DonationPayment({ data, fullWidth }: { data?: IDonationList, fullWidth?: boolean }) {
-
-    const [open, setOpen] = useState(false)
+export default function DonationPayment({ data, fullWidth, setOpen }: { data?: IDonationList, fullWidth?: boolean, setOpen?: any }) {
+ 
     const [openSignUp, setOpenSignUp] = useState(false) 
 
     const [value, setValue] = useState("")
@@ -100,14 +99,7 @@ export default function DonationPayment({ data, fullWidth }: { data?: IDonationL
             router.push(`/donation/${data?.id}?type=modal`)
         }
     }
-    
-    const query = useSearchParams();
-    const type = query?.get('type');
-
-    const signUpHandler = (item: boolean) => {
-        router.push(`/donation/${data?.id}?type=modal`)
-        setOpenSignUp(item)
-    }
+ 
 
     return (
         <Flex bgColor={mainBackgroundColor} w={["full", "full", "full", fullWidth ? "full" : "450px"]} minW={["200px", "200px", "200px", "200px"]} maxW={["full", "full", "450px", "full"]} shadow={"lg"} borderWidth={"1px"} borderColor={borderColor} rounded={"16px"} flexDir={"column"} overflowX={"hidden"} gap={"3"} p={["3", "3", "5"]}  >
@@ -133,34 +125,6 @@ export default function DonationPayment({ data, fullWidth }: { data?: IDonationL
             <Flex w={"full"} justifyContent={"center"} >
                 <DonationTermAndCondition refund={true} />
             </Flex> 
-            <ModalLayout open={type === "modal" ? true : false} close={()=> router.push(`/donation/${data?.id}`)} title='' closeIcon={true} >
-                <Flex w={"full"} flexDir={"column"} gap={"4"} p={"6"} >
-                    <Flex flexDir={"column"} justifyContent={"center"} >
-                        <Text fontSize={"24px"} textAlign={"center"} fontWeight={"700"} lineHeight={"32px"} >Fundraising</Text>
-                        <Text color={"#626262"} textAlign={"center"}>Please choose your option and proceed with Chasescroll.</Text>
-                    </Flex>
-                    <GoogleBtn newbtn title='Sign in' type="DONATION" id={data?.id ? true : false} index={data?.id} height='50px' border='1px solid #B6B6B6' bgColor='white' />
-                    <Flex justifyContent={"center"} gap={"2px"} alignItems={"center"} >
-                        <Text color={"#BCBCBC"} fontSize={"14px"} lineHeight={"19.6px"} >OR</Text>
-                    </Flex>
-                    <Button onClick={() => router.push("/share/auth/temporary-account/?type=DONATION&typeID=" + data?.id)} backgroundColor={"#EDEFFF"} color={"#5465E0"} h={"50px"} w={"full"} borderWidth={"0.5px"} borderColor={"#EDEFFF"} rounded={"32px"} gap={"3"} _hover={{ backgroundColor: "#EDEFFF" }} justifyContent={"center"} alignItems={"center"} >
-                        <Text textAlign={"center"} fontWeight={"600"} >Get Temporary Account</Text>
-                    </Button>
-                    <Button onClick={() => signUpHandler(true)} color={"white"} h={"50px"} w={"full"} borderWidth={"0.5px"} borderColor={"#233DF3"} bgColor={"#233DF3"} rounded={"32px"} gap={"3"} _hover={{ backgroundColor: "#233DF3" }} justifyContent={"center"} alignItems={"center"} >
-                        <Text textAlign={"center"} fontWeight={"600"} >Sign up</Text>
-                    </Button>
-                    {/* <SignupModal index={data?.id} open={openSignUp} setOpen={signUpHandler} /> */}
-                    <Flex>
-                        <CustomText fontSize={'sm'} fontFamily={'Satoshi-Regular'} marginLeft='0px'>
-                            Already have an account?
-                        </CustomText>
-                        <CustomText onClick={() => router.push("/share/auth/login/?type=DONATION&typeID=" + data?.id)} fontWeight={"700"} ml={"4px"} fontSize={'sm'} color='brand.chasescrollButtonBlue' fontFamily={'Satoshi-Regular'} cursor='pointer'>Log in</CustomText>
-                    </Flex>
-                </Flex>
-            </ModalLayout>
-            {openSignUp && (
-                <SignupModal hide={true} index={data?.id} open={openSignUp} setOpen={signUpHandler} />
-            )}
         </Flex>
     )
 }

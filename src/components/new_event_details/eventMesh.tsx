@@ -42,11 +42,12 @@ export default function EventMesh({ data, setMeshSize }: { data: IEventType, set
     const { push } = useRouter()
 
     const [eventData, setEventData] = useState<Array<IProps>>([])
+
     const { deleteFundraising } = usePr()
 
     const { pinProduct, open, setOpen } = useProduct()
 
-    const [selectProduct, setSelectProduct] = useState<Array<IPinned>>([])
+    const [selectProduct, setSelectProduct] = useState<IProps>({} as IProps)
 
     // react query
     const { isLoading, isRefetching } = useQuery(['all-events-mesh', data?.id], () => httpService.get(`/pin-item/search`, {
@@ -77,10 +78,13 @@ export default function EventMesh({ data, setMeshSize }: { data: IEventType, set
         pinProduct?.mutate({ pinnedItems: [...obj] })
     }
 
-    const openHandler = (e: any) => {
+    const openHandler = (e: any, item: IProps) => {
         e.stopPropagation()
+        setSelectProduct(item)
         setOpen(true)
     }
+
+
 
 
     return (
@@ -88,10 +92,10 @@ export default function EventMesh({ data, setMeshSize }: { data: IEventType, set
             <Flex w={"full"} justifyContent={"space-between"} alignItems={"center"} >
                 {data?.isOrganizer ? (
                     <Text fontWeight={"500"} >Add  Product to enable your Audience connect to your event</Text>
-                ): (
+                ) : (
                     <Text fontSize={["14px", "14px", "20px"]} fontWeight={"bold"} >Shop the ${data?.eventName} kiosk</Text>
                 )}
-                {!data?.isOrganizer && ( 
+                {!data?.isOrganizer && (
                     <Text fontSize={"12px"} fontWeight={"600"} onClick={() => push(`/dashboard/profile/${data?.createdBy?.userId}/kiosk`)} color={primaryColor} as={"button"} >See all</Text>
                 )}
             </Flex>
@@ -107,14 +111,14 @@ export default function EventMesh({ data, setMeshSize }: { data: IEventType, set
                     <PrBtn data={data} product={true} />
                     {eventData?.map((item, index) => {
                         return (
-                            <Flex pos={"relative"} bgColor={mainBackgroundColor} key={index} onClick={() => push(`/dashboard/kisok/details/${item?.returnProductDto?.id}`)} w={["170px", "170px", "230px"]}  h={"219px"} borderWidth={"1px"} borderColor={"#EBEDF0"} flexDir={"column"} gap={"2"} p={"2"} rounded={"16px"} >
+                            <Flex pos={"relative"} bgColor={mainBackgroundColor} key={index} onClick={() => push(`/dashboard/kisok/details/${item?.returnProductDto?.id}`)} w={["170px", "170px", "230px"]} h={["170px", "170px", "219px"]} borderWidth={"1px"} borderColor={"#EBEDF0"} flexDir={"column"} gap={"2"} p={"2"} rounded={"16px"} >
 
                                 {data?.isOrganizer && (
-                                    <Flex w={"6"} h={"6"} onClick={(e) => openHandler(e)} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"3"} right={"3"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
+                                    <Flex w={"6"} h={"6"} onClick={(e) => openHandler(e, item)} justifyContent={"center"} alignItems={"center"} pos={"absolute"} top={"3"} right={"3"} zIndex={"50"} bg={"#F2A09B66"} color={"#F50A0A"} rounded={"full"} >
                                         <IoClose size={"14px"} />
                                     </Flex>
                                 )}
-                                <Flex w={"full"} h={["101px", "101px", "176px"]} p={"1"} justifyContent={"center"} alignItems={"center"} bgColor={secondaryBackgroundColor} rounded={"8px"} >
+                                <Flex w={"full"} h={["101px", "101px", "150px"]} p={"1"} justifyContent={"center"} alignItems={"center"} bgColor={secondaryBackgroundColor} rounded={"8px"} >
                                     <Image alt="logo" height={"full"} w={"auto"} objectFit={"contain"} rounded={"8px"} src={IMAGE_URL + item?.returnProductDto?.images[0]} />
                                 </Flex>
                                 <Flex flexDir={"column"} >
@@ -122,18 +126,19 @@ export default function EventMesh({ data, setMeshSize }: { data: IEventType, set
                                     <Text fontSize={["12px", "12px", "14px"]} >{capitalizeFLetter(textLimit(item?.returnProductDto?.name, 20))}</Text>
                                 </Flex>
 
-                                <ModalLayout open={open} close={setOpen} size={"xs"} >
-                                    <VStack width='100%' justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} spacing={3}>
-                                        <Image alt='delete' src='/assets/images/deleteaccount.svg' />
-                                        <CustomText fontWeight={"700"} textAlign={'center'} fontSize={'20px'}>Remove Product </CustomText>
-                                        <CustomText textAlign={'center'} fontSize={'14px'} >Are you sure you want to remove <span style={{ fontWeight: "bold" }} >{capitalizeFLetter(item?.returnProductDto?.name)}</span>, this action cannot be undone.</CustomText>
-                                        <Button isDisabled={pinProduct.isLoading} onClick={() => removeHandler(item?.returnProductDto?.id)} isLoading={pinProduct.isLoading} fontSize={"14px"} width='100%' height='42px' bg='red' color="white" variant='solid'>Remove</Button>
-                                        <Button onClick={() => setOpen(false)} width='100%' height='42px' borderWidth={'0px'} color="grey">Cancel</Button>
-                                    </VStack>
-                                </ModalLayout>
                             </Flex>
                         )
                     })}
+
+                    <ModalLayout open={open} close={setOpen} size={"xs"} >
+                        <VStack width='100%' justifyContent={'center'} p={"4"} height='100%' alignItems={'center'} spacing={3}>
+                            <Image alt='delete' src='/assets/images/deleteaccount.svg' />
+                            <CustomText fontWeight={"700"} textAlign={'center'} fontSize={'20px'}>Remove Product </CustomText>
+                            <CustomText textAlign={'center'} fontSize={'14px'} >Are you sure you want to remove <span style={{ fontWeight: "bold" }} >{capitalizeFLetter(selectProduct?.returnProductDto?.name)}</span>, this action cannot be undone.</CustomText>
+                            <Button isDisabled={pinProduct.isLoading} onClick={() => removeHandler(selectProduct?.returnProductDto?.id)} isLoading={pinProduct.isLoading} fontSize={"14px"} width='100%' height='42px' bg='red' color="white" variant='solid'>Remove</Button>
+                            <Button onClick={() => setOpen(false)} width='100%' height='42px' borderWidth={'0px'} color="grey">Cancel</Button>
+                        </VStack>
+                    </ModalLayout>
                 </Flex>
             </Flex>
         </Flex>

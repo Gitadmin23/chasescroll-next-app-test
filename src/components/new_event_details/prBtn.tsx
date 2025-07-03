@@ -163,13 +163,13 @@ export default function PrBtn({ data, donation, product }: { data: IEventType, d
                 </Flex>
             )}
 
-            {donation && (
+            {(donation && data?.isOrganizer) && (
                 <Flex px={"8"} onClick={() => { setOpen(true), setTab(true), setIndex(1) }} as={"button"} justifyContent={"center"} alignItems={"center"} h={"102px"} rounded={"16px"} w={"full"} bgColor={secondaryBackgroundColor} >
                     <Text fontWeight={"500"} fontSize={"14px"} color={primaryColor} >+ Add Fundraising</Text>
                 </Flex>
             )}
-            {product && (
-                <Flex px={"8"} onClick={() => { setOpen(true), setTab(true), setIndex(2) }} as={"button"} justifyContent={"center"} alignItems={"center"} h={"219px"} rounded={"16px"} w={"fit-content"} bgColor={secondaryBackgroundColor}  >
+            {(product && data?.isOrganizer) && (
+                <Flex px={"8"} onClick={() => { setOpen(true), setTab(true), setIndex(2) }} as={"button"} justifyContent={"center"} alignItems={"center"} h={["170px","170px","219px"]} rounded={"16px"} w={"fit-content"} bgColor={secondaryBackgroundColor}  >
                     <Text fontWeight={"500"} fontSize={"14px"} color={primaryColor} >+ Add a product</Text>
                 </Flex>
             )}

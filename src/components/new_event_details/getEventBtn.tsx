@@ -131,7 +131,7 @@ function GetEventTicket(props: IProps) {
                         <SuccessIcon />
                         <Text fontSize={"24px"} color={"#121212"} lineHeight={"44.8px"} fontWeight={"500"} mt={"4"} >Ticket Purchase Successful</Text>
                         <Text fontSize={"12px"} color={"#626262"} maxWidth={"351px"} textAlign={"center"} mb={"4"} >{`Congratulations! you can also find your ticket on the Chasescroll app, on the details page click on the view ticket button.`}</Text>
-                        <CustomButton onClick={() => setModalTab(5)} color={"#FFF"} text='View Ticket' w={"full"} backgroundColor={"#3EC259"} />
+                        <CustomButton onClick={() => {setModalTab(1), setShowModal(false)}} color={"#FFF"} text='Close' w={"full"} />
                     </Flex>
                 )}
             </ModalLayout>
